@@ -1,9 +1,42 @@
-import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 import 'package:tab_container/tab_container.dart';
 
-class DashboardView extends StatelessWidget {
+import '../../../core/widgets/headline6.dart';
+import '../model/tab_model.dart';
+import '../widgets/tabs_child.dart';
+
+class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
+  late TabContainerController tabcontroller;
+  @override
+  void initState() {
+    tabcontroller = TabContainerController(length: 4);
+    tabcontroller.addListener(() {
+      setState(() {
+        
+      });
+     });
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    tabcontroller.removeListener(() {});
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +47,52 @@ class DashboardView extends StatelessWidget {
       ),
       body: SafeArea(
           child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          children: const <Widget>[],
+          children: <Widget>[
+            SizedBox(
+                height: 200,
+                width: context.dynamicWidth(1),
+                child: TabContainer(
+                  
+                  transitionBuilder: (child, animation) {
+                    animation = CurvedAnimation(
+                        curve: Curves.easeIn, parent: animation);
+                    return SlideTransition(
+                      position: Tween(
+                        begin: const Offset(0.2, 0.0),
+                        end: const Offset(0.0, 0.0),
+                      ).animate(animation),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  controller: tabcontroller,
+                  tabs: [
+                    ...List.generate(
+                      tabs.length,
+                      (index) {
+                        return Icon(tabs[index].icon,
+                            color: tabcontroller.index == index
+                                ? Colors.white
+                                : Colors.black);
+                      },
+                    )
+                  ],
+                  isStringTabs: false,
+                  tabEdge: TabEdge.right,
+                  tabCurve: Curves.easeIn,
+                  colors: const <Color>[
+                    Color(0xfffa86be),
+                    Color(0xffa275e3),
+                    Color(0xff9aebed),
+                    Color(0xfffdc5d5a)
+                  ],
+                  children: getChildrenTabs(context),
+                ))
+          ],
         ),
       )),
     );

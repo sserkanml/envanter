@@ -53,6 +53,8 @@ dependencies:
   auto_route: ^5.0.4
   cupertino_onboarding: ^1.1.1
   tab_container: ^2.0.0
+  nine_grid_view: ^2.0.0
+  flutter_staggered_animations: ^1.1.1
 
  
 
@@ -82,8 +84,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/animations/
-    - assets/videos/
     - assets/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
