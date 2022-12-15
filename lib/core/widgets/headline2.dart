@@ -6,7 +6,7 @@ class Headline2 extends StatelessWidget {
   final FontWeight? fontWeight;
   final Color? color;
   const Headline2(
-      {Key? key, required this.data, this.fontWeight, required this.color})
+      {Key? key, required this.data, this.fontWeight,  this.color})
       : super(key: key);
 
   @override

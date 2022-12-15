@@ -1,0 +1,122 @@
+import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/util/extension.dart';
+import 'package:aden_envanterus/core/widgets/bodylarge.dart';
+import 'package:aden_envanterus/core/widgets/bodymedium.dart';
+import 'package:aden_envanterus/core/widgets/custom_text_field.dart';
+import 'package:aden_envanterus/core/widgets/headline6.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:kartal/kartal.dart';
+
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  late FocusNode email;
+  late FocusNode password;
+  @override
+  void initState() {
+    email = FocusNode();
+    password = FocusNode();
+    super.initState();
+  }
+
+  bool isClickEye = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: TextButton(
+              onPressed: () {
+                context.router.push(const SignUpRoute());
+              },
+              child: const Bodymedium(
+                data: "Kayıt Ol",
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+        title: const Headline6(data: "Giriş Yap"),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Headline6(data: "Hesabına Giriş Yapabilirsin"),
+              const SizedBox(height: 20),
+              const Bodymedium(
+                  textalign: TextAlign.center,
+                  opacity: .6,
+                  data:
+                      'Aşağıdaki doğrulamayı doğrulayarak hesabına giriş yapabilrisin'),
+              const SizedBox(height: 20),
+              CustomTextField(
+                hintext: 'Email',
+                focusNode: email,
+                inputType: TextInputType.emailAddress,
+                prefixIcon: Icon(Icons.email),
+              ),
+              const SizedBox(height: 40),
+              CustomTextField(
+                hintext: 'Şifre',
+                focusNode: password,
+                obscureText: isClickEye,
+                inputType: TextInputType.text,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isClickEye = !isClickEye;
+                    });
+                  },
+                  icon: SvgPicture.asset(
+                    context.getPath(
+                        folder: 'svg',
+                        file: isClickEye ? 'eye.svg' : 'eye_close.svg'),
+                    color: context.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Bodylarge(
+                data: 'Şifremi Unuttum ?',
+                color: context.colorScheme.error,
+                fontWeight: FontWeight.bold,
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                child: GFButton(
+                  shape: GFButtonShape.pills,
+                  fullWidthButton: true,
+                  size: GFSize.LARGE,
+                  type: GFButtonType.solid,
+                  onPressed: () {
+                    context.router.push(RootRoute());
+                  },
+                  child: const Bodylarge(
+                    data: "Giriş Yap",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

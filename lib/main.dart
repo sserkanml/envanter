@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'core/service/dependecy_service.dart';
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
       builder: (light, dark) {
         return MaterialApp.router(
           theme: light,
+          routeInformationParser: getIt.get<AppRouter>().defaultRouteParser(),
+          routerDelegate: getIt.get<AppRouter>().delegate(),
           darkTheme: dark,
           debugShowCheckedModeBanner: false,
           title: 'Envanterus',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CreateCustomerView extends StatelessWidget {
-const CreateCustomerView({ Key? key }) : super(key: key);
+class CustomersView extends StatelessWidget {
+const CustomersView({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context){

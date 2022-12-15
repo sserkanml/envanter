@@ -1,3 +1,4 @@
+import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:get_it/get_it.dart';
 
 import '../constant/service_path_constant.dart';
@@ -11,6 +12,7 @@ class DependecyService {
   static void setup() {
     getIt.registerLazySingleton<LightTheme>(() => LightTheme());
     getIt.registerLazySingleton<DarkTheme>(() => DarkTheme());
+     getIt.registerLazySingleton<AppRouter>(() => AppRouter());
     getIt.registerLazySingleton<ConstantServicePath>(
         () => ConstantServicePath());
     getIt.registerLazySingleton<ConstantSvgPath>(() => ConstantSvgPath());

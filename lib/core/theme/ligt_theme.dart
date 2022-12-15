@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 
 class LightTheme {
   ThemeData lightTheme = ThemeData(
-      appBarTheme: const AppBarTheme(),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFFAFAFA),
+          iconTheme: IconThemeData(
+            color: Color(0xFF000000),
+            size: 25,
+          )),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: const Color(0xFFD32F2F),
+        unselectedIconTheme: IconThemeData(color: Colors.black.withOpacity(.2)),
+        selectedLabelStyle: const TextStyle(
+          color: Color(0xFFD32F2F),
+        ),
+      ),
+      iconTheme: const IconThemeData(color: Color(0xFF000000), size: 20),
       brightness: Brightness.light,
       elevatedButtonTheme:
           ElevatedButtonThemeData(style: ElevatedButton.styleFrom()),
@@ -12,9 +25,9 @@ class LightTheme {
       secondaryHeaderColor: const Color(0xFFE3F2FD),
       toggleableActiveColor: const Color(0xFF1E88E5),
       errorColor: const Color(0xFFD32F2F),
-      canvasColor: const Color(0xFFD32F2F),
+      canvasColor: const Color(0xFFFAFAFA),
       cardColor: const Color(0xFFFFFFFF),
-      scaffoldBackgroundColor: const Color(0xFFFAFAFA),
+      scaffoldBackgroundColor: const Color(0xFFF6F8F9),
       bottomAppBarColor: const Color(0xFFFFFFFF),
       dialogBackgroundColor: const Color(0xFFFFFFFF),
       indicatorColor: const Color(0xFF2196F3),

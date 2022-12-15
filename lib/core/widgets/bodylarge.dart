@@ -8,7 +8,7 @@ class Bodylarge extends StatelessWidget {
   
   final double? opacity;
   const Bodylarge(
-      {Key? key, required this.data, this.fontWeight, required this.color, this.opacity})
+      {Key? key, required this.data, this.fontWeight,  this.color, this.opacity})
       : super(key: key);
 
   @override
