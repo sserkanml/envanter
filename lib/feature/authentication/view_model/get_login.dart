@@ -13,7 +13,7 @@ class AuthenticateUser {
         await http.post(url, body: {'_UserName': email, '_Password': pasword});
 
     getIt.get<UserSession>().sessionId = response.headers['set-cookie'] ?? '';
-    print(response.headers['set-cookie']);
+  
     return response.body;
   }
 }

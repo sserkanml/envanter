@@ -4,6 +4,7 @@ import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:kartal/kartal.dart';
 
 class ChecksView extends StatelessWidget {
   const ChecksView({Key? key}) : super(key: key);
@@ -19,39 +20,46 @@ class ChecksView extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                GFButton(
-                  onPressed: () {
-                    context.router.push(const CreateChecksRoute());
-                  },
-                  child: const Bodysmall(
-                    data: 'Sayım Başlat',
-                    color: Colors.white,
+            SizedBox(
+              height: 40,
+              width: context.dynamicWidth(1),
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: [
+                  GFButton(
+                    onPressed: () {
+                      context.router.push(const CreateChecksRoute());
+                    },
+                    child: const Bodysmall(
+                      data: 'Sayım Başlat',
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                GFButton(
-                  color: GFColors.DANGER,
-                  onPressed: () {
-                    context.router.push(const PendingCheckingRoute());
-                  },
-                  child: const Bodysmall(
-                    data: 'Bekleyen Sayımlar',
-                    color: Colors.white,
+                  const SizedBox(width:20),
+                  GFButton(
+                    color: GFColors.DANGER,
+                    onPressed: () {
+                      context.router.push(const PendingCheckingRoute());
+                    },
+                    child: const Bodysmall(
+                      data: 'Bekleyen Sayımlar',
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                GFButton(
-                  color: GFColors.WARNING,
-                  onPressed: () {
-                    context.router.push(const ConfirmedRoute());
-                  },
-                  child: const Bodysmall(
-                    data: 'Onaylanan Sayımlar',
-                    color: Colors.white,
-                  ),
-                )
-              ],
+                  const SizedBox(width:20),
+                  GFButton(
+                    color: GFColors.WARNING,
+                    onPressed: () {
+                      context.router.push(const ConfirmedRoute());
+                    },
+                    child: const Bodysmall(
+                      data: 'Onaylanan Sayımlar',
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 20,

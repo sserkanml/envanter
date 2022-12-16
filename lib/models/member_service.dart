@@ -32,6 +32,6 @@ abstract class _MemberMobxBase with Store {
       result = 'Hatayla Karşılaşıldı';
     }
 
-    print(response.body);
+   
   }
 }

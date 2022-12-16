@@ -56,8 +56,9 @@ class _OnBoardViewState extends State<OnBoardView> {
                       SvgPicture.asset(
                         context.getPath(
                             folder: "svg", file: onboardData[index].file),
-                        width: 300,
-                        height: 300,
+                        fit: BoxFit.contain,
+                        height: 150,
+                        width: 100,
                       )
                     ],
                   ));

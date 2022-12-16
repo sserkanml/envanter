@@ -11,6 +11,8 @@ class ProjectsMobx = _ProjectsMobxBase with _$ProjectsMobx;
 abstract class _ProjectsMobxBase with Store {
   @observable
   List<ProjectsModel> projects = [];
+  @observable
+  String result = '';
 
   @action
   Future<void> getAllProjects() async {
@@ -19,6 +21,6 @@ abstract class _ProjectsMobxBase with Store {
     var response = await http.get(url, headers: {
       'cookie': getIt.get<Shared>().pref.getString('sessionID') ?? ''
     });
-    
+    result = response.body;
   }
 }
