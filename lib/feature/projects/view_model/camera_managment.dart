@@ -1,8 +1,9 @@
 import 'package:photo_manager/photo_manager.dart';
 
 class CameraManagmentService {
-  List<AssetEntity> assetsEntities = [];
-
+ static  List<AssetEntity> assetsEntities = [];
+ static  List<AssetEntity> selectedEntities = [];
+  static  List<AssetEntity> selectedEntitiesCopy = [];
   void getPermission() async {
     final PermissionState ps = await PhotoManager.requestPermissionExtend();
 

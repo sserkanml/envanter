@@ -1,3 +1,5 @@
+import 'package:aden_envanterus/core/route/guard/login_guard.dart';
+import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:aden_envanterus/feature/checking/view/checks_view.dart';
 import 'package:aden_envanterus/feature/checking/view/checks_wrapper_view.dart';
 import 'package:aden_envanterus/feature/checking/view/confirmed_view.dart';
@@ -13,18 +15,23 @@ import 'package:aden_envanterus/feature/projects/view/projects_detail_view.dart'
 import 'package:aden_envanterus/feature/projects/view/projects_view.dart';
 import 'package:aden_envanterus/feature/projects/view/projects_wrapper_view.dart';
 import 'package:aden_envanterus/feature/root/view/root_view.dart';
+import 'package:aden_envanterus/feature/settings/view/alerts_view.dart';
 
 import 'package:aden_envanterus/feature/settings/view/create_user_view.dart';
 import 'package:aden_envanterus/feature/settings/view/my_profile_view.dart';
 import 'package:aden_envanterus/feature/settings/view/role_view.dart';
 import 'package:aden_envanterus/feature/settings/view/settings_view.dart';
 import 'package:aden_envanterus/feature/settings/view/settings_wrapper_view.dart';
+import 'package:aden_envanterus/feature/settings/view/users_detail_view.dart';
 import 'package:aden_envanterus/feature/settings/view/users_view.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../feature/customers/view/create_customers_view.dart';
+import '../../feature/settings/view/system_settings_view.dart';
 
+final AppRouter approuter = AppRouter();
 const rootAutoRoute = CustomRoute(
+    guards: [LoginGuard],
     page: RootView,
     path: '/root',
     transitionsBuilder: TransitionsBuilders.noTransition,
@@ -74,6 +81,9 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: CreateUserView),
         CustomRoute(page: MyProfileView),
         CustomRoute(page: RoleView),
+        CustomRoute(page: SystemSettingsView),
         CustomRoute(page: UsersView),
+        CustomRoute(page: AlertsView),
+        CustomRoute(page: UsersDetailView),
       ])
     ]);

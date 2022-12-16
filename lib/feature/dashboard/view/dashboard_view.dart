@@ -76,8 +76,8 @@ class _DashboardViewState extends State<DashboardView> {
                       (index) {
                         return Icon(tabs[index].icon,
                             color: tabcontroller.index == index
-                                ? Colors.white
-                                : Colors.black);
+                                ? context.colorScheme.onPrimary
+                                : context.colorScheme.onBackground);
                       },
                     )
                   ],

@@ -18,6 +18,7 @@ class RootView extends StatelessWidget {
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
+          elevation: 3,
           onTap: (value) {
             tabsRouter.setActiveIndex(value);
           },

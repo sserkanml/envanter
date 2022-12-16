@@ -1,9 +1,15 @@
 import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:aden_envanterus/core/util/extension.dart';
 import 'package:aden_envanterus/core/widgets/bodylarge.dart';
 import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/custom_text_field.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
+import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
+import 'package:aden_envanterus/models/member_service.dart';
+import 'package:aden_envanterus/models/projects_service.dart';
+import 'package:aden_envanterus/models/user_session.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,10 +26,16 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late FocusNode email;
   late FocusNode password;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  bool isLoading = false;
+  bool isError = false;
   @override
   void initState() {
     email = FocusNode();
     password = FocusNode();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
   }
 
@@ -64,13 +76,15 @@ class _LoginViewState extends State<LoginView> {
                       'Aşağıdaki doğrulamayı doğrulayarak hesabına giriş yapabilrisin'),
               const SizedBox(height: 20),
               CustomTextField(
+                controller: emailController,
                 hintext: 'Email',
                 focusNode: email,
                 inputType: TextInputType.emailAddress,
-                prefixIcon: Icon(Icons.email),
+                prefixIcon: const Icon(Icons.email),
               ),
               const SizedBox(height: 40),
               CustomTextField(
+                controller: passwordController,
                 hintext: 'Şifre',
                 focusNode: password,
                 obscureText: isClickEye,
@@ -103,16 +117,53 @@ class _LoginViewState extends State<LoginView> {
                   fullWidthButton: true,
                   size: GFSize.LARGE,
                   type: GFButtonType.solid,
-                  onPressed: () {
-                    context.router.push(RootRoute());
+                  onPressed: () async {
+                    isLoading = true;
+                    setState(() {});
+                    final isLogin = await getIt
+                        .get<AuthenticateUser>()
+                        .authenticaceUser(
+                            email: getIt.get<AuthenticateUser>().email,
+                            pasword: getIt.get<AuthenticateUser>().password);
+
+                    if (isLogin == 'true') {
+                      getIt.get<Shared>().pref.setBool('isLogin', true);
+                      getIt.get<Shared>().pref.setString(
+                          'sessionID', getIt.get<UserSession>().sessionId);
+                      isError = false;
+                      await getIt.get<ProjectsMobx>().getAllProjects();
+                      await getIt.get<MemberMobx>().getAllMembers();
+                      context.router.push(const RootRoute());
+                    } else {
+                      isLoading = false;
+                      isError = true;
+                      setState(() {});
+
+                      return;
+                    }
+                    isLoading = false;
+                    setState(() {});
                   },
-                  child: const Bodylarge(
-                    data: "Giriş Yap",
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Bodylarge(
+                          data: "Giriş Yap",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                 ),
               ),
+              const SizedBox(height: 10),
+              Visibility(
+                visible: isError,
+                child: Bodymedium(
+                  data: 'Kullanıcı ya da şifre yanlış',
+                  color: context.colorScheme.error,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ],
           ),
         ),

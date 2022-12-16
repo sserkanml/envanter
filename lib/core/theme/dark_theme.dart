@@ -8,6 +8,15 @@ class DarkTheme {
             color: Color(0xFFFFFBFE),
             size: 25,
           )),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: const Color(0xFFD32F2F),
+        selectedLabelStyle: const TextStyle(
+          color: Color(0xFFD32F2F),
+        ),
+  
+        unselectedIconTheme: IconThemeData(color: Colors.white.withOpacity(.2)),
+      ),
+      iconTheme: const IconThemeData(color: Color(0xFFFFFFFF)),
       primaryColor: const Color(0xFF212121),
       primaryColorDark: const Color(0xFF212121),
       brightness: Brightness.dark,

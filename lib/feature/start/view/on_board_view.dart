@@ -1,4 +1,6 @@
 import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:aden_envanterus/core/util/extension.dart';
 import 'package:aden_envanterus/core/widgets/headline5.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
@@ -18,6 +20,13 @@ class OnBoardView extends StatefulWidget {
 class _OnBoardViewState extends State<OnBoardView> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (getIt.get<Shared>().pref.getBool('isLogin') ?? false) {
+        context.router.push(const RootRoute());
+      } else {
+        return;
+      }
+    });
     super.initState();
   }
 

@@ -8,8 +8,11 @@ class LightTheme {
             color: Color(0xFF000000),
             size: 25,
           )),
+      
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        unselectedLabelStyle: TextStyle(color: Colors.black, ),
         selectedItemColor: const Color(0xFFD32F2F),
+
         unselectedIconTheme: IconThemeData(color: Colors.black.withOpacity(.2)),
         selectedLabelStyle: const TextStyle(
           color: Color(0xFFD32F2F),

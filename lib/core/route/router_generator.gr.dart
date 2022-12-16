@@ -13,7 +13,12 @@
 part of 'router_generator.dart';
 
 class _$AppRouter extends RootStackRouter {
-  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
+  _$AppRouter({
+    GlobalKey<NavigatorState>? navigatorKey,
+
+  }) : super(navigatorKey);
+
+  final LoginGuard loginGuard=LoginGuard();
 
   @override
   final Map<String, PageFactory> pagesMap = {
@@ -23,10 +28,10 @@ class _$AppRouter extends RootStackRouter {
         child: const OnBoardView(),
       );
     },
-    LoginRoute.name: (routeData) {
+    EmptyRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const LoginView(),
+        child: const EmptyView(),
       );
     },
     RootRoute.name: (routeData) {
@@ -40,15 +45,16 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    LoginRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const LoginView(),
+      );
+    },
     SignUpRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const SignUpView(),
-        transitionsBuilder: TransitionsBuilders.slideBottom,
-        durationInMilliseconds: 500,
-        reverseDurationInMilliseconds: 500,
-        opaque: true,
-        barrierDismissible: false,
       );
     },
     DashboardWrapperRoute.name: (routeData) {
@@ -220,10 +226,38 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    SystemSettingsRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const SystemSettingsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     UsersRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: const UsersView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    AlertsRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const AlertsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    UsersDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<UsersDetailRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: UsersDetailView(
+          key: args.key,
+          member: args.member,
+        ),
         opaque: true,
         barrierDismissible: false,
       );
@@ -234,15 +268,16 @@ class _$AppRouter extends RootStackRouter {
   List<RouteConfig> get routes => [
         RouteConfig(
           OnBoardRoute.name,
-          path: '/',
+          path: '/on-board-view',
         ),
         RouteConfig(
-          LoginRoute.name,
-          path: '/login',
+          EmptyRoute.name,
+          path: '/',
         ),
         RouteConfig(
           RootRoute.name,
           path: '/root',
+          guards: [loginGuard],
           children: [
             RouteConfig(
               DashboardWrapperRoute.name,
@@ -353,8 +388,23 @@ class _$AppRouter extends RootStackRouter {
                   parent: SettingsWrapperRoute.name,
                 ),
                 RouteConfig(
+                  SystemSettingsRoute.name,
+                  path: 'system-settings-view',
+                  parent: SettingsWrapperRoute.name,
+                ),
+                RouteConfig(
                   UsersRoute.name,
                   path: 'users-view',
+                  parent: SettingsWrapperRoute.name,
+                ),
+                RouteConfig(
+                  AlertsRoute.name,
+                  path: 'alerts-view',
+                  parent: SettingsWrapperRoute.name,
+                ),
+                RouteConfig(
+                  UsersDetailRoute.name,
+                  path: 'users-detail-view',
                   parent: SettingsWrapperRoute.name,
                 ),
               ],
@@ -362,8 +412,12 @@ class _$AppRouter extends RootStackRouter {
           ],
         ),
         RouteConfig(
+          LoginRoute.name,
+          path: '/login-view',
+        ),
+        RouteConfig(
           SignUpRoute.name,
-          path: '/sign-up',
+          path: '/sign-up-view',
         ),
       ];
 }
@@ -374,22 +428,22 @@ class OnBoardRoute extends PageRouteInfo<void> {
   const OnBoardRoute()
       : super(
           OnBoardRoute.name,
-          path: '/',
+          path: '/on-board-view',
         );
 
   static const String name = 'OnBoardRoute';
 }
 
 /// generated route for
-/// [LoginView]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute()
+/// [EmptyView]
+class EmptyRoute extends PageRouteInfo<void> {
+  const EmptyRoute()
       : super(
-          LoginRoute.name,
-          path: '/login',
+          EmptyRoute.name,
+          path: '/',
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'EmptyRoute';
 }
 
 /// generated route for
@@ -406,12 +460,24 @@ class RootRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LoginView]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute()
+      : super(
+          LoginRoute.name,
+          path: '/login-view',
+        );
+
+  static const String name = 'LoginRoute';
+}
+
+/// generated route for
 /// [SignUpView]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute()
       : super(
           SignUpRoute.name,
-          path: '/sign-up',
+          path: '/sign-up-view',
         );
 
   static const String name = 'SignUpRoute';
@@ -663,6 +729,18 @@ class RoleRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SystemSettingsView]
+class SystemSettingsRoute extends PageRouteInfo<void> {
+  const SystemSettingsRoute()
+      : super(
+          SystemSettingsRoute.name,
+          path: 'system-settings-view',
+        );
+
+  static const String name = 'SystemSettingsRoute';
+}
+
+/// generated route for
 /// [UsersView]
 class UsersRoute extends PageRouteInfo<void> {
   const UsersRoute()
@@ -672,4 +750,50 @@ class UsersRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'UsersRoute';
+}
+
+/// generated route for
+/// [AlertsView]
+class AlertsRoute extends PageRouteInfo<void> {
+  const AlertsRoute()
+      : super(
+          AlertsRoute.name,
+          path: 'alerts-view',
+        );
+
+  static const String name = 'AlertsRoute';
+}
+
+/// generated route for
+/// [UsersDetailView]
+class UsersDetailRoute extends PageRouteInfo<UsersDetailRouteArgs> {
+  UsersDetailRoute({
+    Key? key,
+    required Member member,
+  }) : super(
+          UsersDetailRoute.name,
+          path: 'users-detail-view',
+          args: UsersDetailRouteArgs(
+            key: key,
+            member: member,
+          ),
+        );
+
+  static const String name = 'UsersDetailRoute';
+}
+
+class UsersDetailRouteArgs {
+  const UsersDetailRouteArgs({
+    this.key,
+    required this.member,
+  });
+
+  final Key? key;
+
+  final Member member;
+
+  @override
+  String toString() {
+    return 'UsersDetailRouteArgs{key: $key, member: $member}';
+  }
 }

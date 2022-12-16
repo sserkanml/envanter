@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline5.dart';
@@ -12,6 +13,9 @@ List<Widget> getChildrenTabs(BuildContext context) => <Widget>[
             height: 20,
           ),
           Bodymedium(data: 'data'),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
       Column(
@@ -21,7 +25,10 @@ List<Widget> getChildrenTabs(BuildContext context) => <Widget>[
           SizedBox(
             height: 20,
           ),
-          Bodymedium(data: 'data')
+          Bodymedium(data: 'data'),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
       Column(
@@ -31,7 +38,10 @@ List<Widget> getChildrenTabs(BuildContext context) => <Widget>[
           SizedBox(
             height: 20,
           ),
-          Bodymedium(data: 'data')
+          Bodymedium(data: 'data'),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
       Column(
@@ -41,7 +51,10 @@ List<Widget> getChildrenTabs(BuildContext context) => <Widget>[
           SizedBox(
             height: 20,
           ),
-          Bodymedium(data: 'data')
+          Bodymedium(data: 'data'),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     ];

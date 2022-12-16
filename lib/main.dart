@@ -1,5 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/theme/dark_theme.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'core/service/dependecy_service.dart';
@@ -15,6 +17,7 @@ void main() async {
   ));
 }
 
+
 class MyApp extends StatelessWidget {
   final AdaptiveThemeMode? mode;
   const MyApp({super.key, this.mode});
@@ -23,7 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdaptiveTheme(
       light: getIt.get<LightTheme>().lightTheme,
-      initial: mode ?? AdaptiveThemeMode.light,
+      initial: mode ?? AdaptiveThemeMode.dark,
+      dark: getIt.get<DarkTheme>().darkTheme,
       builder: (light, dark) {
         return MaterialApp.router(
           theme: light,

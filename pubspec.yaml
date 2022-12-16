@@ -56,6 +56,9 @@ dependencies:
   nine_grid_view: ^2.0.0
   flutter_staggered_animations: ^1.1.1
 
+  belatuk_json_serializer: ^6.0.1
+  
+
  
 
 dev_dependencies:

@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  belatuk_json_serializer:
+    dependency: "direct main"
+    description:
+      name: belatuk_json_serializer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.1"
   boolean_selector:
     dependency: transitive
     description:

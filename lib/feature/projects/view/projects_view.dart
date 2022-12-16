@@ -1,8 +1,13 @@
+import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/core/widgets/bodysmall.dart';
+import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/components/card/gf_card.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:kartal/kartal.dart';
 
 import '../../../core/util/extension.dart';
 import '../../../core/widgets/bodymedium.dart';
@@ -28,7 +33,9 @@ class ProjectsView extends StatelessWidget {
               children: <Widget>[
                 const Bodymedium(data: 'Tüm Projeler'),
                 GFButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.router.push(const CreateProjectsRoute());
+                  },
                   child: Row(
                     children: const [
                       Icon(
@@ -76,8 +83,30 @@ class ProjectsView extends StatelessWidget {
                       child: ScaleAnimation(
                           child: FadeInAnimation(
                               child: GFCard(
-                        image: Image.asset(context.getPath(
-                            folder: 'images', file: 'arduino.jpg')),
+                        padding: EdgeInsets.zero,
+                        titlePosition: GFPosition.start,
+                        boxFit: BoxFit.cover,
+                        image: Image.asset(
+                          context.getPath(
+                              folder: 'images', file: 'arduino.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        title: GFListTile(
+                            padding: EdgeInsets.zero,
+                            title: const Bodysmall(
+                              data: 'Kullanıcı Adı',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            subTitle: Bodysmall(
+                              data: 'Atanan Kullanıcı',
+                              color:
+                                  context.colorScheme.onSurface.withOpacity(.5),
+                            ),
+                            avatar: GFAvatar(
+                                radius: 12,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: AssetImage(context.getPath(
+                                    folder: 'images', file: 'user.png')))),
                         margin: const EdgeInsets.all(5),
                       ))));
                 },
