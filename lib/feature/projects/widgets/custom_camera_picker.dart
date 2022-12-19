@@ -6,5 +6,5 @@ class CustomCameraPickerDelegate extends CameraPickerTextDelegate {
   String get confirm => 'Onayla';
   @override
   // TODO: implement shootingTips
-  String get shootingTips => 'Fotorağ Çek';
+  String get shootingTips => 'Fotoğraf Çek';
 }

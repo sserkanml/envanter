@@ -25,10 +25,35 @@ mixin _$ProjectsMobx on _ProjectsMobxBase, Store {
     });
   }
 
+  late final _$resultAtom =
+      Atom(name: '_ProjectsMobxBase.result', context: context);
+
+  @override
+  String get result {
+    _$resultAtom.reportRead();
+    return super.result;
+  }
+
+  @override
+  set result(String value) {
+    _$resultAtom.reportWrite(value, super.result, () {
+      super.result = value;
+    });
+  }
+
+  late final _$getAllProjectsAsyncAction =
+      AsyncAction('_ProjectsMobxBase.getAllProjects', context: context);
+
+  @override
+  Future<void> getAllProjects() {
+    return _$getAllProjectsAsyncAction.run(() => super.getAllProjects());
+  }
+
   @override
   String toString() {
     return '''
-projects: ${projects}
+projects: ${projects},
+result: ${result}
     ''';
   }
 }

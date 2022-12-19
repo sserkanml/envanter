@@ -3,7 +3,7 @@ import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:aden_envanterus/core/theme/dark_theme.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/service/dependecy_service.dart';
 import 'core/theme/ligt_theme.dart';
 
@@ -16,7 +16,6 @@ void main() async {
     mode: savedThemeMode,
   ));
 }
-
 
 class MyApp extends StatelessWidget {
   final AdaptiveThemeMode? mode;
@@ -31,6 +30,8 @@ class MyApp extends StatelessWidget {
       builder: (light, dark) {
         return MaterialApp.router(
           theme: light,
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          supportedLocales: const [Locale('tr','')],
           routeInformationParser: getIt.get<AppRouter>().defaultRouteParser(),
           routerDelegate: getIt.get<AppRouter>().delegate(),
           darkTheme: dark,

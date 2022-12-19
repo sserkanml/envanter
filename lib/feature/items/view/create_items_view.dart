@@ -1,3 +1,4 @@
+import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:flutter/material.dart';
 
 class CreateItemsView extends StatelessWidget {
@@ -5,6 +6,16 @@ class CreateItemsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Headline6(data: 'Malzeme Oluştur'),
+      ),
+      body: SafeArea(child:
+      SingleChildScrollView(child: Column(
+        children: [
+          
+        ],
+      ),)),
+    );
   }
 }

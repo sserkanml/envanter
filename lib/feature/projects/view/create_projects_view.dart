@@ -238,7 +238,7 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                                                   if (CameraManagmentService
                                                           .selectedEntities
                                                           .length ==
-                                                      4) {
+                                                      1) {
                                                     if (CameraManagmentService
                                                         .selectedEntitiesCopy[
                                                             index]

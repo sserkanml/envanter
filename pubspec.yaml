@@ -45,7 +45,8 @@ dependencies:
   wechat_camera_picker: ^3.6.5
   kartal: ^2.7.0
   get_it: ^7.2.0
-  
+  flutter_localizations:
+    sdk: flutter   
   getwidget: ^3.0.1
   auto_size_text: ^3.0.0
   photo_manager: ^2.5.1+1
@@ -53,10 +54,14 @@ dependencies:
   auto_route: ^5.0.4
   cupertino_onboarding: ^1.1.1
   tab_container: ^2.0.0
-  nine_grid_view: ^2.0.0
+
   flutter_staggered_animations: ^1.1.1
 
-  belatuk_json_serializer: ^6.0.1
+  
+ 
+  cached_network_image: ^3.2.3
+  js: ^0.6.4
+  calendar_date_picker2: ^0.3.5
   
 
  

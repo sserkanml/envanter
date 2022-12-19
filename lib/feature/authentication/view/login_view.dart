@@ -7,6 +7,11 @@ import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/custom_text_field.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
+import 'package:aden_envanterus/models/check_detail_service.dart';
+import 'package:aden_envanterus/models/checks_service.dart';
+
+import 'package:aden_envanterus/models/customer_service.dart';
+import 'package:aden_envanterus/models/items_model.dart';
 import 'package:aden_envanterus/models/member_service.dart';
 import 'package:aden_envanterus/models/projects_service.dart';
 import 'package:aden_envanterus/models/user_session.dart';
@@ -15,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../../models/items_service.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -127,12 +134,13 @@ class _LoginViewState extends State<LoginView> {
                             pasword: getIt.get<AuthenticateUser>().password);
 
                     if (isLogin == 'true') {
-                      getIt.get<Shared>().pref.setBool('isLogin', true);
-                      getIt.get<Shared>().pref.setString(
-                          'sessionID', getIt.get<UserSession>().sessionId);
                       isError = false;
                       await getIt.get<ProjectsMobx>().getAllProjects();
                       await getIt.get<MemberMobx>().getAllMembers();
+                       await getIt.get<ItemsMobx>().getAllItems();
+                        await getIt.get<CheckDetailMobx>().getAllChekcDetail();
+                        await getIt.get<CheckMobx>().getAllChecks();
+                      await getIt.get<CustomerMobx>().getAllCustomers();
                       context.router.push(const RootRoute());
                     } else {
                       isLoading = false;

@@ -5,11 +5,16 @@ import 'package:aden_envanterus/feature/checking/view/checks_wrapper_view.dart';
 import 'package:aden_envanterus/feature/checking/view/confirmed_view.dart';
 import 'package:aden_envanterus/feature/checking/view/create_checks_view.dart';
 import 'package:aden_envanterus/feature/checking/view/pending_checking_view.dart';
+import 'package:aden_envanterus/feature/customers/view/customer_detail_view.dart';
 import 'package:aden_envanterus/feature/customers/view/customers_view.dart';
 import 'package:aden_envanterus/feature/customers/view/customers_wrapper_view.dart';
 import 'package:aden_envanterus/feature/customers/view/detect_location_view.dart';
 import 'package:aden_envanterus/feature/dashboard/view/dashboard_view.dart';
 import 'package:aden_envanterus/feature/dashboard/view/dashboard_wrapper_view.dart';
+import 'package:aden_envanterus/feature/items/view/create_items_view.dart';
+import 'package:aden_envanterus/feature/checking/view/checks_detail_view..dart';
+import 'package:aden_envanterus/feature/items/view/items_detail_view.dart';
+import 'package:aden_envanterus/feature/items/view/items_view.dart';
 import 'package:aden_envanterus/feature/projects/view/create_projects_view.dart';
 import 'package:aden_envanterus/feature/projects/view/projects_detail_view.dart';
 import 'package:aden_envanterus/feature/projects/view/projects_view.dart';
@@ -67,6 +72,9 @@ const rootAutoRoute = CustomRoute(
       ),
       CustomRoute(page: CustomersWrapperView, children: [
         CustomRoute(page: CustomersView, path: ''),
+        CustomRoute(
+          page: CustomerDetailView,
+        ),
         CustomRoute(page: CreateCustomersView, path: 'create-customers'),
         CustomRoute(page: DetectLocationView, path: 'detect-location'),
       ]),
@@ -74,7 +82,19 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: ChecksView, path: ''),
         CustomRoute(page: ConfirmedView, path: 'confirmed'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
-        CustomRoute(page: PendingCheckingView, path: 'pending')
+        CustomRoute(page: PendingCheckingView, path: 'pending'),
+        CustomRoute(
+          page: ItemsView,
+        ),
+        CustomRoute(
+          page: CreateItemsView,
+        ),
+         CustomRoute(
+          page: ItemsDetailView,
+        ),
+        CustomRoute(
+          page: CheckDetailView,
+        ),
       ]),
       CustomRoute(page: SettingsWrapperView, children: [
         CustomRoute(page: SettingsView, path: ''),

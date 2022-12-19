@@ -1,6 +1,12 @@
 import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
+import 'package:aden_envanterus/models/check_detail_service.dart';
+import 'package:aden_envanterus/models/checks_service.dart';
+
+import 'package:aden_envanterus/models/customer_service.dart';
+import 'package:aden_envanterus/models/items_model.dart';
+import 'package:aden_envanterus/models/items_service.dart';
 import 'package:aden_envanterus/models/member_service.dart';
 import 'package:aden_envanterus/models/projects_service.dart';
 import 'package:aden_envanterus/models/user_session.dart';
@@ -25,7 +31,11 @@ class DependecyService {
     getIt.registerLazySingleton<ConstantSvgPath>(() => ConstantSvgPath());
     getIt.registerSingleton<Shared>(Shared());
     getIt.registerSingleton<MemberMobx>(MemberMobx());
+     getIt.registerSingleton<CustomerMobx>(CustomerMobx());
+      getIt.registerSingleton<CheckMobx>(CheckMobx());
     getIt.registerSingleton<ProjectsMobx>(ProjectsMobx());
+      getIt.registerSingleton<CheckDetailMobx>(CheckDetailMobx());
+    getIt.registerSingleton<ItemsMobx>(ItemsMobx());
     getIt.registerSingleton<UserSession>(UserSession());
     await getIt.get<Shared>().getRef();
   }

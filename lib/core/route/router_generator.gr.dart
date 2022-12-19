@@ -28,12 +28,6 @@ class _$AppRouter extends RootStackRouter {
         child: const OnBoardView(),
       );
     },
-    EmptyRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const EmptyView(),
-      );
-    },
     RootRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -131,9 +125,14 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProjectsDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ProjectsDetailRouteArgs>();
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const ProjectsDetailView(),
+        child: ProjectsDetailView(
+          key: args.key,
+          project: args.project,
+          projectsId: args.projectsId,
+        ),
         opaque: true,
         barrierDismissible: false,
       );
@@ -142,6 +141,18 @@ class _$AppRouter extends RootStackRouter {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: const CustomersView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    CustomerDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CustomerDetailRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: CustomerDetailView(
+          key: args.key,
+          customer: args.customer,
+        ),
         opaque: true,
         barrierDismissible: false,
       );
@@ -190,6 +201,50 @@ class _$AppRouter extends RootStackRouter {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: const PendingCheckingView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    ItemsRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const ItemsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    CreateItemsRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const CreateItemsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    ItemsDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ItemsDetailRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: ItemsDetailView(
+          key: args.key,
+          item: args.item,
+          customer: args.customer,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    CheckDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CheckDetailRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: CheckDetailView(
+          key: args.key,
+          customer: args.customer,
+          item: args.item,
+          checkDetail: args.checkDetail,
+          check: args.check,
+        ),
         opaque: true,
         barrierDismissible: false,
       );
@@ -268,10 +323,6 @@ class _$AppRouter extends RootStackRouter {
   List<RouteConfig> get routes => [
         RouteConfig(
           OnBoardRoute.name,
-          path: '/on-board-view',
-        ),
-        RouteConfig(
-          EmptyRoute.name,
           path: '/',
         ),
         RouteConfig(
@@ -324,6 +375,11 @@ class _$AppRouter extends RootStackRouter {
                   parent: CustomersWrapperRoute.name,
                 ),
                 RouteConfig(
+                  CustomerDetailRoute.name,
+                  path: 'customer-detail-view',
+                  parent: CustomersWrapperRoute.name,
+                ),
+                RouteConfig(
                   CreateCustomersRoute.name,
                   path: 'create-customers',
                   parent: CustomersWrapperRoute.name,
@@ -358,6 +414,26 @@ class _$AppRouter extends RootStackRouter {
                 RouteConfig(
                   PendingCheckingRoute.name,
                   path: 'pending',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  ItemsRoute.name,
+                  path: 'items-view',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  CreateItemsRoute.name,
+                  path: 'create-items-view',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  ItemsDetailRoute.name,
+                  path: 'items-detail-view',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  CheckDetailRoute.name,
+                  path: 'check-detail-view',
                   parent: ChecksWrapperRoute.name,
                 ),
               ],
@@ -428,22 +504,10 @@ class OnBoardRoute extends PageRouteInfo<void> {
   const OnBoardRoute()
       : super(
           OnBoardRoute.name,
-          path: '/on-board-view',
-        );
-
-  static const String name = 'OnBoardRoute';
-}
-
-/// generated route for
-/// [EmptyView]
-class EmptyRoute extends PageRouteInfo<void> {
-  const EmptyRoute()
-      : super(
-          EmptyRoute.name,
           path: '/',
         );
 
-  static const String name = 'EmptyRoute';
+  static const String name = 'OnBoardRoute';
 }
 
 /// generated route for
@@ -586,14 +650,41 @@ class CreateProjectsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProjectsDetailView]
-class ProjectsDetailRoute extends PageRouteInfo<void> {
-  const ProjectsDetailRoute()
-      : super(
+class ProjectsDetailRoute extends PageRouteInfo<ProjectsDetailRouteArgs> {
+  ProjectsDetailRoute({
+    Key? key,
+    required ProjectsModel project,
+    required CustomerModel? projectsId,
+  }) : super(
           ProjectsDetailRoute.name,
           path: 'project-detail',
+          args: ProjectsDetailRouteArgs(
+            key: key,
+            project: project,
+            projectsId: projectsId,
+          ),
         );
 
   static const String name = 'ProjectsDetailRoute';
+}
+
+class ProjectsDetailRouteArgs {
+  const ProjectsDetailRouteArgs({
+    this.key,
+    required this.project,
+    required this.projectsId,
+  });
+
+  final Key? key;
+
+  final ProjectsModel project;
+
+  final CustomerModel? projectsId;
+
+  @override
+  String toString() {
+    return 'ProjectsDetailRouteArgs{key: $key, project: $project, projectsId: $projectsId}';
+  }
 }
 
 /// generated route for
@@ -606,6 +697,40 @@ class CustomersRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CustomersRoute';
+}
+
+/// generated route for
+/// [CustomerDetailView]
+class CustomerDetailRoute extends PageRouteInfo<CustomerDetailRouteArgs> {
+  CustomerDetailRoute({
+    Key? key,
+    required CustomerModel customer,
+  }) : super(
+          CustomerDetailRoute.name,
+          path: 'customer-detail-view',
+          args: CustomerDetailRouteArgs(
+            key: key,
+            customer: customer,
+          ),
+        );
+
+  static const String name = 'CustomerDetailRoute';
+}
+
+class CustomerDetailRouteArgs {
+  const CustomerDetailRouteArgs({
+    this.key,
+    required this.customer,
+  });
+
+  final Key? key;
+
+  final CustomerModel customer;
+
+  @override
+  String toString() {
+    return 'CustomerDetailRouteArgs{key: $key, customer: $customer}';
+  }
 }
 
 /// generated route for
@@ -678,6 +803,118 @@ class PendingCheckingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'PendingCheckingRoute';
+}
+
+/// generated route for
+/// [ItemsView]
+class ItemsRoute extends PageRouteInfo<void> {
+  const ItemsRoute()
+      : super(
+          ItemsRoute.name,
+          path: 'items-view',
+        );
+
+  static const String name = 'ItemsRoute';
+}
+
+/// generated route for
+/// [CreateItemsView]
+class CreateItemsRoute extends PageRouteInfo<void> {
+  const CreateItemsRoute()
+      : super(
+          CreateItemsRoute.name,
+          path: 'create-items-view',
+        );
+
+  static const String name = 'CreateItemsRoute';
+}
+
+/// generated route for
+/// [ItemsDetailView]
+class ItemsDetailRoute extends PageRouteInfo<ItemsDetailRouteArgs> {
+  ItemsDetailRoute({
+    Key? key,
+    required ItemsModel item,
+    required CustomerModel customer,
+  }) : super(
+          ItemsDetailRoute.name,
+          path: 'items-detail-view',
+          args: ItemsDetailRouteArgs(
+            key: key,
+            item: item,
+            customer: customer,
+          ),
+        );
+
+  static const String name = 'ItemsDetailRoute';
+}
+
+class ItemsDetailRouteArgs {
+  const ItemsDetailRouteArgs({
+    this.key,
+    required this.item,
+    required this.customer,
+  });
+
+  final Key? key;
+
+  final ItemsModel item;
+
+  final CustomerModel customer;
+
+  @override
+  String toString() {
+    return 'ItemsDetailRouteArgs{key: $key, item: $item, customer: $customer}';
+  }
+}
+
+/// generated route for
+/// [CheckDetailView]
+class CheckDetailRoute extends PageRouteInfo<CheckDetailRouteArgs> {
+  CheckDetailRoute({
+    Key? key,
+    required CustomerModel customer,
+    required ItemsModel item,
+    required CheckDetailModel checkDetail,
+    required CheckModel check,
+  }) : super(
+          CheckDetailRoute.name,
+          path: 'check-detail-view',
+          args: CheckDetailRouteArgs(
+            key: key,
+            customer: customer,
+            item: item,
+            checkDetail: checkDetail,
+            check: check,
+          ),
+        );
+
+  static const String name = 'CheckDetailRoute';
+}
+
+class CheckDetailRouteArgs {
+  const CheckDetailRouteArgs({
+    this.key,
+    required this.customer,
+    required this.item,
+    required this.checkDetail,
+    required this.check,
+  });
+
+  final Key? key;
+
+  final CustomerModel customer;
+
+  final ItemsModel item;
+
+  final CheckDetailModel checkDetail;
+
+  final CheckModel check;
+
+  @override
+  String toString() {
+    return 'CheckDetailRouteArgs{key: $key, customer: $customer, item: $item, checkDetail: $checkDetail, check: $check}';
+  }
 }
 
 /// generated route for

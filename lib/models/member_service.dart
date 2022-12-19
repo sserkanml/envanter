@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:aden_envanterus/core/service/dependecy_service.dart';
 import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:aden_envanterus/models/member.dart';
+import 'package:aden_envanterus/models/user_session.dart';
 
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ abstract class _MemberMobxBase with Store {
     var url = Uri.http('envanter.sgktesvikrehberi.com', 'Api/GetUyeler');
 
     final response = await http.get(url, headers: {
-      'cookie': getIt.get<Shared>().pref.getString('sessionID') ?? ''
+      'cookie': getIt.get<UserSession>().sessionId
     });
     late final result;
     if (response.statusCode >= 200 && response.statusCode <= 299) {

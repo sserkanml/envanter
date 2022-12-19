@@ -1,14 +1,26 @@
 import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
 import 'package:aden_envanterus/core/widgets/bodysmall.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
+import 'package:aden_envanterus/models/check_detail_service.dart';
+import 'package:aden_envanterus/models/checks_service.dart';
+import 'package:aden_envanterus/models/customer_service.dart';
+import 'package:aden_envanterus/models/items_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 
-class ChecksView extends StatelessWidget {
+import '../../../core/widgets/bodymedium.dart';
+
+class ChecksView extends StatefulWidget {
   const ChecksView({Key? key}) : super(key: key);
 
+  @override
+  State<ChecksView> createState() => _ChecksViewState();
+}
+
+class _ChecksViewState extends State<ChecksView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +40,17 @@ class ChecksView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: [
                   GFButton(
+                    color: GFColors.SUCCESS,
+                    onPressed: () {
+                      context.router.push(const ItemsRoute());
+                    },
+                    child: const Bodysmall(
+                      data: 'Malzemeler',
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  GFButton(
                     onPressed: () {
                       context.router.push(const CreateChecksRoute());
                     },
@@ -36,7 +59,7 @@ class ChecksView extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(width:20),
+                  const SizedBox(width: 20),
                   GFButton(
                     color: GFColors.DANGER,
                     onPressed: () {
@@ -47,7 +70,7 @@ class ChecksView extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(width:20),
+                  const SizedBox(width: 20),
                   GFButton(
                     color: GFColors.WARNING,
                     onPressed: () {
@@ -74,6 +97,94 @@ class ChecksView extends StatelessWidget {
                     horizontal: 8.0,
                   )),
             ),
+            const SizedBox(height: 10),
+            ListView.separated(
+                shrinkWrap: true,
+                primary: false,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {},
+                    trailing: GFButton(
+                      onPressed: () {
+                        context.router.push(CheckDetailRoute(
+                            check: getIt
+                                .get<CheckMobx>()
+                                .checks
+                                .where((element) =>
+                                    element.malzeme ==
+                                    getIt
+                                        .get<CheckDetailMobx>()
+                                        .checksDetail[index]
+                                        .malzeme)
+                                .first,
+                            customer: getIt
+                                .get<CustomerMobx>()
+                                .customers
+                                .where((element) =>
+                                    element.oid ==
+                                    getIt
+                                        .get<CheckDetailMobx>()
+                                        .checksDetail[index]
+                                        .musteriID)
+                                .first,
+                            item: getIt
+                                .get<ItemsMobx>()
+                                .items
+                                .where((element) =>
+                                    element.oid ==
+                                    getIt
+                                        .get<CheckDetailMobx>()
+                                        .checksDetail[index]
+                                        .malzeme)
+                                .first,
+                            checkDetail: getIt
+                                .get<CheckDetailMobx>()
+                                .checksDetail
+                                .where((element) =>
+                                    element.malzeme ==
+                                    getIt
+                                        .get<CheckMobx>()
+                                        .checks[index]
+                                        .malzeme)
+                                .first));
+                      },
+                      color: GFColors.WARNING,
+                      child: const Bodysmall(
+                        data: 'Detay',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    title: Row(
+                      children: [
+                        Bodymedium(
+                            fontWeight: FontWeight.bold,
+                            data: getIt
+                                    .get<CustomerMobx>()
+                                    .customers
+                                    .firstWhereOrNull((element) =>
+                                        element.oid ==
+                                        getIt
+                                            .get<CheckDetailMobx>()
+                                            .checksDetail[index]
+                                            .musteriID)
+                                    ?.musteriFirmaAdi ??
+                                ''),
+                        const SizedBox(width: 5),
+                        Bodysmall(
+                            data:
+                                '(${getIt.get<ItemsMobx>().items.firstWhereOrNull((element) => element.oid == getIt.get<CheckDetailMobx>().checksDetail[index].malzeme)?.adi})')
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    height: 0,
+                    color: context.colorScheme.onSurface.withOpacity(.3),
+                  );
+                },
+                itemCount: getIt.get<CheckMobx>().checks.length)
           ],
         ),
       )),

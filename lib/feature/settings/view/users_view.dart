@@ -9,9 +9,42 @@ import 'package:kartal/kartal.dart';
 
 import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
+import '../../../models/member.dart';
 
-class UsersView extends StatelessWidget {
+class UsersView extends StatefulWidget {
   const UsersView({Key? key}) : super(key: key);
+
+  @override
+  State<UsersView> createState() => _UsersViewState();
+}
+
+class _UsersViewState extends State<UsersView> {
+  late TextEditingController searchField;
+  late List<Member> customerSearch;
+
+  @override
+  void initState() {
+    searchField = TextEditingController();
+    customerSearch = [...getIt.get<MemberMobx>().members];
+    super.initState();
+  }
+
+  void filterResult(String query) {
+    List<Member> results = [];
+    if (query.isEmpty) {
+      results = [...getIt.get<MemberMobx>().members];
+    } else {
+      results = getIt
+          .get<MemberMobx>()
+          .members
+          .where((element) =>
+              element.kullaniciAdi!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      customerSearch = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +58,12 @@ class UsersView extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              onChanged: (value) {
+                filterResult(value);
+              },
+              controller: searchField,
+              decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   hintText: 'Arama Yap',
                   border: OutlineInputBorder(),
@@ -49,8 +86,8 @@ class UsersView extends StatelessWidget {
                     trailing: GFButton(
                       color: GFColors.SUCCESS,
                       onPressed: () {
-                        context.router.push(UsersDetailRoute(
-                            member: getIt.get<MemberMobx>().members[index]));
+                        context.router.push(
+                            UsersDetailRoute(member: customerSearch[index]));
                       },
                       child: const Bodysmall(
                         data: 'Detay',
@@ -58,11 +95,7 @@ class UsersView extends StatelessWidget {
                       ),
                     ),
                     title: Bodymedium(
-                        data: getIt
-                                .get<MemberMobx>()
-                                .members[index]
-                                .kullaniciAdi ??
-                            ''),
+                        data: customerSearch[index].kullaniciAdi ?? ''),
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -71,7 +104,7 @@ class UsersView extends StatelessWidget {
                     color: context.colorScheme.onSurface.withOpacity(.3),
                   );
                 },
-                itemCount: getIt.get<MemberMobx>().members.length)
+                itemCount: customerSearch.length)
           ],
         ),
       )),
