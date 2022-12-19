@@ -14,6 +14,33 @@ abstract class _CustomerMobxBase with Store {
   List<CustomerModel> customers = [];
 
   @action
+  Future<void> customerPostData(
+      {required String customerCompanyName,
+      required String authorityName,
+      required String customerEmail,
+      required String customerPhone,
+      required String taxPlace,
+      required String taxNo,
+      required String adress,
+     }) async {
+    var url = Uri.http('envanter.sgktesvikrehberi.com', 'Api/NewMusteri');
+    final response = await http.post(url, body: {
+      'musteri_firma_adi': customerCompanyName,
+      'musteri_yetkili': authorityName,
+      'musteri_email': customerEmail,
+      'musteri_telefon': customerPhone,
+      'musteri_vergi_daire': taxPlace,
+      'musteri_vergi_no': taxNo,
+      'musteri_adres': adress
+    }, headers: {
+      'cookie': getIt.get<UserSession>().sessionId
+    });
+    if (response.statusCode >= 200 && response.statusCode <= 299) {
+      print(response.body);
+    } else {}
+  }
+
+  @action
   Future<void> getAllCustomers() async {
     final url = Uri.http('envanter.sgktesvikrehberi.com', 'Api/GetMusteriler');
     final response = await http

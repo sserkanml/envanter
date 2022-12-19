@@ -1,9 +1,13 @@
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
 import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
+import 'package:aden_envanterus/feature/settings/view_model/form_validate_member.dart';
+import 'package:aden_envanterus/models/member_service.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:kartal/kartal.dart';
+import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../../core/widgets/bodysmall.dart';
 
@@ -16,6 +20,11 @@ class CreateUserView extends StatefulWidget {
 
 class _CreateUserViewState extends State<CreateUserView> {
   String dropdownValue = 'Yetki Seçiniz';
+  String errorMessage = '';
+  String password = '';
+  String userName = '';
+  String nickName = '';
+  int authority = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +35,7 @@ class _CreateUserViewState extends State<CreateUserView> {
           child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: MemberForm.memberFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -37,6 +47,10 @@ class _CreateUserViewState extends State<CreateUserView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  userName = newValue!;
+                },
+                validator: Validators.required('Bu alan boş geçilemez'),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -50,6 +64,10 @@ class _CreateUserViewState extends State<CreateUserView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  nickName = newValue!;
+                },
+                validator: Validators.required('Bu alan boş geçilemez'),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -63,6 +81,10 @@ class _CreateUserViewState extends State<CreateUserView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  password = newValue!;
+                },
+                validator: Validators.required('Bu alan boş geçilemez'),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -103,12 +125,39 @@ class _CreateUserViewState extends State<CreateUserView> {
                   ),
                 ),
               ),
+              Visibility(
+                  visible: errorMessage != '',
+                  child: Bodymedium(
+                    data: errorMessage,
+                  )),
               const SizedBox(height: 30),
               SizedBox(
                 height: 50,
                 child: GFButton(
                   fullWidthButton: true,
-                  onPressed: () {},
+                  onPressed: () async {
+                    // if (MemberForm.memberFormKey.currentState!.validate() &&
+                    //     dropdownValue != 'Yetki Seçiniz') {
+                    //   MemberForm.memberFormKey.currentState!.save();
+                    //   authority = dropdownValue == 'Kullanıcı' ? 0 : 1;
+                    //   await getIt.get<MemberMobx>().postData(
+                    //       nameSurname: userName,
+                    //       password: password,
+                    //       nicknName: nickName,
+                    //       authority: authority);
+                    //   setState(() {
+                    //     errorMessage = '';
+                    //   });
+                    // } else if (dropdownValue == 'Yetki Seçiniz') {
+                    //   setState(() {
+                    //     errorMessage = 'Bu alan boş geçilemez';
+                    //   });
+                    // } else {
+                    //   setState(() {
+                    //     errorMessage = 'Bu alan boş geçilemez';
+                    //   });
+                    // }
+                  },
                   child: const Bodymedium(
                     data: 'Kaydet',
                     color: Colors.white,
