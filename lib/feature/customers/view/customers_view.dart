@@ -36,15 +36,16 @@ class _CustomersViewState extends State<CustomersView> {
     if (query.isEmpty) {
       results = [...getIt.get<CustomerMobx>().customers];
     } else {
-      results = getIt.get<CustomerMobx>().customers
+      results = getIt
+          .get<CustomerMobx>()
+          .customers
           .where((element) => element.musteriFirmaAdi!
               .toLowerCase()
               .contains(query.toLowerCase()))
           .toList();
     }
     setState(() {
-      
-      customerSearch =results;
+      customerSearch = results;
     });
   }
 
@@ -87,8 +88,11 @@ class _CustomersViewState extends State<CustomersView> {
                 const SizedBox(width: 10),
                 GFIconButton(
                   icon: const Icon(FontAwesomeIcons.pencil),
-                  onPressed: () {
-                    context.router.push(const CreateCustomersRoute());
+                  onPressed: () async {
+                    await context.router.push(const CreateCustomersRoute());
+                    setState(() {
+                      customerSearch = getIt.get<CustomerMobx>().customers;
+                    });
                   },
                 )
               ],

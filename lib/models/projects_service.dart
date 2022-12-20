@@ -16,6 +16,46 @@ abstract class _ProjectsMobxBase with Store {
   @observable
   String result = '';
 
+  @observable
+  String infoMessage = '';
+
+  @observable
+  void refreshState() {
+    projects = projects;
+  }
+
+  @action
+  Future<void> postProject(
+      {required String projectName,
+      required String note,
+      required String tag,
+      required String projectUserId}) async {
+    var url = Uri.http(
+      'envanter.sgktesvikrehberi.com',
+      'Api/NewProje',
+    );
+    final response = await http.post(url, body: {
+      'Proje_Adi': projectName,
+      'Etiket': tag,
+      'Proje_Not': note,
+      'FirmaKullaniciID': projectUserId
+    }, headers: {
+      'cookie': getIt.get<UserSession>().sessionId
+    });
+    if (response.statusCode >= 200 && response.statusCode <= 299) {
+      infoMessage = response.body;
+      projects.add(ProjectsModel(
+        firmaKullaniciID: projectUserId,
+        projeAdi: projectName,
+        etiket: [tag],
+        projeNot: note,
+      ));
+      refreshState();
+    } else {
+      infoMessage = '';
+    }
+  }
+
   @action
   Future<void> getAllProjects() async {
     var url = Uri.http(

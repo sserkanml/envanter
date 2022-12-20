@@ -4,12 +4,17 @@ import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/bodysmall.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:aden_envanterus/feature/projects/view_model/camera_managment.dart';
+import 'package:aden_envanterus/feature/projects/view_model/project_form.dart';
 import 'package:aden_envanterus/feature/projects/widgets/custom_camera_picker.dart';
 import 'package:aden_envanterus/models/member_service.dart';
+import 'package:aden_envanterus/models/projects_service.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:wc_form_validators/wc_form_validators.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class CreateProjectsView extends StatefulWidget {
@@ -21,6 +26,10 @@ class CreateProjectsView extends StatefulWidget {
 
 class _CreateProjectsViewState extends State<CreateProjectsView> {
   late String dropdownValue;
+  String projectName = '';
+  String tag = '';
+  String note = '';
+  String projectUserId = '';
   String selectedText = 'Seçilen Resim';
   @override
   void initState() {
@@ -49,6 +58,7 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
           child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: ProjectForm.projectForm,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,6 +67,10 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  projectName = newValue!;
+                },
+                validator: Validators.required('Bu alan boş geçilemez'),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -86,6 +100,14 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                     onChanged: (dynamic newValue) {
                       setState(() {
                         dropdownValue = newValue!;
+                        projectUserId = getIt
+                                .get<MemberMobx>()
+                                .members
+                                .where((element) =>
+                                    element.kullaniciAdi == dropdownValue)
+                                .first
+                                .oid ??
+                            ' ';
                       });
                     },
                     items: [
@@ -115,6 +137,9 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  tag = newValue!;
+                },
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -130,6 +155,9 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                 height: 10,
               ),
               TextFormField(
+                onSaved: (newValue) {
+                  note = newValue!;
+                },
                 maxLines: 6,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -436,7 +464,31 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                     ),
                   ),
                   GFButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      if (ProjectForm.projectForm.currentState!.validate()) {
+                        ProjectForm.projectForm.currentState!.save();
+                        await getIt.get<ProjectsMobx>().postProject(
+                            projectName: projectName,
+                            note: note,
+                            tag: tag,
+                            projectUserId: projectUserId);
+                        MotionToast.success(
+                          onClose: () {
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              context.router.pop();
+                            });
+                          },
+                          description: const Bodymedium(
+                            data: 'Proje oluşturma işlemi başarıla tamamlandı',
+                          ),
+                          title: Bodymedium(
+                              fontWeight: FontWeight.bold,
+                              data: getIt.get<ProjectsMobx>().infoMessage),
+                        ).show(context);
+                      } else {}
+                    },
                     child: const Bodymedium(
                       data: 'Kaydet',
                       color: Colors.white,

@@ -13,12 +13,7 @@
 part of 'router_generator.dart';
 
 class _$AppRouter extends RootStackRouter {
-  _$AppRouter({
-    GlobalKey<NavigatorState>? navigatorKey,
-
-  }) : super(navigatorKey);
-
-  final LoginGuard loginGuard=LoginGuard();
+  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
 
   @override
   final Map<String, PageFactory> pagesMap = {
@@ -328,7 +323,6 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           RootRoute.name,
           path: '/root',
-          guards: [loginGuard],
           children: [
             RouteConfig(
               DashboardWrapperRoute.name,

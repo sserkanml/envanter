@@ -13,16 +13,24 @@ abstract class _CustomerMobxBase with Store {
   @observable
   List<CustomerModel> customers = [];
 
+  @observable
+  String infoMessage = '';
+
   @action
-  Future<void> customerPostData(
-      {required String customerCompanyName,
-      required String authorityName,
-      required String customerEmail,
-      required String customerPhone,
-      required String taxPlace,
-      required String taxNo,
-      required String adress,
-     }) async {
+  void refreshState() {
+    customers = customers;
+  }
+
+  @action
+  Future<void> customerPostData({
+    required String customerCompanyName,
+    required String authorityName,
+    required String customerEmail,
+    required String customerPhone,
+    required String taxPlace,
+    required String taxNo,
+    required String adress,
+  }) async {
     var url = Uri.http('envanter.sgktesvikrehberi.com', 'Api/NewMusteri');
     final response = await http.post(url, body: {
       'musteri_firma_adi': customerCompanyName,
@@ -36,7 +44,16 @@ abstract class _CustomerMobxBase with Store {
       'cookie': getIt.get<UserSession>().sessionId
     });
     if (response.statusCode >= 200 && response.statusCode <= 299) {
-      print(response.body);
+      infoMessage = response.body;
+      customers.add(CustomerModel(
+        musteriAdres: adress,
+        musteriFirmaAdi: customerCompanyName,
+        musteriVergiNo: taxNo,
+        musteriTelefon: customerPhone,
+        musteriYetkili: authorityName,
+        musteriVergiDaire: taxPlace,
+        musteriEmail: customerEmail,
+      ));
     } else {}
   }
 

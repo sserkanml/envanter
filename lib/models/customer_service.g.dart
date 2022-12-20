@@ -25,6 +25,44 @@ mixin _$CustomerMobx on _CustomerMobxBase, Store {
     });
   }
 
+  late final _$infoMessageAtom =
+      Atom(name: '_CustomerMobxBase.infoMessage', context: context);
+
+  @override
+  String get infoMessage {
+    _$infoMessageAtom.reportRead();
+    return super.infoMessage;
+  }
+
+  @override
+  set infoMessage(String value) {
+    _$infoMessageAtom.reportWrite(value, super.infoMessage, () {
+      super.infoMessage = value;
+    });
+  }
+
+  late final _$customerPostDataAsyncAction =
+      AsyncAction('_CustomerMobxBase.customerPostData', context: context);
+
+  @override
+  Future<void> customerPostData(
+      {required String customerCompanyName,
+      required String authorityName,
+      required String customerEmail,
+      required String customerPhone,
+      required String taxPlace,
+      required String taxNo,
+      required String adress}) {
+    return _$customerPostDataAsyncAction.run(() => super.customerPostData(
+        customerCompanyName: customerCompanyName,
+        authorityName: authorityName,
+        customerEmail: customerEmail,
+        customerPhone: customerPhone,
+        taxPlace: taxPlace,
+        taxNo: taxNo,
+        adress: adress));
+  }
+
   late final _$getAllCustomersAsyncAction =
       AsyncAction('_CustomerMobxBase.getAllCustomers', context: context);
 
@@ -33,10 +71,25 @@ mixin _$CustomerMobx on _CustomerMobxBase, Store {
     return _$getAllCustomersAsyncAction.run(() => super.getAllCustomers());
   }
 
+  late final _$_CustomerMobxBaseActionController =
+      ActionController(name: '_CustomerMobxBase', context: context);
+
+  @override
+  void refreshState() {
+    final _$actionInfo = _$_CustomerMobxBaseActionController.startAction(
+        name: '_CustomerMobxBase.refreshState');
+    try {
+      return super.refreshState();
+    } finally {
+      _$_CustomerMobxBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-customers: ${customers}
+customers: ${customers},
+infoMessage: ${infoMessage}
     ''';
   }
 }

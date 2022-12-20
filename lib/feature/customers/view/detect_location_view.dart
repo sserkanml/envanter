@@ -18,7 +18,7 @@ class _DetectLocationViewState extends State<DetectLocationView> {
   late String dropdownValue;
   @override
   void initState() {
-    dropdownValue = 'Kayıtlı Konumlar';
+    dropdownValue = 'Kayıtlı';
     super.initState();
   }
 
@@ -72,7 +72,7 @@ class _DetectLocationViewState extends State<DetectLocationView> {
                                         dropdownValue = newValue!;
                                       });
                                     },
-                                    items: ['Kayıtlı Konumlar']
+                                    items: ['Kayıtlı']
                                         .map((value) => DropdownMenuItem(
                                               value: value,
                                               child: Text(value),

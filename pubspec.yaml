@@ -63,6 +63,7 @@ dependencies:
   js: ^0.6.4
   calendar_date_picker2: ^0.3.5
   wc_form_validators: ^1.0.0
+  motion_toast: ^2.6.4
   
 
  

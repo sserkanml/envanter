@@ -3,8 +3,10 @@ import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
 import 'package:aden_envanterus/feature/customers/view_model/customer_form.dart';
 import 'package:aden_envanterus/models/customer_service.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../../core/widgets/bodysmall.dart';
@@ -88,7 +90,10 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                 onSaved: (newValue) {
                   customerEmail = newValue!;
                 },
-                validator: Validators.required('Bu alan boş geçilemez'),
+                validator: Validators.compose([
+                  Validators.required('Bu alan boş geçilemez'),
+                  Validators.email('Geçersiz bir mail formatı'),
+                ]),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
@@ -179,6 +184,7 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                   GFButton(
                     color: GFColors.DANGER,
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (CustomerForm.customerForm.currentState!.validate()) {
                         CustomerForm.customerForm.currentState!.save();
                         await getIt.get<CustomerMobx>().customerPostData(
@@ -189,7 +195,23 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                             taxPlace: taxPlace,
                             taxNo: taxNo,
                             adress: adress);
-                      } else {}
+                        MotionToast.success(
+                          onClose: () {
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              context.router.pop();
+                            });
+                          },
+                          description: const Bodymedium(
+                            data: 'Proje oluşturma işlemi başarıla tamamlandı',
+                          ),
+                          title: Bodymedium(
+                              fontWeight: FontWeight.bold,
+                              data: getIt.get<CustomerMobx>().infoMessage),
+                        ).show(context);
+                      } else {
+                        getIt.get<CustomerMobx>().infoMessage = '';
+                      }
                     },
                     child: const Bodysmall(data: 'Kaydet', color: Colors.white),
                   )

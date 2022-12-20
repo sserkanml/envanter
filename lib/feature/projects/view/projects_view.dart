@@ -15,9 +15,14 @@ import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
 import '../widgets/info_widget.dart';
 
-class ProjectsView extends StatelessWidget {
+class ProjectsView extends StatefulWidget {
   const ProjectsView({Key? key}) : super(key: key);
 
+  @override
+  State<ProjectsView> createState() => _ProjectsViewState();
+}
+
+class _ProjectsViewState extends State<ProjectsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +39,9 @@ class ProjectsView extends StatelessWidget {
               children: <Widget>[
                 const Bodymedium(data: 'Tüm Projeler'),
                 GFButton(
-                  onPressed: () {
-                    context.router.push(const CreateProjectsRoute());
+                  onPressed: () async {
+                    await context.router.push(const CreateProjectsRoute());
+                    setState(() {});
                   },
                   child: Row(
                     children: const [
@@ -76,7 +82,7 @@ class ProjectsView extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisExtent: 230,
                 ),
-                itemCount: 10,
+                itemCount: getIt.get<ProjectsMobx>().projects.length,
                 itemBuilder: (BuildContext context, int index) {
                   var rawStart =
                       getIt.get<ProjectsMobx>().projects[index].kayitZamani;
@@ -151,11 +157,16 @@ class ProjectsView extends StatelessWidget {
                               GFButton(
                                 onPressed: () {
                                   context.router.push(ProjectsDetailRoute(
-                                      projectsId:  getIt
+                                      projectsId: getIt
                                           .get<CustomerMobx>()
-                                          .customers.where((element) => element.projeID ==  getIt
-                                          .get<ProjectsMobx>()
-                                          .projects[index].oid).firstOrNull,
+                                          .customers
+                                          .where((element) =>
+                                              element.projeID ==
+                                              getIt
+                                                  .get<ProjectsMobx>()
+                                                  .projects[index]
+                                                  .oid)
+                                          .firstOrNull,
                                       project: getIt
                                           .get<ProjectsMobx>()
                                           .projects[index]));

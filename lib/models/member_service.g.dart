@@ -33,6 +33,20 @@ mixin _$MemberMobx on _MemberMobxBase, Store {
     return _$getAllMembersAsyncAction.run(() => super.getAllMembers());
   }
 
+  late final _$_MemberMobxBaseActionController =
+      ActionController(name: '_MemberMobxBase', context: context);
+
+  @override
+  void refreshState() {
+    final _$actionInfo = _$_MemberMobxBaseActionController.startAction(
+        name: '_MemberMobxBase.refreshState');
+    try {
+      return super.refreshState();
+    } finally {
+      _$_MemberMobxBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

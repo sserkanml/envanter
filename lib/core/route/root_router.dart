@@ -36,7 +36,7 @@ import '../../feature/settings/view/system_settings_view.dart';
 
 final AppRouter approuter = AppRouter();
 const rootAutoRoute = CustomRoute(
-    guards: [LoginGuard],
+
     page: RootView,
     path: '/root',
     transitionsBuilder: TransitionsBuilders.noTransition,
