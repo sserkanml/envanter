@@ -1,7 +1,8 @@
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../service/dependecy_service.dart';
+import '../../service/shared_references.dart';
+
 
 class LoginGuard extends AutoRouteGuard {
   @override

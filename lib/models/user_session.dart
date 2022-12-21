@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+
 part 'user_session.g.dart';
 
 class UserSession = _UserSessionBase with _$UserSession;

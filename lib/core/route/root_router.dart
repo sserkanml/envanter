@@ -1,42 +1,42 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/feature/checking/view/checks_view.dart';
-import 'package:aden_envanterus/feature/checking/view/checks_wrapper_view.dart';
-import 'package:aden_envanterus/feature/checking/view/confirmed_view.dart';
-import 'package:aden_envanterus/feature/checking/view/create_checks_view.dart';
-import 'package:aden_envanterus/feature/checking/view/pending_checking_view.dart';
-import 'package:aden_envanterus/feature/checking/view/select_customer_view.dart';
-import 'package:aden_envanterus/feature/customers/view/custom_select_location_view.dart';
-import 'package:aden_envanterus/feature/customers/view/customer_detail_view.dart';
-import 'package:aden_envanterus/feature/customers/view/customers_view.dart';
-import 'package:aden_envanterus/feature/customers/view/customers_wrapper_view.dart';
-import 'package:aden_envanterus/feature/customers/view/detail_location_view.dart';
-import 'package:aden_envanterus/feature/customers/view/detect_location_view.dart';
-import 'package:aden_envanterus/feature/customers/view/gps_view.dart';
-import 'package:aden_envanterus/feature/customers/view/location_wrapper_view.dart';
-import 'package:aden_envanterus/feature/dashboard/view/dashboard_view.dart';
-import 'package:aden_envanterus/feature/dashboard/view/dashboard_wrapper_view.dart';
-import 'package:aden_envanterus/feature/items/view/create_items_view.dart';
-import 'package:aden_envanterus/feature/checking/view/checks_detail_view..dart';
-import 'package:aden_envanterus/feature/items/view/items_detail_view.dart';
-import 'package:aden_envanterus/feature/items/view/items_view.dart';
-import 'package:aden_envanterus/feature/projects/view/create_projects_view.dart';
-import 'package:aden_envanterus/feature/projects/view/projects_detail_view.dart';
-import 'package:aden_envanterus/feature/projects/view/projects_view.dart';
-import 'package:aden_envanterus/feature/projects/view/projects_wrapper_view.dart';
-import 'package:aden_envanterus/feature/root/view/root_view.dart';
-import 'package:aden_envanterus/feature/settings/view/alerts_view.dart';
-
-import 'package:aden_envanterus/feature/settings/view/create_user_view.dart';
-import 'package:aden_envanterus/feature/settings/view/my_profile_view.dart';
-import 'package:aden_envanterus/feature/settings/view/role_view.dart';
-import 'package:aden_envanterus/feature/settings/view/settings_view.dart';
-import 'package:aden_envanterus/feature/settings/view/settings_wrapper_view.dart';
-import 'package:aden_envanterus/feature/settings/view/users_detail_view.dart';
-import 'package:aden_envanterus/feature/settings/view/users_view.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../../feature/checking/view/checks_detail_view..dart';
+import '../../feature/checking/view/checks_view.dart';
+import '../../feature/checking/view/checks_wrapper_view.dart';
+import '../../feature/checking/view/confirmed_view.dart';
+import '../../feature/checking/view/create_checks_view.dart';
+import '../../feature/checking/view/pending_checking_view.dart';
+import '../../feature/checking/view/scan_qr_code_view.dart';
+import '../../feature/checking/view/select_customer_view.dart';
 import '../../feature/customers/view/create_customers_view.dart';
+import '../../feature/customers/view/custom_select_location_view.dart';
+import '../../feature/customers/view/customer_detail_view.dart';
+import '../../feature/customers/view/customers_view.dart';
+import '../../feature/customers/view/customers_wrapper_view.dart';
+import '../../feature/customers/view/detail_location_view.dart';
+import '../../feature/customers/view/detect_location_view.dart';
+import '../../feature/customers/view/gps_view.dart';
+import '../../feature/customers/view/location_wrapper_view.dart';
+import '../../feature/dashboard/view/dashboard_view.dart';
+import '../../feature/dashboard/view/dashboard_wrapper_view.dart';
+import '../../feature/items/view/create_items_view.dart';
+import '../../feature/items/view/items_detail_view.dart';
+import '../../feature/items/view/items_view.dart';
+import '../../feature/projects/view/create_projects_view.dart';
+import '../../feature/projects/view/projects_detail_view.dart';
+import '../../feature/projects/view/projects_view.dart';
+import '../../feature/projects/view/projects_wrapper_view.dart';
+import '../../feature/root/view/root_view.dart';
+import '../../feature/settings/view/alerts_view.dart';
+import '../../feature/settings/view/create_user_view.dart';
+import '../../feature/settings/view/my_profile_view.dart';
+import '../../feature/settings/view/role_view.dart';
+import '../../feature/settings/view/settings_view.dart';
+import '../../feature/settings/view/settings_wrapper_view.dart';
 import '../../feature/settings/view/system_settings_view.dart';
+import '../../feature/settings/view/users_detail_view.dart';
+import '../../feature/settings/view/users_view.dart';
+import 'router_generator.dart';
 
 final AppRouter approuter = AppRouter();
 const rootAutoRoute = CustomRoute(
@@ -98,6 +98,7 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: SelectCustomerView,path: 'select-customer'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
         CustomRoute(page: PendingCheckingView, path: 'pending'),
+     
         CustomRoute(
           page: ItemsView,
         ),

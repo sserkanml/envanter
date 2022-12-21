@@ -1,17 +1,15 @@
-import 'package:aden_envanterus/core/route/guard/login_guard.dart';
-import 'package:aden_envanterus/core/route/root_router.dart';
-import 'package:aden_envanterus/feature/authentication/view/login_view.dart';
-import 'package:aden_envanterus/feature/authentication/view/sign_up_view.dart';
-
-import 'package:aden_envanterus/feature/start/view/on_board_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../feature/authentication/view/login_view.dart';
+import '../../feature/authentication/view/sign_up_view.dart';
+import '../../feature/checking/view/checks_detail_view..dart';
 import '../../feature/checking/view/checks_view.dart';
 import '../../feature/checking/view/checks_wrapper_view.dart';
 import '../../feature/checking/view/confirmed_view.dart';
 import '../../feature/checking/view/create_checks_view.dart';
 import '../../feature/checking/view/pending_checking_view.dart';
+import '../../feature/checking/view/scan_qr_code_view.dart';
 import '../../feature/checking/view/select_customer_view.dart';
 import '../../feature/customers/view/create_customers_view.dart';
 import '../../feature/customers/view/custom_select_location_view.dart';
@@ -25,7 +23,6 @@ import '../../feature/customers/view/location_wrapper_view.dart';
 import '../../feature/dashboard/view/dashboard_view.dart';
 import '../../feature/dashboard/view/dashboard_wrapper_view.dart';
 import '../../feature/items/view/create_items_view.dart';
-import '../../feature/checking/view/checks_detail_view..dart';
 import '../../feature/items/view/items_detail_view.dart';
 import '../../feature/items/view/items_view.dart';
 import '../../feature/projects/view/create_projects_view.dart';
@@ -42,12 +39,14 @@ import '../../feature/settings/view/settings_wrapper_view.dart';
 import '../../feature/settings/view/system_settings_view.dart';
 import '../../feature/settings/view/users_detail_view.dart';
 import '../../feature/settings/view/users_view.dart';
+import '../../feature/start/view/on_board_view.dart';
 import '../../models/checks_detail_model.dart';
 import '../../models/checks_model.dart';
 import '../../models/customer_model.dart';
 import '../../models/items_model.dart';
 import '../../models/member.dart';
 import '../../models/projets_model.dart';
+import 'root_router.dart';
 
 part './router_generator.gr.dart';
 
@@ -55,7 +54,7 @@ part './router_generator.gr.dart';
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(page: OnBoardView, initial: true),
-   
+    CustomRoute(page: ScanQrCodeView),
     rootAutoRoute,
     AutoRoute(page: LoginView),
     AutoRoute(page: SignUpView),

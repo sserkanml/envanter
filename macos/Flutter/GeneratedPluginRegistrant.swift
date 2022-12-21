@@ -5,7 +5,7 @@
 import FlutterMacOS
 import Foundation
 
-import mobile_scanner
+import ai_barcode
 import package_info_plus
 import path_provider_macos
 import photo_manager
@@ -14,7 +14,7 @@ import sqflite
 import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  MobileScannerPlugin.register(with: registry.registrar(forPlugin: "MobileScannerPlugin"))
+  AiBarcodePlugin.register(with: registry.registrar(forPlugin: "AiBarcodePlugin"))
   FLTPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FLTPackageInfoPlusPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
   PhotoManagerPlugin.register(with: registry.registrar(forPlugin: "PhotoManagerPlugin"))

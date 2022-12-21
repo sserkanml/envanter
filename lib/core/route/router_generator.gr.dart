@@ -23,6 +23,19 @@ class _$AppRouter extends RootStackRouter {
         child: const OnBoardView(),
       );
     },
+    ScanQrCodeRoute.name: (routeData) {
+      final args = routeData.argsAs<ScanQrCodeRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: ScanQrCodeView(
+          key: args.key,
+          counter: args.counter,
+          item: args.item,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     RootRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -365,6 +378,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/',
         ),
         RouteConfig(
+          ScanQrCodeRoute.name,
+          path: '/scan-qr-code-view',
+        ),
+        RouteConfig(
           RootRoute.name,
           path: '/root',
           children: [
@@ -573,6 +590,45 @@ class OnBoardRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'OnBoardRoute';
+}
+
+/// generated route for
+/// [ScanQrCodeView]
+class ScanQrCodeRoute extends PageRouteInfo<ScanQrCodeRouteArgs> {
+  ScanQrCodeRoute({
+    Key? key,
+    required int counter,
+    required ItemsModel item,
+  }) : super(
+          ScanQrCodeRoute.name,
+          path: '/scan-qr-code-view',
+          args: ScanQrCodeRouteArgs(
+            key: key,
+            counter: counter,
+            item: item,
+          ),
+        );
+
+  static const String name = 'ScanQrCodeRoute';
+}
+
+class ScanQrCodeRouteArgs {
+  const ScanQrCodeRouteArgs({
+    this.key,
+    required this.counter,
+    required this.item,
+  });
+
+  final Key? key;
+
+  final int counter;
+
+  final ItemsModel item;
+
+  @override
+  String toString() {
+    return 'ScanQrCodeRouteArgs{key: $key, counter: $counter, item: $item}';
+  }
 }
 
 /// generated route for
