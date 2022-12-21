@@ -52,7 +52,7 @@ class _ChecksViewState extends State<ChecksView> {
                   const SizedBox(width: 20),
                   GFButton(
                     onPressed: () {
-                      context.router.push(const CreateChecksRoute());
+                      context.router.push(const SelectCustomerRoute());
                     },
                     child: const Bodysmall(
                       data: 'Sayım Başlat',

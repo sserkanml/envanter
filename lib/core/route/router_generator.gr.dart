@@ -160,10 +160,42 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    LocationWrapperRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const LocationWrapperView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     DetectLocationRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: const DetectLocationView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    GpsRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const GpsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    DetailLocationRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const DetailLocationView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    CustomSelectLocationRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const CustomSelectLocationView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -184,10 +216,22 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
-    CreateChecksRoute.name: (routeData) {
+    SelectCustomerRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const CreateChecksView(),
+        child: const SelectCustomerView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    CreateChecksRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateChecksRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: CreateChecksView(
+          key: args.key,
+          customer: args.customer,
+        ),
         opaque: true,
         barrierDismissible: false,
       );
@@ -379,9 +423,31 @@ class _$AppRouter extends RootStackRouter {
                   parent: CustomersWrapperRoute.name,
                 ),
                 RouteConfig(
-                  DetectLocationRoute.name,
-                  path: 'detect-location',
+                  LocationWrapperRoute.name,
+                  path: 'location-wrapper-view',
                   parent: CustomersWrapperRoute.name,
+                  children: [
+                    RouteConfig(
+                      DetectLocationRoute.name,
+                      path: '',
+                      parent: LocationWrapperRoute.name,
+                    ),
+                    RouteConfig(
+                      GpsRoute.name,
+                      path: 'gps-view',
+                      parent: LocationWrapperRoute.name,
+                    ),
+                    RouteConfig(
+                      DetailLocationRoute.name,
+                      path: 'detail-location-view',
+                      parent: LocationWrapperRoute.name,
+                    ),
+                    RouteConfig(
+                      CustomSelectLocationRoute.name,
+                      path: 'custom-select-location-view',
+                      parent: LocationWrapperRoute.name,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -398,6 +464,11 @@ class _$AppRouter extends RootStackRouter {
                 RouteConfig(
                   ConfirmedRoute.name,
                   path: 'confirmed',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  SelectCustomerRoute.name,
+                  path: 'select-customer',
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
@@ -740,15 +811,64 @@ class CreateCustomersRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LocationWrapperView]
+class LocationWrapperRoute extends PageRouteInfo<void> {
+  const LocationWrapperRoute({List<PageRouteInfo>? children})
+      : super(
+          LocationWrapperRoute.name,
+          path: 'location-wrapper-view',
+          initialChildren: children,
+        );
+
+  static const String name = 'LocationWrapperRoute';
+}
+
+/// generated route for
 /// [DetectLocationView]
 class DetectLocationRoute extends PageRouteInfo<void> {
   const DetectLocationRoute()
       : super(
           DetectLocationRoute.name,
-          path: 'detect-location',
+          path: '',
         );
 
   static const String name = 'DetectLocationRoute';
+}
+
+/// generated route for
+/// [GpsView]
+class GpsRoute extends PageRouteInfo<void> {
+  const GpsRoute()
+      : super(
+          GpsRoute.name,
+          path: 'gps-view',
+        );
+
+  static const String name = 'GpsRoute';
+}
+
+/// generated route for
+/// [DetailLocationView]
+class DetailLocationRoute extends PageRouteInfo<void> {
+  const DetailLocationRoute()
+      : super(
+          DetailLocationRoute.name,
+          path: 'detail-location-view',
+        );
+
+  static const String name = 'DetailLocationRoute';
+}
+
+/// generated route for
+/// [CustomSelectLocationView]
+class CustomSelectLocationRoute extends PageRouteInfo<void> {
+  const CustomSelectLocationRoute()
+      : super(
+          CustomSelectLocationRoute.name,
+          path: 'custom-select-location-view',
+        );
+
+  static const String name = 'CustomSelectLocationRoute';
 }
 
 /// generated route for
@@ -776,15 +896,49 @@ class ConfirmedRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CreateChecksView]
-class CreateChecksRoute extends PageRouteInfo<void> {
-  const CreateChecksRoute()
+/// [SelectCustomerView]
+class SelectCustomerRoute extends PageRouteInfo<void> {
+  const SelectCustomerRoute()
       : super(
+          SelectCustomerRoute.name,
+          path: 'select-customer',
+        );
+
+  static const String name = 'SelectCustomerRoute';
+}
+
+/// generated route for
+/// [CreateChecksView]
+class CreateChecksRoute extends PageRouteInfo<CreateChecksRouteArgs> {
+  CreateChecksRoute({
+    Key? key,
+    required CustomerModel customer,
+  }) : super(
           CreateChecksRoute.name,
           path: 'create-checks',
+          args: CreateChecksRouteArgs(
+            key: key,
+            customer: customer,
+          ),
         );
 
   static const String name = 'CreateChecksRoute';
+}
+
+class CreateChecksRouteArgs {
+  const CreateChecksRouteArgs({
+    this.key,
+    required this.customer,
+  });
+
+  final Key? key;
+
+  final CustomerModel customer;
+
+  @override
+  String toString() {
+    return 'CreateChecksRouteArgs{key: $key, customer: $customer}';
+  }
 }
 
 /// generated route for

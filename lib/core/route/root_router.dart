@@ -1,14 +1,18 @@
-import 'package:aden_envanterus/core/route/guard/login_guard.dart';
 import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:aden_envanterus/feature/checking/view/checks_view.dart';
 import 'package:aden_envanterus/feature/checking/view/checks_wrapper_view.dart';
 import 'package:aden_envanterus/feature/checking/view/confirmed_view.dart';
 import 'package:aden_envanterus/feature/checking/view/create_checks_view.dart';
 import 'package:aden_envanterus/feature/checking/view/pending_checking_view.dart';
+import 'package:aden_envanterus/feature/checking/view/select_customer_view.dart';
+import 'package:aden_envanterus/feature/customers/view/custom_select_location_view.dart';
 import 'package:aden_envanterus/feature/customers/view/customer_detail_view.dart';
 import 'package:aden_envanterus/feature/customers/view/customers_view.dart';
 import 'package:aden_envanterus/feature/customers/view/customers_wrapper_view.dart';
+import 'package:aden_envanterus/feature/customers/view/detail_location_view.dart';
 import 'package:aden_envanterus/feature/customers/view/detect_location_view.dart';
+import 'package:aden_envanterus/feature/customers/view/gps_view.dart';
+import 'package:aden_envanterus/feature/customers/view/location_wrapper_view.dart';
 import 'package:aden_envanterus/feature/dashboard/view/dashboard_view.dart';
 import 'package:aden_envanterus/feature/dashboard/view/dashboard_wrapper_view.dart';
 import 'package:aden_envanterus/feature/items/view/create_items_view.dart';
@@ -36,7 +40,6 @@ import '../../feature/settings/view/system_settings_view.dart';
 
 final AppRouter approuter = AppRouter();
 const rootAutoRoute = CustomRoute(
-
     page: RootView,
     path: '/root',
     transitionsBuilder: TransitionsBuilders.noTransition,
@@ -76,11 +79,23 @@ const rootAutoRoute = CustomRoute(
           page: CustomerDetailView,
         ),
         CustomRoute(page: CreateCustomersView, path: 'create-customers'),
-        CustomRoute(page: DetectLocationView, path: 'detect-location'),
+        CustomRoute(page: LocationWrapperView, children: [
+          CustomRoute(page: DetectLocationView, path: ''),
+          CustomRoute(
+            page: GpsView,
+          ),
+          CustomRoute(
+            page: DetailLocationView,
+          ),
+          CustomRoute(
+            page: CustomSelectLocationView,
+          ),
+        ]),
       ]),
       CustomRoute(page: ChecksWrapperView, children: [
         CustomRoute(page: ChecksView, path: ''),
         CustomRoute(page: ConfirmedView, path: 'confirmed'),
+        CustomRoute(page: SelectCustomerView,path: 'select-customer'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
         CustomRoute(page: PendingCheckingView, path: 'pending'),
         CustomRoute(
@@ -89,7 +104,7 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(
           page: CreateItemsView,
         ),
-         CustomRoute(
+        CustomRoute(
           page: ItemsDetailView,
         ),
         CustomRoute(
