@@ -1,6 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/route/router_generator.dart';
@@ -8,11 +8,12 @@ import 'core/service/dependecy_service.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/ligt_theme.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   DependecyService.setup();
   runApp(MyApp(
     mode: savedThemeMode,

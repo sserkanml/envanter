@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/models/customer_model.dart';
-import 'package:aden_envanterus/models/user_session.dart';
+import '../core/service/dependecy_service.dart';
+import 'customer_model.dart';
+import 'user_session.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 part 'customer_service.g.dart';
@@ -54,6 +54,7 @@ abstract class _CustomerMobxBase with Store {
         musteriVergiDaire: taxPlace,
         musteriEmail: customerEmail,
       ));
+      print(customers.length);
     } else {}
   }
 

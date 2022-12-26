@@ -1,20 +1,20 @@
 import 'dart:async';
 
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodysmall.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/models/check_detail_service.dart';
-import 'package:aden_envanterus/models/checks_service.dart';
-import 'package:aden_envanterus/models/customer_service.dart';
-import 'package:aden_envanterus/models/items_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
 import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/check_detail_service.dart';
+import '../../../models/checks_service.dart';
+import '../../../models/customer_service.dart';
+import '../../../models/items_service.dart';
 import '../../authentication/view_model/get_login.dart';
 
 class ChecksView extends StatefulWidget {
@@ -65,7 +65,7 @@ class _ChecksViewState extends State<ChecksView> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         GFButton(
-                          color: GFColors.SUCCESS,
+                          color: GFColors.SECONDARY,
                           onPressed: () {
                             context.router.push(const ItemsRoute());
                           },
@@ -88,6 +88,17 @@ class _ChecksViewState extends State<ChecksView> {
                         GFButton(
                           color: GFColors.DANGER,
                           onPressed: () {
+                            context.router.push(const ConfirmedRoute());
+                          },
+                          child: const Bodysmall(
+                            data: 'İptal Edilen  Sayımlar',
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        GFButton(
+                          color: GFColors.WARNING,
+                          onPressed: () {
                             context.router.push(const PendingCheckingRoute());
                           },
                           child: const Bodysmall(
@@ -97,7 +108,7 @@ class _ChecksViewState extends State<ChecksView> {
                         ),
                         const SizedBox(width: 20),
                         GFButton(
-                          color: GFColors.WARNING,
+                          color: GFColors.SUCCESS,
                           onPressed: () {
                             context.router.push(const ConfirmedRoute());
                           },
@@ -105,7 +116,8 @@ class _ChecksViewState extends State<ChecksView> {
                             data: 'Onaylanan Sayımlar',
                             color: Colors.white,
                           ),
-                        )
+                        ),
+                        
                       ],
                     ),
                   ),

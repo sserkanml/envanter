@@ -25,6 +25,7 @@ abstract class _CheckDetailMobxBase with Store {
       checksDetail = result['jsonData_3'].map<CheckDetailModel>((element) {
         return CheckDetailModel.fromMap(element);
       }).toList();
+      print(checksDetail.length);
     } else {}
   }
 }
