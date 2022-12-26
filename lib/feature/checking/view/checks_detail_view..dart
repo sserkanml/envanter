@@ -1,10 +1,15 @@
+import 'package:aden_envanterus/core/route/router_generator.dart';
+import 'package:aden_envanterus/core/util/extension.dart';
 import 'package:aden_envanterus/core/widgets/bodymedium.dart';
 import 'package:aden_envanterus/core/widgets/headline6.dart';
+import 'package:aden_envanterus/feature/checking/model/check_qr_model.dart';
 import 'package:aden_envanterus/models/checks_detail_model.dart';
 import 'package:aden_envanterus/models/checks_model.dart';
 import 'package:aden_envanterus/models/customer_model.dart';
 import 'package:aden_envanterus/models/items_model.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -53,7 +58,7 @@ class _CheckDetailViewState extends State<CheckDetailView> {
     detailExplanation.text = widget.checkDetail.detayAciklama ?? '';
     item.text = widget.item.adi ?? '';
     customerName.text = widget.customer.musteriFirmaAdi ?? ' ';
-    checkCount.text = widget.customer.musteriFirmaAdi ?? ' ';
+    checkCount.text = widget.check.miktar.toString();
 
     var rawStart = widget.checkDetail.baslamaTarihi;
     var numericStart = rawStart?.split('(')[1].split(')')[0];
@@ -109,11 +114,47 @@ class _CheckDetailViewState extends State<CheckDetailView> {
                   style: TextStyle(color: context.colorScheme.onSurface)),
             ])),
             const SizedBox(height: 30),
+            const Bodymedium(data: 'Miktar'),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              readOnly: true,
+              controller: checkCount,
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      final double? data = await context.router.push(
+                          ScanQrCodeRoute(
+                              qrModel: CheckQrModel(
+                                  controller: checkCount,
+                                  item: widget.item,
+                                  name: widget.item.adi ?? ' ',
+                                  quantity: widget.check.miktar ?? 0)));
+                      setState(() {
+                        checkCount.text = data.toString();
+                      });
+                    },
+                    icon: SvgPicture.asset(
+                      context.getPath(folder: 'svg', file: 'qr_code.svg'),
+                      width: 25,
+                      height: 25,
+                      color: context.colorScheme.onSurface.withOpacity(.7),
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 8.0,
+                  )),
+            ),
+            const SizedBox(height: 20),
             const Bodymedium(data: 'Firma Adı:'),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
+              readOnly: true,
               controller: customerName,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -130,6 +171,7 @@ class _CheckDetailViewState extends State<CheckDetailView> {
               height: 10,
             ),
             TextFormField(
+              readOnly: true,
               controller: item,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -227,39 +269,6 @@ class _CheckDetailViewState extends State<CheckDetailView> {
                     vertical: 8.0,
                     horizontal: 8.0,
                   )),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Bodymedium(data: 'İşlem Seçiniz'),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              child: DropdownButtonHideUnderline(
-                child: GFDropdown(
-                  padding: const EdgeInsets.all(15),
-                  borderRadius: BorderRadius.circular(5),
-                  border: BorderSide(
-                      color: context.colorScheme.onSurface.withOpacity(.5),
-                      width: .3),
-                  dropdownButtonColor: Colors.transparent,
-                  value: status,
-                  onChanged: (dynamic newValue) {
-                    setState(() {
-                      status = newValue!;
-                    });
-                  },
-                  items: [ 'İşlem Seçiniz','Onay', 'Beklemeye Al', 'İptal Et']
-                      .map((value) => DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          ))
-                      .toList(),
-                ),
-              ),
             ),
             const SizedBox(
               height: 20,

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/models/checks_detail_model.dart';
 import 'package:aden_envanterus/models/checks_model.dart';
 import 'package:aden_envanterus/models/user_session.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +12,30 @@ class CheckMobx = _CheckMobxBase with _$CheckMobx;
 abstract class _CheckMobxBase with Store {
   @observable
   List<CheckModel> checks = [];
- 
+
+  @observable
+  String infoMessage = '';
+
+  @action
+  Future<void> createCheck(
+      {required String item_id,
+      required String quantity,
+      required String customer_id}) async {
+    final url = Uri.http('envanter.sgktesvikrehberi.com', 'Api/SayimKaydet');
+    final response = await http.post(url, body: {
+      'Malzeme': item_id,
+      'Miktar': quantity,
+      'Musteri_ID': customer_id
+    }, headers: {
+      'cookie': getIt.get<UserSession>().sessionId
+    });
+    if (response.statusCode <= 299 && response.statusCode >= 200) {
+      infoMessage = response.body;
+      await getAllChecks();
+    } else {
+      print(response.body);
+    }
+  }
 
   @action
   Future<void> getAllChecks() async {
@@ -25,8 +47,6 @@ abstract class _CheckMobxBase with Store {
       checks = result['jsonData_1'].map<CheckModel>((element) {
         return CheckModel.fromMap(element);
       }).toList();
-    
-   
     } else {}
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../feature/authentication/view/login_view.dart';
 import '../../feature/authentication/view/sign_up_view.dart';
+import '../../feature/checking/model/check_qr_model.dart';
 import '../../feature/checking/view/checks_detail_view..dart';
 import '../../feature/checking/view/checks_view.dart';
 import '../../feature/checking/view/checks_wrapper_view.dart';
@@ -54,7 +55,7 @@ part './router_generator.gr.dart';
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(page: OnBoardView, initial: true),
-    CustomRoute(page: ScanQrCodeView),
+    CustomRoute<double>(page: ScanQrCodeView),
     rootAutoRoute,
     AutoRoute(page: LoginView),
     AutoRoute(page: SignUpView),

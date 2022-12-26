@@ -1,18 +1,23 @@
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/core/widgets/bodylarge.dart';
+import 'package:aden_envanterus/core/widgets/bodymedium.dart';
+import 'package:aden_envanterus/feature/checking/model/check_qr_model.dart';
+import 'package:aden_envanterus/feature/checking/view_model/check_form.dart';
+import 'package:aden_envanterus/models/checks_service.dart';
+import 'package:aden_envanterus/models/items_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:kartal/kartal.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 import '../../../core/route/router_generator.dart';
-import '../../../core/service/dependecy_service.dart';
 import '../../../core/util/extension.dart';
-import '../../../core/widgets/bodylarge.dart';
-import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
 import '../../../models/customer_model.dart';
-import '../../../models/items_service.dart';
-import '../model/check_qr_model.dart';
 
 class CreateChecksView extends StatefulWidget {
   final CustomerModel customer;
@@ -23,123 +28,252 @@ class CreateChecksView extends StatefulWidget {
 }
 
 class _CreateChecksViewState extends State<CreateChecksView> {
-  String currentKey = '';
-  List<CheckQrModel> currentValue = [];
+  late List<CheckQrModel> itemsQr;
+  List<String> names = [];
+  String currentValue = '';
   @override
   void initState() {
-    for (var item in getIt.get<ItemsMobx>().items) {
-      if (widget.customer.oid == item.musteriID) {
-        currentValue.add(CheckQrModel(
-            controller: TextEditingController(),
-            item: item,
-            name: widget.customer.musteriFirmaAdi ?? ' ',
-            quantity: 0));
-      } else {
-        return;
+    if (getIt
+        .get<ItemsMobx>()
+        .items
+        .any((element) => element.musteriID == widget.customer.oid)) {
+      itemsQr = getIt
+          .get<ItemsMobx>()
+          .items
+          .where((element) => element.musteriID == widget.customer.oid)
+          .toList()
+          .map<CheckQrModel>((e) => CheckQrModel(
+              controller: TextEditingController(),
+              item: e,
+              name: e.adi ?? ' ',
+              quantity: getIt
+                      .get<CheckMobx>()
+                      .checks
+                      .firstWhereOrNull((element) => element.malzeme == e.oid)
+                      ?.miktar ??
+                  0))
+          .toList();
+
+      for (var element in itemsQr) {
+        if (element.quantity == 0) {
+          names.add(element.name);
+          element.controller.text = element.quantity.toString();
+        }
+        element.controller.text = element.quantity.toString();
       }
+      if (names.isNotEmpty) {
+        currentValue = names[0];
+      }
+    } else {
+      itemsQr = [];
+      names = [];
     }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final int? quantity = await context.router.push<int>(ScanQrCodeRoute(
-              item: currentValue
-                  .where((element) => element.name == currentKey)
-                  .first
-                  .item,
-              counter: currentValue
-                  .where((element) => element.name == currentKey)
-                  .first
-                  .quantity));
-          currentValue
-              .where((element) => element.name == currentKey)
-              .first
-              .quantity = quantity!;
-          currentValue
-              .where((element) => element.name == currentKey)
-              .first
-              .controller
-              .text = quantity.toString();
-          setState(() {});
-        },
-        child: SvgPicture.asset(
-          context.getPath(folder: 'svg', file: 'qr_code.svg'),
-          color: Colors.white,
-          width: 30,
-          height: 30,
-        ),
-      ),
+      floatingActionButton: names.isEmpty
+          ? null
+          : FloatingActionButton(
+              onPressed: () async {
+                final double? data = await context.router.push<double>(
+                    ScanQrCodeRoute(
+                        qrModel: itemsQr
+                            .where((element) => element.name == currentValue)
+                            .first));
+                itemsQr
+                    .where((element) => element.name == currentValue)
+                    .first
+                    .quantity = data ?? 0;
+                itemsQr
+                    .where((element) => element.name == currentValue)
+                    .first
+                    .controller
+                    .text = data.toString();
+
+                setState(() {});
+              },
+              child: SvgPicture.asset(
+                context.getPath(folder: 'svg', file: 'qr_code.svg'),
+                color: Colors.white,
+                width: 30,
+                height: 30,
+              ),
+            ),
       appBar: AppBar(
         title: const Headline6(data: 'Sayım Oluştur'),
       ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            const Bodylarge(data: 'Sayım Başlat'),
-            DropdownButtonFormField2(
-              value: currentKey,
-              onChanged: (value) {
-                setState(() {
-                  currentKey = value!;
-                });
-              },
-              items: [
-                ...getIt
-                    .get<ItemsMobx>()
-                    .items
-                    .where(
-                        (element) => widget.customer.oid == element.musteriID)
-                    .toList()
-                    .map<DropdownMenuItem<String>>((e) =>
-                        DropdownMenuItem(child: Bodymedium(data: e.adi ?? ' ')))
-                    .toList()
-              ],
-              dropdownDecoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              icon: const Icon(
-                Icons.arrow_drop_down,
-                color: Colors.black45,
-              ),
-              hint: const Bodymedium(data: 'Malzeme Seç'),
-              decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(FontAwesomeIcons.arrowDown)),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ListView.builder(
-              itemCount: currentValue.length,
-              shrinkWrap: true,
-              primary: false,
-              physics: const ScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: TextField(
-                    controller: currentValue[index].controller,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 8.0,
-                        )),
-                  ),
-                );
-              },
+      body: itemsQr.isEmpty
+          ? const Center(
+              child: Bodylarge(data: 'Malzeme bulunamadı...'),
             )
-          ],
-        ),
-      )),
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: CheckForm.checkForm,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Bodylarge(data: 'Sayım Başlat'),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    names.isEmpty
+                        ? const SizedBox()
+                        : DropdownButton2<String>(
+                            dropdownMaxHeight: 200,
+                            value: currentValue,
+                            underline: Container(
+                              height: 1,
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                bottom: BorderSide(
+                                  width: 1,
+                                  color: context.colorScheme.onSurface
+                                      .withOpacity(.1),
+                                ),
+                                top: BorderSide(
+                                    width: 1,
+                                    color: context.colorScheme.onSurface
+                                        .withOpacity(.1)),
+                                left: BorderSide(
+                                    width: 1,
+                                    color: context.colorScheme.onSurface
+                                        .withOpacity(.1)),
+                                right: BorderSide(
+                                    width: 1,
+                                    color: context.colorScheme.onSurface
+                                        .withOpacity(.1)),
+                              )),
+                            ),
+                            hint: const Bodymedium(data: 'Malzeme Seç'),
+                            buttonPadding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            buttonDecoration: BoxDecoration(
+                                border: null,
+                                borderRadius: BorderRadius.circular(4)),
+                            buttonWidth: context.dynamicWidth(1),
+                            items: [...names]
+                                .map((value) => DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                currentValue = value!;
+                              });
+                            },
+                          ),
+                    const SizedBox(height: 20),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      primary: false,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Bodymedium(data: itemsQr[index].name),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: itemsQr[index].controller,
+                              readOnly: true,
+                              onSaved: (newValue) {},
+                              decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  suffixIcon: names.any(
+                                    (element) {
+                                      return element == itemsQr[index].name;
+                                    },
+                                  )
+                                      ? null
+                                      : TextButton(
+                                          onPressed: () {},
+                                          child: const Bodymedium(
+                                            data: "Detay",
+                                            color: Colors.yellow,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 8.0,
+                                  )),
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 20);
+                      },
+                      itemCount: itemsQr.length,
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        const Spacer(),
+                       names.isEmpty ? SizedBox() : GFButton(
+                          onPressed: itemsQr.every(
+                            (element) {
+                              return element.quantity > 0;
+                            },
+                          )
+                              ? () async {
+                                  CheckForm.checkForm.currentState!.save();
+                                  for (var i = 0; i < itemsQr.length; i++) {
+                                    // ignore: avoid_function_literals_in_foreach_calls
+                                    names.forEach((element) async {
+                                      if (element == itemsQr[i].name) {
+                                        await getIt
+                                            .get<CheckMobx>()
+                                            .createCheck(
+                                                item_id: itemsQr[i].item.oid!,
+                                                customer_id:
+                                                    itemsQr[i].item.musteriID!,
+                                                quantity: itemsQr[i]
+                                                    .quantity
+                                                    .toInt()
+                                                    .toString());
+                                      } else {}
+                                    });
+                                  }
+
+                                  if (getIt.get<CheckMobx>().infoMessage ==
+                                      "Sayım Kayıt Olmuştur") {
+                                    MotionToast.success(
+                                        description: const Bodymedium(
+                                      data: 'İşlem Başarıyla Kaydedildi',
+                                    )).show(context);
+                                    getIt.get<CheckMobx>().infoMessage = '';
+                                  } else {
+                                    MotionToast.error(
+                                        description: const Bodymedium(
+                                      data: 'İşlem Kaydedilemedi',
+                                    )).show(context);
+                                    getIt.get<CheckMobx>().infoMessage = '';
+                                  }
+
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 3000), (() {
+                                    context.router.pop();
+                                  }));
+                                }
+                              : null,
+                          child: const Bodymedium(
+                            data: 'Kaydet',
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

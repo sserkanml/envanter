@@ -25,12 +25,11 @@ class _$AppRouter extends RootStackRouter {
     },
     ScanQrCodeRoute.name: (routeData) {
       final args = routeData.argsAs<ScanQrCodeRouteArgs>();
-      return CustomPage<dynamic>(
+      return CustomPage<double>(
         routeData: routeData,
         child: ScanQrCodeView(
           key: args.key,
-          counter: args.counter,
-          item: args.item,
+          qrModel: args.qrModel,
         ),
         opaque: true,
         barrierDismissible: false,
@@ -597,15 +596,13 @@ class OnBoardRoute extends PageRouteInfo<void> {
 class ScanQrCodeRoute extends PageRouteInfo<ScanQrCodeRouteArgs> {
   ScanQrCodeRoute({
     Key? key,
-    required int counter,
-    required ItemsModel item,
+    required CheckQrModel qrModel,
   }) : super(
           ScanQrCodeRoute.name,
           path: '/scan-qr-code-view',
           args: ScanQrCodeRouteArgs(
             key: key,
-            counter: counter,
-            item: item,
+            qrModel: qrModel,
           ),
         );
 
@@ -615,19 +612,16 @@ class ScanQrCodeRoute extends PageRouteInfo<ScanQrCodeRouteArgs> {
 class ScanQrCodeRouteArgs {
   const ScanQrCodeRouteArgs({
     this.key,
-    required this.counter,
-    required this.item,
+    required this.qrModel,
   });
 
   final Key? key;
 
-  final int counter;
-
-  final ItemsModel item;
+  final CheckQrModel qrModel;
 
   @override
   String toString() {
-    return 'ScanQrCodeRouteArgs{key: $key, counter: $counter, item: $item}';
+    return 'ScanQrCodeRouteArgs{key: $key, qrModel: $qrModel}';
   }
 }
 

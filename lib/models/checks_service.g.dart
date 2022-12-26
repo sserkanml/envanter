@@ -25,6 +25,18 @@ mixin _$CheckMobx on _CheckMobxBase, Store {
     });
   }
 
+  late final _$createCheckAsyncAction =
+      AsyncAction('_CheckMobxBase.createCheck', context: context);
+
+  @override
+  Future<void> createCheck(
+      {required String item_id,
+      required String quantity,
+      required String customer_id}) {
+    return _$createCheckAsyncAction.run(() => super.createCheck(
+        item_id: item_id, quantity: quantity, customer_id: customer_id));
+  }
+
   late final _$getAllChecksAsyncAction =
       AsyncAction('_CheckMobxBase.getAllChecks', context: context);
 

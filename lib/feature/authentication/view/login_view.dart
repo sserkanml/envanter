@@ -135,12 +135,7 @@ class _LoginViewState extends State<LoginView> {
 
                     if (isLogin == 'true') {
                       isError = false;
-                      await getIt.get<ProjectsMobx>().getAllProjects();
-                      await getIt.get<MemberMobx>().getAllMembers();
-                       await getIt.get<ItemsMobx>().getAllItems();
-                        await getIt.get<CheckDetailMobx>().getAllChekcDetail();
-                        await getIt.get<CheckMobx>().getAllChecks();
-                      await getIt.get<CustomerMobx>().getAllCustomers();
+                     await AuthenticateUser.getAllData();
                       context.router.push(const RootRoute());
                     } else {
                       isLoading = false;

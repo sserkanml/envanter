@@ -237,21 +237,7 @@ class _AppBarcodeScannerWidgetState extends State<_BarcodeScannerWidget> {
         Expanded(
           child: _getScanWidgetByPlatform(),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  _scannerController.openFlash();
-                },
-                child: Text("Open")),
-            ElevatedButton(
-                onPressed: () {
-                  _scannerController.closeFlash();
-                },
-                child: Text("Close")),
-          ],
-        ),
+       
       ],
     );
   }
