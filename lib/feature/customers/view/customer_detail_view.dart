@@ -1,11 +1,12 @@
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/models/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../../core/widgets/bodylarge.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/customer_model.dart';
 
 class CustomerDetailView extends StatefulWidget {
   final CustomerModel customer;
@@ -148,7 +149,7 @@ class _CustomerDetailViewState extends State<CustomerDetailView> {
                   )),
             ),
             const SizedBox(height: 10),
-            const Bodymedium(data: 'Müşteri Adı'),
+            const Bodymedium(data: 'Aktif Durumu'),
             const SizedBox(height: 10),
             SizedBox(
               height: 50,

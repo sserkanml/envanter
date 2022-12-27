@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:aden_envanterus/core/util/extension.dart';
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/checking/model/check_qr_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/button/gf_button.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner_overlay_shape.dart';
+import 'package:getwidget/components/button/gf_button.dart';
 import 'package:kartal/kartal.dart';
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:photo_manager/photo_manager.dart';
+
+import '../../../core/util/extension.dart';
+import '../../../core/widgets/bodylarge.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/headline6.dart';
+import '../model/check_qr_model.dart';
 
 class ScanQrCodeView extends StatefulWidget {
   final CheckQrModel qrModel;
@@ -46,6 +48,7 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
   @override
   void dispose() {
     controller?.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -131,6 +134,7 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
         controller.resumeCamera();
       } else {
         await controller.pauseCamera();
+        // ignore: use_build_context_synchronously
         MotionToast.error(
             description: const Bodymedium(
           data: 'Kod Bulunamadı',
@@ -146,9 +150,7 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
 
     if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
+      await PhotoManager.openSetting();
     }
   }
 

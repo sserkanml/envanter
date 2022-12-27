@@ -14,7 +14,21 @@ class CanceledCheckView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: const [],
+          children: const [
+            SizedBox(
+              height: 20,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Arama Yap',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 8.0,
+                  )),
+            ),
+          ],
         ),
       ),
     );

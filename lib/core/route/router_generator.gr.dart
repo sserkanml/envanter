@@ -172,14 +172,6 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
-    LocationWrapperRoute.name: (routeData) {
-      return CustomPage<dynamic>(
-        routeData: routeData,
-        child: const LocationWrapperView(),
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
     DetectLocationRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -256,18 +248,18 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
-    ItemsRoute.name: (routeData) {
+    CanceledCheckRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const ItemsView(),
+        child: const CanceledCheckView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
-    CreateItemsRoute.name: (routeData) {
+    ItemsRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const CreateItemsView(),
+        child: const ItemsView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -439,31 +431,24 @@ class _$AppRouter extends RootStackRouter {
                   parent: CustomersWrapperRoute.name,
                 ),
                 RouteConfig(
-                  LocationWrapperRoute.name,
-                  path: 'location-wrapper-view',
+                  DetectLocationRoute.name,
+                  path: 'detect-location-view',
                   parent: CustomersWrapperRoute.name,
-                  children: [
-                    RouteConfig(
-                      DetectLocationRoute.name,
-                      path: '',
-                      parent: LocationWrapperRoute.name,
-                    ),
-                    RouteConfig(
-                      GpsRoute.name,
-                      path: 'gps-view',
-                      parent: LocationWrapperRoute.name,
-                    ),
-                    RouteConfig(
-                      DetailLocationRoute.name,
-                      path: 'detail-location-view',
-                      parent: LocationWrapperRoute.name,
-                    ),
-                    RouteConfig(
-                      CustomSelectLocationRoute.name,
-                      path: 'custom-select-location-view',
-                      parent: LocationWrapperRoute.name,
-                    ),
-                  ],
+                ),
+                RouteConfig(
+                  GpsRoute.name,
+                  path: 'gps-view',
+                  parent: CustomersWrapperRoute.name,
+                ),
+                RouteConfig(
+                  DetailLocationRoute.name,
+                  path: 'detail-location-view',
+                  parent: CustomersWrapperRoute.name,
+                ),
+                RouteConfig(
+                  CustomSelectLocationRoute.name,
+                  path: 'custom-select-location-view',
+                  parent: CustomersWrapperRoute.name,
                 ),
               ],
             ),
@@ -498,13 +483,13 @@ class _$AppRouter extends RootStackRouter {
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
-                  ItemsRoute.name,
-                  path: 'items-view',
+                  CanceledCheckRoute.name,
+                  path: 'canceled',
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
-                  CreateItemsRoute.name,
-                  path: 'create-items-view',
+                  ItemsRoute.name,
+                  path: 'items-view',
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
@@ -861,25 +846,12 @@ class CreateCustomersRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LocationWrapperView]
-class LocationWrapperRoute extends PageRouteInfo<void> {
-  const LocationWrapperRoute({List<PageRouteInfo>? children})
-      : super(
-          LocationWrapperRoute.name,
-          path: 'location-wrapper-view',
-          initialChildren: children,
-        );
-
-  static const String name = 'LocationWrapperRoute';
-}
-
-/// generated route for
 /// [DetectLocationView]
 class DetectLocationRoute extends PageRouteInfo<void> {
   const DetectLocationRoute()
       : super(
           DetectLocationRoute.name,
-          path: '',
+          path: 'detect-location-view',
         );
 
   static const String name = 'DetectLocationRoute';
@@ -1004,6 +976,18 @@ class PendingCheckingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CanceledCheckView]
+class CanceledCheckRoute extends PageRouteInfo<void> {
+  const CanceledCheckRoute()
+      : super(
+          CanceledCheckRoute.name,
+          path: 'canceled',
+        );
+
+  static const String name = 'CanceledCheckRoute';
+}
+
+/// generated route for
 /// [ItemsView]
 class ItemsRoute extends PageRouteInfo<void> {
   const ItemsRoute()
@@ -1013,18 +997,6 @@ class ItemsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ItemsRoute';
-}
-
-/// generated route for
-/// [CreateItemsView]
-class CreateItemsRoute extends PageRouteInfo<void> {
-  const CreateItemsRoute()
-      : super(
-          CreateItemsRoute.name,
-          path: 'create-items-view',
-        );
-
-  static const String name = 'CreateItemsRoute';
 }
 
 /// generated route for

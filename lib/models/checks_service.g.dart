@@ -25,6 +25,22 @@ mixin _$CheckMobx on _CheckMobxBase, Store {
     });
   }
 
+  late final _$infoMessageAtom =
+      Atom(name: '_CheckMobxBase.infoMessage', context: context);
+
+  @override
+  String get infoMessage {
+    _$infoMessageAtom.reportRead();
+    return super.infoMessage;
+  }
+
+  @override
+  set infoMessage(String value) {
+    _$infoMessageAtom.reportWrite(value, super.infoMessage, () {
+      super.infoMessage = value;
+    });
+  }
+
   late final _$createCheckAsyncAction =
       AsyncAction('_CheckMobxBase.createCheck', context: context);
 
@@ -48,7 +64,8 @@ mixin _$CheckMobx on _CheckMobxBase, Store {
   @override
   String toString() {
     return '''
-checks: ${checks}
+checks: ${checks},
+infoMessage: ${infoMessage}
     ''';
   }
 }

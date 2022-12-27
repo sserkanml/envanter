@@ -1,15 +1,15 @@
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/customers/view_model/customer_form.dart';
-import 'package:aden_envanterus/models/customer_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
+import '../../../core/service/dependecy_service.dart';
+import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/customer_service.dart';
+import '../view_model/customer_form.dart';
 
 class CreateCustomersView extends StatefulWidget {
   const CreateCustomersView({Key? key}) : super(key: key);
@@ -26,6 +26,7 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
   String taxPlace = '';
   String taxNo = '';
   String adress = '';
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,6 +188,8 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                       FocusScope.of(context).unfocus();
                       if (CustomerForm.customerForm.currentState!.validate()) {
                         CustomerForm.customerForm.currentState!.save();
+                        isLoading = true;
+                        setState(() {});
                         await getIt.get<CustomerMobx>().customerPostData(
                             customerCompanyName: customerCompanyName,
                             authorityName: authorityName,
@@ -195,6 +198,9 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                             taxPlace: taxPlace,
                             taxNo: taxNo,
                             adress: adress);
+                        await getIt.get<CustomerMobx>().getAllCustomers();
+                        isLoading = false;
+                        setState(() {});
                         MotionToast.success(
                           onClose: () {
                             Future.delayed(const Duration(milliseconds: 1000),
@@ -213,7 +219,11 @@ class _CreateCustomersViewState extends State<CreateCustomersView> {
                         getIt.get<CustomerMobx>().infoMessage = '';
                       }
                     },
-                    child: const Bodysmall(data: 'Kaydet', color: Colors.white),
+                    child: isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Bodysmall(data: 'Kaydet', color: Colors.white),
                   )
                 ],
               )

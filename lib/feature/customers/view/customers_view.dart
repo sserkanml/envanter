@@ -1,11 +1,5 @@
 import 'dart:async';
 
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodysmall.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/models/customer_model.dart';
-import 'package:aden_envanterus/models/customer_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +8,13 @@ import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
 import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/customer_model.dart';
+import '../../../models/customer_service.dart';
 import '../../authentication/view_model/get_login.dart';
 
 class CustomersView extends StatefulWidget {
@@ -64,7 +64,7 @@ class _CustomersViewState extends State<CustomersView> {
 
   Future<void> _refresh() async {
     await AuthenticateUser.getAllData();
-   
+
     _controller.sink.add(SwipeRefreshState.hidden);
     setState(() {});
   }
@@ -109,7 +109,7 @@ class _CustomersViewState extends State<CustomersView> {
                   ),
                   const SizedBox(width: 10),
                   GFIconButton(
-                    icon: const Icon(FontAwesomeIcons.pencil),
+                    icon: const Icon(FontAwesomeIcons.plus),
                     onPressed: () async {
                       await context.router.push(const CreateCustomersRoute());
                       setState(() {
@@ -124,6 +124,7 @@ class _CustomersViewState extends State<CustomersView> {
                   shrinkWrap: true,
                   primary: false,
                   itemBuilder: (context, index) {
+                    print(customerSearch[index].aktifPasif);
                     return ListTile(
                       trailing: Bodysmall(
                           fontWeight: FontWeight.bold,

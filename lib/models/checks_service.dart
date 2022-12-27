@@ -47,7 +47,7 @@ abstract class _CheckMobxBase with Store {
       checks = result['jsonData_1'].map<CheckModel>((element) {
         return CheckModel.fromMap(element);
       }).toList();
-      print(checks.length);
+     
     } else {}
   }
 }

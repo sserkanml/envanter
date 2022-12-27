@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 
+import '../../feature/checking/view/canceled_check_view.dart';
 import '../../feature/checking/view/checks_detail_view..dart';
 import '../../feature/checking/view/checks_view.dart';
 import '../../feature/checking/view/checks_wrapper_view.dart';
 import '../../feature/checking/view/confirmed_view.dart';
 import '../../feature/checking/view/create_checks_view.dart';
 import '../../feature/checking/view/pending_checking_view.dart';
-import '../../feature/checking/view/scan_qr_code_view.dart';
 import '../../feature/checking/view/select_customer_view.dart';
 import '../../feature/customers/view/create_customers_view.dart';
 import '../../feature/customers/view/custom_select_location_view.dart';
@@ -19,7 +19,6 @@ import '../../feature/customers/view/gps_view.dart';
 import '../../feature/customers/view/location_wrapper_view.dart';
 import '../../feature/dashboard/view/dashboard_view.dart';
 import '../../feature/dashboard/view/dashboard_wrapper_view.dart';
-import '../../feature/items/view/create_items_view.dart';
 import '../../feature/items/view/items_detail_view.dart';
 import '../../feature/items/view/items_view.dart';
 import '../../feature/projects/view/create_projects_view.dart';
@@ -79,8 +78,8 @@ const rootAutoRoute = CustomRoute(
           page: CustomerDetailView,
         ),
         CustomRoute(page: CreateCustomersView, path: 'create-customers'),
-        CustomRoute(page: LocationWrapperView, children: [
-          CustomRoute(page: DetectLocationView, path: ''),
+      
+          CustomRoute(page: DetectLocationView,),
           CustomRoute(
             page: GpsView,
           ),
@@ -90,7 +89,7 @@ const rootAutoRoute = CustomRoute(
           CustomRoute(
             page: CustomSelectLocationView,
           ),
-        ]),
+      
       ]),
       CustomRoute(page: ChecksWrapperView, children: [
         CustomRoute(page: ChecksView, path: ''),
@@ -98,13 +97,12 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: SelectCustomerView,path: 'select-customer'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
         CustomRoute(page: PendingCheckingView, path: 'pending'),
+        CustomRoute(page:CanceledCheckView,path:'canceled'),
      
         CustomRoute(
           page: ItemsView,
         ),
-        CustomRoute(
-          page: CreateItemsView,
-        ),
+     
         CustomRoute(
           page: ItemsDetailView,
         ),

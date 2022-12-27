@@ -1,13 +1,6 @@
 import 'dart:async';
 
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodysmall.dart';
-import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
-import 'package:aden_envanterus/models/customer_service.dart';
-import 'package:aden_envanterus/models/projects_service.dart';
 import 'package:auto_route/auto_route.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,9 +8,14 @@ import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
 import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/bodysmall.dart';
 import '../../../core/widgets/headline6.dart';
-import '../widgets/info_widget.dart';
+import '../../../models/customer_service.dart';
+import '../../../models/projects_service.dart';
+import '../../authentication/view_model/get_login.dart';
 
 class ProjectsView extends StatefulWidget {
   const ProjectsView({Key? key}) : super(key: key);
@@ -74,7 +72,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                         child: Row(
                           children: const [
                             Icon(
-                              FontAwesomeIcons.pencil,
+                              FontAwesomeIcons.plus,
                               color: Colors.white,
                             ),
                             SizedBox(
@@ -89,18 +87,18 @@ class _ProjectsViewState extends State<ProjectsView> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      InfoWidget(title: 'Dosyalar', data: '2'),
-                      InfoWidget(title: 'Projeler', data: '2'),
-                      InfoWidget(title: 'Toplam Miktar', data: '2'),
-                      InfoWidget(title: 'Toplam Tutar', data: '2'),
-                    ],
-                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: const [
+                  //     InfoWidget(title: 'Dosyalar', data: '2'),
+                  //     InfoWidget(title: 'Projeler', data: '2'),
+                  //     InfoWidget(title: 'Toplam Miktar', data: '2'),
+                  //     InfoWidget(title: 'Toplam Tutar', data: '2'),
+                  //   ],
+                  // ),
                   AnimationLimiter(
                     child: GridView.builder(
                       shrinkWrap: true,

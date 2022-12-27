@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:aden_envanterus/models/projets_model.dart';
-import 'package:aden_envanterus/models/user_session.dart';
-import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobx/mobx.dart';
 
 import '../core/service/dependecy_service.dart';
+import 'projets_model.dart';
+import 'user_session.dart';
+
 part 'projects_service.g.dart';
 
 class ProjectsMobx = _ProjectsMobxBase with _$ProjectsMobx;
@@ -44,13 +45,7 @@ abstract class _ProjectsMobxBase with Store {
     });
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       infoMessage = response.body;
-      projects.add(ProjectsModel(
-        firmaKullaniciID: projectUserId,
-        projeAdi: projectName,
-        etiket: [tag],
-        projeNot: note,
-      ));
-      refreshState();
+      await getAllProjects();
     } else {
       infoMessage = '';
     }

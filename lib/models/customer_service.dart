@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+import 'package:mobx/mobx.dart';
+
 import '../core/service/dependecy_service.dart';
 import 'customer_model.dart';
 import 'user_session.dart';
-import 'package:http/http.dart' as http;
-import 'package:mobx/mobx.dart';
+
 part 'customer_service.g.dart';
 
 class CustomerMobx = _CustomerMobxBase with _$CustomerMobx;
@@ -45,16 +47,6 @@ abstract class _CustomerMobxBase with Store {
     });
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       infoMessage = response.body;
-      customers.add(CustomerModel(
-        musteriAdres: adress,
-        musteriFirmaAdi: customerCompanyName,
-        musteriVergiNo: taxNo,
-        musteriTelefon: customerPhone,
-        musteriYetkili: authorityName,
-        musteriVergiDaire: taxPlace,
-        musteriEmail: customerEmail,
-      ));
-      print(customers.length);
     } else {}
   }
 

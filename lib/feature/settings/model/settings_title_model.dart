@@ -1,8 +1,9 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../core/route/router_generator.dart';
 
 class SettingsTitleModel {
   final String name;
@@ -14,14 +15,14 @@ class SettingsTitleModel {
 }
 
 List<SettingsTitleModel> settingtitle = [
-  SettingsTitleModel(
-      name: 'Bilgilerim',
-      page: const MyProfileRoute(),
-      icon: FontAwesomeIcons.user),
-       SettingsTitleModel(
-      name: 'Uyarılar',
-      page: const MyProfileRoute(),
-      icon: Icons.dangerous),
+  // SettingsTitleModel(
+  //     name: 'Bilgilerim',
+  //     page: const MyProfileRoute(),
+  //     icon: FontAwesomeIcons.user),
+  //  SettingsTitleModel(
+  // name: 'Uyarılar',
+  // page: const MyProfileRoute(),
+  // icon: Icons.dangerous),
   SettingsTitleModel(
       name: 'Kullanıcılar',
       page: const UsersRoute(),
@@ -31,10 +32,10 @@ List<SettingsTitleModel> settingtitle = [
     name: 'Kullanıcı Oluşturma',
     page: const CreateUserRoute(),
   ),
-  SettingsTitleModel(
-      icon: FontAwesomeIcons.gears,
-      name: 'Sistem Ayarları',
-      page: const SystemSettingsRoute()),
+  // SettingsTitleModel(
+  //     icon: FontAwesomeIcons.gears,
+  //     name: 'Sistem Ayarları',
+  //     page: const SystemSettingsRoute()),
   SettingsTitleModel(
       icon: FontAwesomeIcons.rightFromBracket,
       name: 'Çıkış Yap',

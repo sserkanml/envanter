@@ -1,19 +1,19 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/util/extension.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/checking/model/check_qr_model.dart';
-import 'package:aden_envanterus/models/checks_detail_model.dart';
-import 'package:aden_envanterus/models/checks_model.dart';
-import 'package:aden_envanterus/models/customer_model.dart';
-import 'package:aden_envanterus/models/items_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
-
 import 'package:kartal/kartal.dart';
+
+import '../../../core/route/router_generator.dart';
+import '../../../core/util/extension.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/checks_detail_model.dart';
+import '../../../models/checks_model.dart';
+import '../../../models/customer_model.dart';
+import '../../../models/items_model.dart';
+import '../model/check_qr_model.dart';
 
 class CheckDetailView extends StatefulWidget {
   final CustomerModel customer;
@@ -58,7 +58,7 @@ class _CheckDetailViewState extends State<CheckDetailView> {
     detailExplanation.text = widget.checkDetail.detayAciklama ?? '';
     item.text = widget.item.adi ?? '';
     customerName.text = widget.customer.musteriFirmaAdi ?? ' ';
-    checkCount.text = widget.check.miktar.toString();
+    checkCount.text = (widget.check.miktar?.toInt() ?? 0).toString();
 
     var rawStart = widget.checkDetail.baslamaTarihi;
     var numericStart = rawStart?.split('(')[1].split(')')[0];
