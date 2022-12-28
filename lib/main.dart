@@ -15,7 +15,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  await getIt.get<InfoDevices>().getAllInfo();
+  
   DependecyService.setup();
   runApp(MyApp(
     mode: savedThemeMode,

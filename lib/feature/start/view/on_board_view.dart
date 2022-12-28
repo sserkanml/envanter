@@ -1,14 +1,15 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/service/shared_references.dart';
-import 'package:aden_envanterus/core/util/extension.dart';
-import 'package:aden_envanterus/core/widgets/headline5.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/start/model/on_board_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
+import '../../../core/service/shared_references.dart';
+import '../../../core/util/extension.dart';
+import '../../../core/widgets/headline5.dart';
+import '../../../core/widgets/headline6.dart';
+import '../model/on_board_model.dart';
 
 class OnBoardView extends StatefulWidget {
   const OnBoardView({Key? key}) : super(key: key);
@@ -53,12 +54,13 @@ class _OnBoardViewState extends State<OnBoardView> {
                   ),
                   body: Column(
                     children: <Widget>[
-                      SvgPicture.asset(
-                        context.getPath(
-                            folder: "svg", file: onboardData[index].file),
-                        fit: BoxFit.contain,
-                        height: 150,
-                        width: 100,
+                      Expanded(
+                        child: SvgPicture.asset(
+                          context.getPath(
+                              folder: "svg", file: onboardData[index].file),
+                          fit: BoxFit.contain,
+                         
+                        ),
                       )
                     ],
                   ));

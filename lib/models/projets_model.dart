@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 class ProjectsModel {
 
 
@@ -13,7 +11,7 @@ class ProjectsModel {
   String? kaydeden;
   String? kayitZamani;
   String? projeNot;
-  List<String>? etiket;
+  String? etiket;
   String? projeResim;
   ProjectsModel({
     this.oid,
@@ -37,7 +35,7 @@ class ProjectsModel {
     String? kaydeden,
     String? kayitZamani,
     String? projeNot,
-    List<String>? etiket,
+    String? etiket,
     String? projeResim,
   }) {
     return ProjectsModel(
@@ -76,7 +74,7 @@ class ProjectsModel {
       kaydeden: map['Kaydeden'] != null ? map['Kaydeden'] as String : null,
       kayitZamani: map['Kayit_Zamani'] != null ? map['Kayit_Zamani'] as String : null,
       projeNot: map['Proje_Not'] != null ? map['Proje_Not'] as String : null,
-      etiket: map['Etiket'] != null ? List<String>.from((map['Etiket'] as List<String>)) : null,
+      etiket: map['Etiket'] != null ? map['Etiket'] as String : null,
       projeResim: map['Proje_Resim'] != null ? map['Proje_Resim'] as String : null,
     );
   }
@@ -102,7 +100,7 @@ class ProjectsModel {
       other.kaydeden == kaydeden &&
       other.kayitZamani == kayitZamani &&
       other.projeNot == projeNot &&
-      listEquals(other.etiket, etiket) &&
+      other.etiket == etiket &&
       other.projeResim == projeResim;
   }
 

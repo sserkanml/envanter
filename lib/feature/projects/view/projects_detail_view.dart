@@ -1,14 +1,15 @@
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/customers/view/customer_detail_view.dart';
-import 'package:aden_envanterus/models/customer_model.dart';
-import 'package:aden_envanterus/models/projets_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../../core/widgets/bodylarge.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/customer_model.dart';
+import '../../../models/projets_model.dart';
+import '../../customers/view/customer_detail_view.dart';
 
 class ProjectsDetailView extends StatefulWidget {
   final ProjectsModel project;
@@ -32,7 +33,7 @@ class _ProjectsDetailViewState extends State<ProjectsDetailView> {
     tags = TextEditingController();
     projectNote = TextEditingController();
     projectName.text = widget.project.projeAdi ?? ' ';
-    tags.text = widget.project.etiket?.join(',') ?? ' ';
+    tags.text = widget.project.etiket ?? ' ';
     projectNote.text = widget.project.projeNot ?? ' ';
     super.initState();
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
@@ -132,166 +133,171 @@ class _ChecksViewState extends State<ChecksView> {
                     )),
               ),
               const SizedBox(height: 20),
-              ListView.separated(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {},
-                      trailing: TextButton(
-                        onPressed: () {
-                          context.router.push(CheckDetailRoute(
-                              check: getIt
-                                  .get<CheckMobx>()
-                                  .checks
-                                  .where((element) =>
-                                      element.malzeme ==
-                                      getIt
-                                          .get<CheckDetailMobx>()
-                                          .checksDetail[index]
-                                          .malzeme)
-                                  .first,
-                              customer: getIt
-                                  .get<CustomerMobx>()
-                                  .customers
-                                  .where((element) =>
-                                      element.oid ==
-                                      getIt
-                                          .get<CheckDetailMobx>()
-                                          .checksDetail[index]
-                                          .musteriID)
-                                  .first,
-                              item: getIt
-                                  .get<ItemsMobx>()
-                                  .items
-                                  .where((element) =>
-                                      element.oid ==
-                                      getIt
-                                          .get<CheckDetailMobx>()
-                                          .checksDetail[index]
-                                          .malzeme)
-                                  .first,
-                              checkDetail: getIt
-                                  .get<CheckDetailMobx>()
-                                  .checksDetail
-                                  .where((element) =>
-                                      element.malzeme ==
-                                      getIt
-                                          .get<CheckMobx>()
-                                          .checks[index]
-                                          .malzeme)
-                                  .first));
-                        },
-                        child: const Bodymedium(
-                          data: "Detay",
-                          color: Colors.purple,
-                          fontWeight: FontWeight.bold,
+              Observer(
+                
+                builder:(context) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {},
+                        trailing: TextButton(
+                          onPressed: () {
+                            context.router.push(CheckDetailRoute(
+                                check: getIt
+                                    .get<CheckMobx>()
+                                    .checks
+                                    .where((element) =>
+                                        element.malzeme ==
+                                        getIt
+                                            .get<CheckDetailMobx>()
+                                            .checksDetail[index]
+                                            .malzeme)
+                                    .first,
+                                customer: getIt
+                                    .get<CustomerMobx>()
+                                    .customers
+                                    .where((element) =>
+                                        element.oid ==
+                                        getIt
+                                            .get<CheckDetailMobx>()
+                                            .checksDetail[index]
+                                            .musteriID)
+                                    .first,
+                                item: getIt
+                                    .get<ItemsMobx>()
+                                    .items
+                                    .where((element) =>
+                                        element.oid ==
+                                        getIt
+                                            .get<CheckDetailMobx>()
+                                            .checksDetail[index]
+                                            .malzeme)
+                                    .first,
+                                checkDetail: getIt
+                                    .get<CheckDetailMobx>()
+                                    .checksDetail
+                                    .where((element) =>
+                                        element.malzeme ==
+                                        getIt
+                                            .get<CheckMobx>()
+                                            .checks[index]
+                                            .malzeme)
+                                    .first));
+                          },
+                          child: const Bodymedium(
+                            data: "Detay",
+                            color: Colors.purple,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      // trailing: GFButton(
-                      //   onPressed: () {
-                      //     context.router.push(CheckDetailRoute(
-                      //         check: getIt
-                      //             .get<CheckMobx>()
-                      //             .checks
-                      //             .where((element) =>
-                      //                 element.malzeme ==
-                      //                 getIt
-                      //                     .get<CheckDetailMobx>()
-                      //                     .checksDetail[index]
-                      //                     .malzeme)
-                      //             .first,
-                      //         customer: getIt
-                      //             .get<CustomerMobx>()
-                      //             .customers
-                      //             .where((element) =>
-                      //                 element.oid ==
-                      //                 getIt
-                      //                     .get<CheckDetailMobx>()
-                      //                     .checksDetail[index]
-                      //                     .musteriID)
-                      //             .first,
-                      //         item: getIt
-                      //             .get<ItemsMobx>()
-                      //             .items
-                      //             .where((element) =>
-                      //                 element.oid ==
-                      //                 getIt
-                      //                     .get<CheckDetailMobx>()
-                      //                     .checksDetail[index]
-                      //                     .malzeme)
-                      //             .first,
-                      //         checkDetail: getIt
-                      //             .get<CheckDetailMobx>()
-                      //             .checksDetail
-                      //             .where((element) =>
-                      //                 element.malzeme ==
-                      //                 getIt
-                      //                     .get<CheckMobx>()
-                      //                     .checks[index]
-                      //                     .malzeme)
-                      //             .first));
-                      //   },
-                      //   color: GFColors.WARNING,
-                      //   child: const Bodysmall(
-                      //     data: 'Detay',
-                      //     color: Colors.white,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      title: Row(
-                        children: [
-                          Bodymedium(
-                              fontWeight: FontWeight.bold,
-                              data: (getIt
-                                              .get<CustomerMobx>()
-                                              .customers
-                                              .firstWhereOrNull((element) =>
-                                                  element.oid ==
-                                                  getIt
-                                                      .get<CheckDetailMobx>()
-                                                      .checksDetail[index]
-                                                      .musteriID)
-                                              ?.musteriFirmaAdi)!
-                                          .length >
-                                      30
-                                  ? (getIt
-                                          .get<CustomerMobx>()
-                                          .customers
-                                          .firstWhereOrNull((element) =>
-                                              element.oid ==
-                                              getIt
-                                                  .get<CheckDetailMobx>()
-                                                  .checksDetail[index]
-                                                  .musteriID)
-                                          ?.musteriFirmaAdi)!
-                                      .substring(0, 30)
-                                  : (getIt
-                                          .get<CustomerMobx>()
-                                          .customers
-                                          .firstWhereOrNull((element) =>
-                                              element.oid ==
-                                              getIt
-                                                  .get<CheckDetailMobx>()
-                                                  .checksDetail[index]
-                                                  .musteriID)
-                                          ?.musteriFirmaAdi) ??
-                                      ''),
-                          const SizedBox(width: 5),
-                          Bodysmall(
-                              data:
-                                  '(${getIt.get<ItemsMobx>().items.firstWhereOrNull((element) => element.oid == getIt.get<CheckDetailMobx>().checksDetail[index].malzeme)?.adi})')
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      height: 0,
-                      color: context.colorScheme.onSurface.withOpacity(.08),
-                    );
-                  },
-                  itemCount: getIt.get<CheckMobx>().checks.length)
+                        // trailing: GFButton(
+                        //   onPressed: () {
+                        //     context.router.push(CheckDetailRoute(
+                        //         check: getIt
+                        //             .get<CheckMobx>()
+                        //             .checks
+                        //             .where((element) =>
+                        //                 element.malzeme ==
+                        //                 getIt
+                        //                     .get<CheckDetailMobx>()
+                        //                     .checksDetail[index]
+                        //                     .malzeme)
+                        //             .first,
+                        //         customer: getIt
+                        //             .get<CustomerMobx>()
+                        //             .customers
+                        //             .where((element) =>
+                        //                 element.oid ==
+                        //                 getIt
+                        //                     .get<CheckDetailMobx>()
+                        //                     .checksDetail[index]
+                        //                     .musteriID)
+                        //             .first,
+                        //         item: getIt
+                        //             .get<ItemsMobx>()
+                        //             .items
+                        //             .where((element) =>
+                        //                 element.oid ==
+                        //                 getIt
+                        //                     .get<CheckDetailMobx>()
+                        //                     .checksDetail[index]
+                        //                     .malzeme)
+                        //             .first,
+                        //         checkDetail: getIt
+                        //             .get<CheckDetailMobx>()
+                        //             .checksDetail
+                        //             .where((element) =>
+                        //                 element.malzeme ==
+                        //                 getIt
+                        //                     .get<CheckMobx>()
+                        //                     .checks[index]
+                        //                     .malzeme)
+                        //             .first));
+                        //   },
+                        //   color: GFColors.WARNING,
+                        //   child: const Bodysmall(
+                        //     data: 'Detay',
+                        //     color: Colors.white,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        title: Row(
+                          children: [
+                            Bodymedium(
+                                fontWeight: FontWeight.bold,
+                                data: (getIt
+                                                .get<CustomerMobx>()
+                                                .customers
+                                                .firstWhereOrNull((element) =>
+                                                    element.oid ==
+                                                    getIt
+                                                        .get<CheckDetailMobx>()
+                                                        .checksDetail[index]
+                                                        .musteriID)
+                                                ?.musteriFirmaAdi)!
+                                            .length >
+                                        30
+                                    ? (getIt
+                                            .get<CustomerMobx>()
+                                            .customers
+                                            .firstWhereOrNull((element) =>
+                                                element.oid ==
+                                                getIt
+                                                    .get<CheckDetailMobx>()
+                                                    .checksDetail[index]
+                                                    .musteriID)
+                                            ?.musteriFirmaAdi)!
+                                        .substring(0, 30)
+                                    : (getIt
+                                            .get<CustomerMobx>()
+                                            .customers
+                                            .firstWhereOrNull((element) =>
+                                                element.oid ==
+                                                getIt
+                                                    .get<CheckDetailMobx>()
+                                                    .checksDetail[index]
+                                                    .musteriID)
+                                            ?.musteriFirmaAdi) ??
+                                        ''),
+                            const SizedBox(width: 5),
+                            Bodysmall(
+                                data:
+                                    '(${getIt.get<ItemsMobx>().items.firstWhereOrNull((element) => element.oid == getIt.get<CheckDetailMobx>().checksDetail[index].malzeme)?.adi})')
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        height: 0,
+                        color: context.colorScheme.onSurface.withOpacity(.08),
+                      );
+                    },
+                    itemCount: getIt.get<CheckMobx>().checks.length);
+                }, 
+              )
             ],
           ),
         ),

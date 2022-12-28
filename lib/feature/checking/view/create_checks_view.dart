@@ -116,17 +116,18 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                 if (data == 0) {
                 } else {
                   if (doneList.isEmpty) {
-                  } else {
-                    // ignore: avoid_function_literals_in_foreach_calls
-                    doneList.forEach((element) {
-                      if (element.name == currentValue) {
-                        element.quantity = data ?? 0;
-                      } else {
-                        doneList.add(names.firstWhere(
-                            (element) => element.name == currentValue));
-                      }
-                    });
+                    doneList.add(names
+                        .firstWhere((element) => element.name == currentValue));
                   }
+                  // ignore: avoid_function_literals_in_foreach_calls
+                  doneList.forEach((element) {
+                    if (element.name == currentValue) {
+                      element.quantity = data ?? 0;
+                    } else {
+                      doneList.add(names.firstWhere(
+                          (element) => element.name == currentValue));
+                    }
+                  });
                 }
                 setState(() {});
               },
@@ -190,11 +191,10 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                                   color: Colors.white,
                                   size: 20,
                                 ),
-                                onPressed: doneList.isEmpty
-                                    ? null : () {},
+                                onPressed: doneList.isEmpty ? null : () {},
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             SizedBox(
@@ -216,25 +216,29 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                                                       .toString());
                                         });
 
-                                        if (getIt.get<CheckMobx>().infoMessage ==
+                                        if (getIt
+                                                .get<CheckMobx>()
+                                                .infoMessage ==
                                             "Sayım Kayıt Olmuştur") {
                                           MotionToast.success(
                                               description: const Bodymedium(
                                             data: 'İşlem Başarıyla Kaydedildi',
                                           )).show(context);
-                                          getIt.get<CheckMobx>().infoMessage = '';
+                                          getIt.get<CheckMobx>().infoMessage =
+                                              '';
                                         } else {
                                           MotionToast.error(
                                               description: const Bodymedium(
                                             data: 'İşlem Kaydedilemedi',
                                           )).show(context);
-                                          getIt.get<CheckMobx>().infoMessage = '';
+                                          getIt.get<CheckMobx>().infoMessage =
+                                              '';
                                         }
 
                                         await Future.delayed(
                                             const Duration(milliseconds: 3000),
                                             (() {
-                                          context.router.pop();
+                                          context.router.popUntil((route) => route.settings.name==ChecksRoute.name);
                                         }));
                                       },
                                 child: const Bodymedium(
@@ -314,52 +318,55 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                   ),
                   doneList.isEmpty
                       ? const SizedBox()
-                      : Container(
-                          color: context.colorScheme.onSurface.withOpacity(.03),
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 20),
-                              const Bodymedium(data: 'Sayılanlar'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              ListView.separated(
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  itemBuilder: (context, index) {
-                                    return Row(
-                                      children: [
-                                        Container(
-                                          width: 10,
-                                          height: 10,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color:
-                                                  context.colorScheme.primary),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Bodymedium(
-                                            data:
-                                                '${doneList[index].name} ${doneList[index].quantity.toInt()} ${doneList[index].item.birim!}')
-                                      ],
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return Divider(
-                                      color: context.colorScheme.onSurface
-                                          .withOpacity(.1),
-                                      height: .8,
-                                    );
-                                  },
-                                  itemCount: doneList.length),
-                              const SizedBox(height: 20),
-                            ],
+                      : Padding(
+                        padding: const EdgeInsets.only(bottom:12.0),
+                        child: Container(
+                            color: context.colorScheme.onSurface.withOpacity(.03),
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20),
+                                const Bodymedium(data: 'Sayılanlar'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ListView.separated(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemBuilder: (context, index) {
+                                      return Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color:
+                                                    context.colorScheme.primary),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Bodymedium(
+                                              data:
+                                                  '${doneList[index].name} ${doneList[index].quantity.toInt()} ${doneList[index].item.birim!}')
+                                        ],
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return Divider(
+                                        color: context.colorScheme.onSurface
+                                            .withOpacity(.1),
+                                        height: .8,
+                                      );
+                                    },
+                                    itemCount: doneList.length),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
                           ),
-                        ),
+                      ),
                   sentList.isEmpty
                       ? const SizedBox()
                       : Container(
