@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:tab_container/tab_container.dart';
 
 import '../../../core/widgets/headline6.dart';
+import '../../authentication/view_model/get_login.dart';
 import '../model/tab_model.dart';
 import '../widgets/tabs_child.dart';
 
@@ -115,23 +115,23 @@ class _DashboardViewState extends State<DashboardView> {
                 const SizedBox(
                   height: 40,
                 ),
-                const Headline6(data: 'Son Eklenen Projeler'),
-                SizedBox(
-                    height: 240,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const SizedBox(
-                          width: 200,
-                          child: Card(
-                            color: Colors.red,
-                            margin:
-                                EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                          ),
-                        );
-                      },
-                      itemCount: 5,
-                    ))
+                // const Headline6(data: 'Son Eklenen Projeler'),
+                // SizedBox(
+                //     height: 240,
+                //     child: ListView.builder(
+                //       scrollDirection: Axis.horizontal,
+                //       itemBuilder: (context, index) {
+                //         return const SizedBox(
+                //           width: 200,
+                //           child: Card(
+                //             color: Colors.red,
+                //             margin:
+                //                 EdgeInsets.only(top: 20, bottom: 20, right: 20),
+                //           ),
+                //         );
+                //       },
+                //       itemCount: 5,
+                //     ))
               ],
             ),
           ),

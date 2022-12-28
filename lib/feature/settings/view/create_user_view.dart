@@ -1,15 +1,13 @@
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/settings/view_model/form_validate_member.dart';
-import 'package:aden_envanterus/models/member_service.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:kartal/kartal.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
+import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../view_model/form_validate_member.dart';
 
 class CreateUserView extends StatefulWidget {
   const CreateUserView({Key? key}) : super(key: key);

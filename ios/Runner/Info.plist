@@ -16,6 +16,7 @@
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
     <string>Kamera Kullanımına İzin ver ?</string>
+	
 	<key>CFBundleName</key>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>Galeri kullanımına izin ver ?</string>

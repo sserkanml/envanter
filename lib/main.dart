@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/constant/info_devices.dart';
 import 'core/route/router_generator.dart';
 import 'core/service/dependecy_service.dart';
 import 'core/theme/dark_theme.dart';
@@ -14,6 +15,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  await getIt.get<InfoDevices>().getAllInfo();
   DependecyService.setup();
   runApp(MyApp(
     mode: savedThemeMode,

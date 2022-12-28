@@ -1,12 +1,11 @@
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/models/member.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/member.dart';
 
 class UsersDetailView extends StatefulWidget {
   final Member member;
@@ -128,14 +127,14 @@ class _UsersDetailViewState extends State<UsersDetailView> {
             Row(
               children: [
                 const Spacer(),
-                GFButton(
-                  color: GFColors.SECONDARY,
-                  onPressed: () {},
-                  child: const Bodysmall(
-                    data: 'Proje Ata',
-                    color: Colors.white,
-                  ),
-                ),
+                // GFButton(
+                //   color: GFColors.SECONDARY,
+                //   onPressed: () {},
+                //   child: const Bodysmall(
+                //     data: 'Proje Ata',
+                //     color: Colors.white,
+                //   ),
+                // ),
                 const SizedBox(width: 20),
                 GFButton(
                   onPressed: () {},
@@ -147,7 +146,7 @@ class _UsersDetailViewState extends State<UsersDetailView> {
               ],
             ),
             const SizedBox(height: 30),
-            const Bodylarge(data: 'Kullanıcıya Atanmış Projeler')
+            // const Bodylarge(data: 'Kullanıcıya Atanmış Projeler')
           ],
         ),
       )),

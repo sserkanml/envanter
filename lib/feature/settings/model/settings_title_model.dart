@@ -27,11 +27,11 @@ List<SettingsTitleModel> settingtitle = [
       name: 'Kullanıcılar',
       page: const UsersRoute(),
       icon: FontAwesomeIcons.users),
-  SettingsTitleModel(
-    icon: FontAwesomeIcons.pencil,
-    name: 'Kullanıcı Oluşturma',
-    page: const CreateUserRoute(),
-  ),
+  // SettingsTitleModel(
+  //   icon: FontAwesomeIcons.pencil,
+  //   name: 'Kullanıcı Oluşturma',
+  //   page: const CreateUserRoute(),
+  // ),
   // SettingsTitleModel(
   //     icon: FontAwesomeIcons.gears,
   //     name: 'Sistem Ayarları',

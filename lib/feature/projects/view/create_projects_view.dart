@@ -165,49 +165,55 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                           horizontal: 8.0,
                         )),
                   ),
-                  GFButton(
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (ProjectForm.projectForm.currentState!.validate()) {
-                        ProjectForm.projectForm.currentState!.save();
-                        isLoading=true;
-                        setState(() {
-                          
-                        });
-                        await getIt.get<ProjectsMobx>().postProject(
-                            projectName: projectName,
-                            note: note,
-                            tag: tag,
-                            projectUserId: projectUserId);
-                          isLoading=false;
-                          setState(() {
-                            
-                          });
-                        // ignore: use_build_context_synchronously
-                        MotionToast.success(
-                          onClose: () {
-                            Future.delayed(const Duration(milliseconds: 1000),
-                                () {
-                              context.router.pop();
-                            });
-                          },
-                          description: const Bodymedium(
-                            data: 'Proje oluşturma işlemi başarıla tamamlandı',
-                          ),
-                          title: Bodymedium(
-                              fontWeight: FontWeight.bold,
-                              data: getIt.get<ProjectsMobx>().infoMessage),
-                        ).show(context);
-                      } else {}
-                    },
-                    child: isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : const Bodymedium(
-                            data: 'Kaydet',
-                            color: Colors.white,
-                          ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      GFButton(
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          if (ProjectForm.projectForm.currentState!
+                              .validate()) {
+                            ProjectForm.projectForm.currentState!.save();
+                            isLoading = true;
+                            setState(() {});
+                            await getIt.get<ProjectsMobx>().postProject(
+                                projectName: projectName,
+                                note: note,
+                                tag: tag,
+                                projectUserId: projectUserId);
+                            isLoading = false;
+                            setState(() {});
+                            // ignore: use_build_context_synchronously
+                            MotionToast.success(
+                              onClose: () {
+                                Future.delayed(
+                                    const Duration(milliseconds: 1000), () {
+                                  context.router.pop();
+                                });
+                              },
+                              description: const Bodymedium(
+                                data:
+                                    'Proje oluşturma işlemi başarıla tamamlandı',
+                              ),
+                              title: Bodymedium(
+                                  fontWeight: FontWeight.bold,
+                                  data: getIt.get<ProjectsMobx>().infoMessage),
+                            ).show(context);
+                          } else {}
+                        },
+                        child: isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : const Bodymedium(
+                                data: 'Kaydet',
+                                color: Colors.white,
+                              ),
+                      ),
+                    ],
                   )
                 ],
               ),

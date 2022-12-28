@@ -138,6 +138,56 @@ class _ChecksViewState extends State<ChecksView> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {},
+                      trailing: TextButton(
+                        onPressed: () {
+                          context.router.push(CheckDetailRoute(
+                              check: getIt
+                                  .get<CheckMobx>()
+                                  .checks
+                                  .where((element) =>
+                                      element.malzeme ==
+                                      getIt
+                                          .get<CheckDetailMobx>()
+                                          .checksDetail[index]
+                                          .malzeme)
+                                  .first,
+                              customer: getIt
+                                  .get<CustomerMobx>()
+                                  .customers
+                                  .where((element) =>
+                                      element.oid ==
+                                      getIt
+                                          .get<CheckDetailMobx>()
+                                          .checksDetail[index]
+                                          .musteriID)
+                                  .first,
+                              item: getIt
+                                  .get<ItemsMobx>()
+                                  .items
+                                  .where((element) =>
+                                      element.oid ==
+                                      getIt
+                                          .get<CheckDetailMobx>()
+                                          .checksDetail[index]
+                                          .malzeme)
+                                  .first,
+                              checkDetail: getIt
+                                  .get<CheckDetailMobx>()
+                                  .checksDetail
+                                  .where((element) =>
+                                      element.malzeme ==
+                                      getIt
+                                          .get<CheckMobx>()
+                                          .checks[index]
+                                          .malzeme)
+                                  .first));
+                        },
+                        child: const Bodymedium(
+                          data: "Detay",
+                          color: Colors.purple,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       // trailing: GFButton(
                       //   onPressed: () {
                       //     context.router.push(CheckDetailRoute(

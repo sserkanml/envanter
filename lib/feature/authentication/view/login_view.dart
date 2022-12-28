@@ -1,20 +1,20 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/service/shared_references.dart';
-import 'package:aden_envanterus/core/util/extension.dart';
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/custom_text_field.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/authentication/view_model/get_login.dart';
-import 'package:aden_envanterus/models/check_detail_service.dart';
-import 'package:aden_envanterus/models/checks_service.dart';
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
+import '../../../core/service/shared_references.dart';
+import '../../../core/util/extension.dart';
+import '../../../core/widgets/bodylarge.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/custom_text_field.dart';
+import '../../../core/widgets/headline6.dart';
+import '../view_model/get_login.dart';
+import '../../../models/check_detail_service.dart';
+import '../../../models/checks_service.dart';
 
-import 'package:aden_envanterus/models/customer_service.dart';
-import 'package:aden_envanterus/models/items_model.dart';
-import 'package:aden_envanterus/models/member_service.dart';
-import 'package:aden_envanterus/models/projects_service.dart';
-import 'package:aden_envanterus/models/user_session.dart';
+import '../../../models/customer_service.dart';
+import '../../../models/items_model.dart';
+import '../../../models/member_service.dart';
+import '../../../models/projects_service.dart';
+import '../../../models/user_session.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -51,21 +51,21 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: () {
-                context.router.push(const SignUpRoute());
-              },
-              child: const Bodymedium(
-                data: "Kayıt Ol",
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 16.0),
+        //     child: TextButton(
+        //       onPressed: () {
+        //         context.router.push(const SignUpRoute());
+        //       },
+        //       child: const Bodymedium(
+        //         data: "Kayıt Ol",
+        //         color: Colors.red,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //   ),
+        // ],
         title: const Headline6(data: "Giriş Yap"),
       ),
       body: Center(

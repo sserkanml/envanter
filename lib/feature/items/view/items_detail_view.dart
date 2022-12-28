@@ -6,7 +6,7 @@ import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
 import '../../../models/customer_model.dart';
 import '../../../models/items_model.dart';
-import '../../projects/view_model/camera_managment.dart';
+
 
 class ItemsDetailView extends StatefulWidget {
   final ItemsModel item;
@@ -66,10 +66,7 @@ class _ItemsDetailViewState extends State<ItemsDetailView> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () {
-            for (var element in CameraManagmentService.selectedEntitiesCopy) {
-              element.isSelecting = false;
-            }
-            CameraManagmentService.selectedEntities.clear();
+           
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back),

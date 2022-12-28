@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:motion_toast/motion_toast.dart';
 
@@ -172,49 +173,77 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                        horizontal: 20, vertical: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Bodylarge(data: 'Sayım Başlat'),
-                        GFButton(
-                          onPressed: doneList.isEmpty
-                              ? null
-                              : () async {
-                                  // ignore: avoid_function_literals_in_foreach_calls
-                                  doneList.forEach((element) async {
-                                    await getIt.get<CheckMobx>().createCheck(
-                                        item_id: element.item.oid!,
-                                        customer_id: element.item.musteriID!,
-                                        quantity: element.quantity
-                                            .toInt()
-                                            .toString());
-                                  });
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              child: GFIconButton(
+                                borderShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4)),
+                                icon: const Icon(
+                                  FontAwesomeIcons.camera,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                onPressed: doneList.isEmpty
+                                    ? null : () {},
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: GFButton(
+                                onPressed: doneList.isEmpty
+                                    ? null
+                                    : () async {
+                                        // ignore: avoid_function_literals_in_foreach_calls
+                                        doneList.forEach((element) async {
+                                          await getIt
+                                              .get<CheckMobx>()
+                                              .createCheck(
+                                                  item_id: element.item.oid!,
+                                                  customer_id:
+                                                      element.item.musteriID!,
+                                                  quantity: element.quantity
+                                                      .toInt()
+                                                      .toString());
+                                        });
 
-                                  if (getIt.get<CheckMobx>().infoMessage ==
-                                      "Sayım Kayıt Olmuştur") {
-                                    MotionToast.success(
-                                        description: const Bodymedium(
-                                      data: 'İşlem Başarıyla Kaydedildi',
-                                    )).show(context);
-                                    getIt.get<CheckMobx>().infoMessage = '';
-                                  } else {
-                                    MotionToast.error(
-                                        description: const Bodymedium(
-                                      data: 'İşlem Kaydedilemedi',
-                                    )).show(context);
-                                    getIt.get<CheckMobx>().infoMessage = '';
-                                  }
+                                        if (getIt.get<CheckMobx>().infoMessage ==
+                                            "Sayım Kayıt Olmuştur") {
+                                          MotionToast.success(
+                                              description: const Bodymedium(
+                                            data: 'İşlem Başarıyla Kaydedildi',
+                                          )).show(context);
+                                          getIt.get<CheckMobx>().infoMessage = '';
+                                        } else {
+                                          MotionToast.error(
+                                              description: const Bodymedium(
+                                            data: 'İşlem Kaydedilemedi',
+                                          )).show(context);
+                                          getIt.get<CheckMobx>().infoMessage = '';
+                                        }
 
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 3000), (() {
-                                    context.router.pop();
-                                  }));
-                                },
-                          child: const Bodymedium(
-                            data: 'Kaydet',
-                            color: Colors.white,
-                          ),
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 3000),
+                                            (() {
+                                          context.router.pop();
+                                        }));
+                                      },
+                                child: const Bodymedium(
+                                  data: 'Kaydet',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
@@ -280,6 +309,9 @@ class _CreateChecksViewState extends State<CreateChecksView> {
                             },
                           ),
                         ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   doneList.isEmpty
                       ? const SizedBox()
                       : Container(

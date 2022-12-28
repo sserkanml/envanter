@@ -179,7 +179,7 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
                   );
                 },
                 child: Bodylarge(
-                  data: '+$count',
+                  data: '+${count.toInt()}',
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
