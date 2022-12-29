@@ -15,10 +15,10 @@ class TakePictureForChecksView extends StatefulWidget {
 }
 
 class _TakePictureForChecksViewState extends State<TakePictureForChecksView> {
-  late int takenPhoto;
+  late int takenPhotoCount;
   @override
   void initState() {
-    takenPhoto = widget.takenPhoto;
+    takenPhotoCount = widget.takenPhoto;
     super.initState();
   }
 

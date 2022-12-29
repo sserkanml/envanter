@@ -1,18 +1,17 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/bodylarge.dart';
-import 'package:aden_envanterus/core/widgets/bodymedium.dart';
-import 'package:aden_envanterus/core/widgets/bodysmall.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/feature/settings/model/settings_title_model.dart';
-import 'package:aden_envanterus/models/member_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:getwidget/getwidget.dart';
 
+import '../../../core/route/router_generator.dart';
+import '../../../core/service/dependecy_service.dart';
 import '../../../core/service/shared_references.dart';
+import '../../../core/widgets/bodylarge.dart';
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/bodysmall.dart';
+import '../../../core/widgets/headline6.dart';
+import '../model/settings_title_model.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({Key? key}) : super(key: key);

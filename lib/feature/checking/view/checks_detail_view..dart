@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../../core/route/router_generator.dart';
 import '../../../core/util/extension.dart';
+import '../../../core/widgets/bodylarge.dart';
 import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
 import '../../../models/checks_detail_model.dart';
@@ -101,54 +102,86 @@ class _CheckDetailViewState extends State<CheckDetailView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: widget.item.adi,
-                  style: const TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17)),
-              TextSpan(
-                  text: ' Malzeme Sayım Detayları',
-                  style: TextStyle(color: context.colorScheme.onSurface)),
-            ])),
             const SizedBox(height: 30),
             const Bodymedium(data: 'Miktar'),
             const SizedBox(
-              height: 10,
+              height: 2,
             ),
-            TextFormField(
-              readOnly: true,
-              controller: checkCount,
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      final double? data = await context.router.push(
-                          ScanQrCodeRoute(
-                              qrModel: CheckQrModel(
-                                  controller: checkCount,
-                                  item: widget.item,
-                                  name: widget.item.adi ?? ' ',
-                                  quantity: widget.check.miktar ?? 0)));
-                      setState(() {
-                        checkCount.text = data.toString();
-                      });
-                    },
-                    icon: SvgPicture.asset(
-                      context.getPath(folder: 'svg', file: 'qr_code.svg'),
-                      width: 25,
-                      height: 25,
-                      color: context.colorScheme.onSurface.withOpacity(.7),
+            // TextFormField(
+            //   readOnly: true,
+            //   controller: checkCount,
+            //   decoration: InputDecoration(
+            //       suffixIcon: IconButton(
+            //         onPressed: () async {
+            //           final double? data = await context.router.push(
+            //               ScanQrCodeRoute(
+            //                   qrModel: CheckQrModel(
+            //                       controller: checkCount,
+            //                       item: widget.item,
+            //                       name: widget.item.adi ?? ' ',
+            //                       quantity: widget.check.miktar ?? 0)));
+            //           setState(() {
+            //             checkCount.text = data.toString();
+            //           });
+            //         },
+            //         icon: SvgPicture.asset(
+            //           context.getPath(folder: 'svg', file: 'qr_code.svg'),
+            //           width: 25,
+            //           height: 25,
+            //           color: context.colorScheme.onSurface.withOpacity(.7),
+            //         ),
+            //       ),
+            //       border: const OutlineInputBorder(),
+            //       contentPadding: const EdgeInsets.symmetric(
+            //         vertical: 8.0,
+            //         horizontal: 8.0,
+            //       )),
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  textBaseline: TextBaseline.ideographic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  children: [
+                    Headline6(
+                      data: widget.item.adi ?? ' ',
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
                     ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Bodylarge(data: checkCount.text),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Bodylarge(data: widget.item.birim ?? ' '),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () async {
+                    final double? data = await context.router.push(
+                        ScanQrCodeRoute(
+                            qrModel: CheckQrModel(
+                                controller: checkCount,
+                                item: widget.item,
+                                name: widget.item.adi ?? ' ',
+                                quantity: widget.check.miktar ?? 0)));
+                    setState(() {
+                      checkCount.text = (data?.toInt() ?? 0).toString();
+                    });
+                  },
+                  icon: SvgPicture.asset(
+                    context.getPath(folder: 'svg', file: 'qr_code.svg'),
+                    width: 25,
+                    height: 25,
+                    color: context.colorScheme.onSurface.withOpacity(.7),
                   ),
-                  border: const OutlineInputBorder(),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 8.0,
-                  )),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Bodymedium(data: 'Firma Adı:'),
             const SizedBox(
               height: 10,

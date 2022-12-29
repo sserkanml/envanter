@@ -108,7 +108,7 @@ class _DashboardViewState extends State<DashboardView> {
                         Color(0xfffa86be),
                         Color(0xffa275e3),
                         Color(0xff251749),
-                        Color(0xfffdc5d5a)
+                        Color(0xffdc5d5a)
                       ],
                       children: getChildrenTabs(context),
                     )),

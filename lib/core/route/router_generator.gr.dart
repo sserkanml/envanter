@@ -228,6 +228,18 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    TakePictureForChecksRoute.name: (routeData) {
+      final args = routeData.argsAs<TakePictureForChecksRouteArgs>();
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: TakePictureForChecksView(
+          key: args.key,
+          takenPhoto: args.takenPhoto,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     CreateChecksRoute.name: (routeData) {
       final args = routeData.argsAs<CreateChecksRouteArgs>();
       return CustomPage<dynamic>(
@@ -470,6 +482,11 @@ class _$AppRouter extends RootStackRouter {
                 RouteConfig(
                   SelectCustomerRoute.name,
                   path: 'select-customer',
+                  parent: ChecksWrapperRoute.name,
+                ),
+                RouteConfig(
+                  TakePictureForChecksRoute.name,
+                  path: 'take-picture',
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
@@ -927,6 +944,41 @@ class SelectCustomerRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SelectCustomerRoute';
+}
+
+/// generated route for
+/// [TakePictureForChecksView]
+class TakePictureForChecksRoute
+    extends PageRouteInfo<TakePictureForChecksRouteArgs> {
+  TakePictureForChecksRoute({
+    Key? key,
+    required int takenPhoto,
+  }) : super(
+          TakePictureForChecksRoute.name,
+          path: 'take-picture',
+          args: TakePictureForChecksRouteArgs(
+            key: key,
+            takenPhoto: takenPhoto,
+          ),
+        );
+
+  static const String name = 'TakePictureForChecksRoute';
+}
+
+class TakePictureForChecksRouteArgs {
+  const TakePictureForChecksRouteArgs({
+    this.key,
+    required this.takenPhoto,
+  });
+
+  final Key? key;
+
+  final int takenPhoto;
+
+  @override
+  String toString() {
+    return 'TakePictureForChecksRouteArgs{key: $key, takenPhoto: $takenPhoto}';
+  }
 }
 
 /// generated route for

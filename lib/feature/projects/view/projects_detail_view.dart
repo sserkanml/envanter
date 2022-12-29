@@ -175,13 +175,13 @@ class _ProjectsDetailViewState extends State<ProjectsDetailView> {
                         ),
                         trailing: GFButton(
                           onPressed: () {
-                            print(context.router.navigatorKey.currentState!
+                            context.router.navigatorKey.currentState!
                                 .push(MaterialPageRoute(
                               builder: (context) {
                                 return CustomerDetailView(
                                     customer: widget.projectsId!);
                               },
-                            )));
+                            ));
                           },
                           color: GFColors.DANGER,
                           child: const Bodymedium(

@@ -1,17 +1,13 @@
-import 'package:aden_envanterus/core/route/router_generator.dart';
-import 'package:aden_envanterus/core/service/dependecy_service.dart';
-import 'package:aden_envanterus/core/widgets/headline6.dart';
-import 'package:aden_envanterus/models/checks_service.dart';
-import 'package:aden_envanterus/models/customer_service.dart';
-import 'package:aden_envanterus/models/items_service.dart';
-import 'package:aden_envanterus/models/projects_service.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/getwidget.dart';
 
-import '../../../core/widgets/bodymedium.dart';
+import 'package:flutter/material.dart';
+
+import '../../../core/service/dependecy_service.dart';
 import '../../../core/widgets/headline5.dart';
+import '../../../core/widgets/headline6.dart';
+import '../../../models/checks_service.dart';
+import '../../../models/customer_service.dart';
+import '../../../models/items_service.dart';
+import '../../../models/projects_service.dart';
 
 List<Widget> getChildrenTabs(BuildContext context) => <Widget>[
       Column(

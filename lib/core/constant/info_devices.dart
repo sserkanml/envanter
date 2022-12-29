@@ -1,19 +1,18 @@
+import 'dart:io' show Platform;
+
 import 'package:device_info_plus/device_info_plus.dart';
 
-
-
 class InfoDevices {
+  DeviceInfoPlugin infoDevice = DeviceInfoPlugin();
 
-DeviceInfoPlugin infoDevice=DeviceInfoPlugin();
+  Future<void> getInfo() async {
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await infoDevice.androidInfo;
 
-late AndroidDeviceInfo  androidInfo;
-late IosDeviceInfo iosInfo;
-
- Future<void> getAllInfo()async{
-  androidInfo=await infoDevice.androidInfo;
-  iosInfo=await infoDevice.iosInfo;
-  print(androidInfo.version);
-    print(iosInfo.systemVersion);
- } 
-
+      print(androidInfo);
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await infoDevice.iosInfo;
+      print(iosInfo);
+    } else {}
+  }
 }

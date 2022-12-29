@@ -8,6 +8,7 @@ import '../../feature/checking/view/confirmed_view.dart';
 import '../../feature/checking/view/create_checks_view.dart';
 import '../../feature/checking/view/pending_checking_view.dart';
 import '../../feature/checking/view/select_customer_view.dart';
+import '../../feature/checking/view/take_picture_for_checks_view.dart';
 import '../../feature/customers/view/create_customers_view.dart';
 import '../../feature/customers/view/custom_select_location_view.dart';
 import '../../feature/customers/view/customer_detail_view.dart';
@@ -16,7 +17,6 @@ import '../../feature/customers/view/customers_wrapper_view.dart';
 import '../../feature/customers/view/detail_location_view.dart';
 import '../../feature/customers/view/detect_location_view.dart';
 import '../../feature/customers/view/gps_view.dart';
-import '../../feature/customers/view/location_wrapper_view.dart';
 import '../../feature/dashboard/view/dashboard_view.dart';
 import '../../feature/dashboard/view/dashboard_wrapper_view.dart';
 import '../../feature/items/view/items_detail_view.dart';
@@ -95,6 +95,7 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: ChecksView, path: ''),
         CustomRoute(page: ConfirmedView, path: 'confirmed'),
         CustomRoute(page: SelectCustomerView,path: 'select-customer'),
+        CustomRoute(page:TakePictureForChecksView,path:'take-picture'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
         CustomRoute(page: PendingCheckingView, path: 'pending'),
         CustomRoute(page:CanceledCheckView,path:'canceled'),
