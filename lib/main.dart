@@ -1,11 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:aden_envanterus/core/constant/info_devices.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/constant/cameras_constant.dart';
-import 'core/constant/info_devices.dart';
 import 'core/route/router_generator.dart';
 import 'core/service/dependecy_service.dart';
 import 'core/theme/dark_theme.dart';
@@ -17,14 +17,14 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  DependecyService.setup();
+
   try {
     cameras = await availableCameras();
-    print(cameras);
-   await  getIt.get<InfoDevices>().getInfo();
   } catch (e) {
     print(e);
   }
-  DependecyService.setup();
+
   runApp(MyApp(
     mode: savedThemeMode,
   ));

@@ -24,18 +24,24 @@ class DependecyService {
     getIt.registerLazySingleton<DarkTheme>(() => DarkTheme());
     getIt.registerLazySingleton<AppRouter>(() => AppRouter());
     getIt.registerSingleton<AuthenticateUser>(AuthenticateUser());
-    getIt.registerLazySingleton<InfoDevices>(() => InfoDevices());
+
     getIt.registerLazySingleton<ConstantServicePath>(
         () => ConstantServicePath());
     getIt.registerLazySingleton<ConstantSvgPath>(() => ConstantSvgPath());
     getIt.registerSingleton<Shared>(Shared());
     getIt.registerSingleton<MemberMobx>(MemberMobx());
-     getIt.registerSingleton<CustomerMobx>(CustomerMobx());
-      getIt.registerSingleton<CheckMobx>(CheckMobx());
+    getIt.registerSingleton<CustomerMobx>(CustomerMobx());
+    getIt.registerSingleton<CheckMobx>(CheckMobx());
     getIt.registerSingleton<ProjectsMobx>(ProjectsMobx());
-      getIt.registerSingleton<CheckDetailMobx>(CheckDetailMobx());
+    getIt.registerSingleton<CheckDetailMobx>(CheckDetailMobx());
     getIt.registerSingleton<ItemsMobx>(ItemsMobx());
     getIt.registerSingleton<UserSession>(UserSession());
+    getIt.registerSingleton<InfoDevices>(InfoDevices());
     await getIt.get<Shared>().getRef();
+    if (getIt.get<Shared>().pref.containsKey('isFirstUsage')) {
+       getIt.get<Shared>().pref.setBool('isFirstUsage', false);
+    } else {
+      getIt.get<Shared>().pref.setBool('isFirstUsage', true);
+    }
   }
 }

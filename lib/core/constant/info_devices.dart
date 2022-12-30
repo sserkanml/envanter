@@ -9,10 +9,10 @@ class InfoDevices {
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await infoDevice.androidInfo;
 
-      print(androidInfo);
+   
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await infoDevice.iosInfo;
-      print(iosInfo);
+      
     } else {}
   }
 }

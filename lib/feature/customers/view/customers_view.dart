@@ -124,7 +124,7 @@ class _CustomersViewState extends State<CustomersView> {
                   shrinkWrap: true,
                   primary: false,
                   itemBuilder: (context, index) {
-                    print(customerSearch[index].aktifPasif);
+            
                     return ListTile(
                       trailing: Bodysmall(
                           fontWeight: FontWeight.bold,

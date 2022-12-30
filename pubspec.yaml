@@ -69,6 +69,7 @@ dependencies:
   camera: ^0.10.1
   device_info_plus: ^8.0.0
   path_provider: ^2.0.11
+  showcaseview: ^2.0.0+1
 
  
 dev_dependencies:
