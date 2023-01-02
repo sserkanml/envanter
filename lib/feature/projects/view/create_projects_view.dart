@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kartal/kartal.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -29,10 +32,21 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
   String projectUserId = '';
   String selectedText = 'Seçilen Resim';
   bool isLoading = false;
+  File? pickedImage;
   @override
   void initState() {
     dropdownValue = getIt.get<MemberMobx>().members[0].kullaniciAdi ?? '';
     super.initState();
+  }
+
+  Future<File> getImage() async {
+    final ImagePicker picker = ImagePicker();
+// Pick an image
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+//TO convert Xfile into file
+    File file = File(image!.path);
+//print(‘Image picked’);
+    return file;
   }
 
   @override
@@ -171,7 +185,12 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                   Row(
                     children: [
                       GFButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          File image = await getImage();
+                          setState(() {
+                            pickedImage = image;
+                          });
+                        },
                         child: const Bodymedium(data: 'Resim Ekle'),
                       ),
                       const Spacer(),
@@ -218,7 +237,16 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                               ),
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(height:10),
+                  pickedImage == null
+                      ? const SizedBox()
+                      : Image.file(
+                          pickedImage!,
+                          fit: BoxFit.cover,
+                          width: context.dynamicWidth(1),
+                          height: 300,
+                        )
                 ],
               ),
             )),

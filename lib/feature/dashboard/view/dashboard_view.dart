@@ -123,7 +123,7 @@ class _DashboardViewState extends State<DashboardView> {
                 const Headline6(data: 'Bana Atanan Projeler'),
                 const SizedBox(height: 10),
                 SizedBox(
-                    height: 240,
+                    height: 270,
                     child: getIt.get<GetAssignedProjectMobx>().projects.isEmpty
                         ? const Card(
                             elevation: 1,
