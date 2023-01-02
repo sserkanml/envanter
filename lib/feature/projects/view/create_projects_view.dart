@@ -205,6 +205,7 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                             await getIt.get<ProjectsMobx>().postProject(
                                 projectName: projectName,
                                 note: note,
+                                image: pickedImage,
                                 tag: tag,
                                 projectUserId: projectUserId);
                             isLoading = false;
