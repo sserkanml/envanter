@@ -1,5 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:aden_envanterus/core/constant/info_devices.dart';
+import 'package:aden_envanterus/core/service/shared_references.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +14,12 @@ import 'core/theme/ligt_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   DependecyService.setup();
-
+  await getIt.get<Shared>().getRef();
   try {
     cameras = await availableCameras();
   } catch (e) {

@@ -21,13 +21,7 @@ class OnBoardView extends StatefulWidget {
 class _OnBoardViewState extends State<OnBoardView> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (getIt.get<Shared>().pref.getBool('isLogin') ?? false) {
-        context.router.push(const RootRoute());
-      } else {
-        return;
-      }
-    });
+   
     super.initState();
   }
 

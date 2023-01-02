@@ -1,25 +1,33 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/core/widgets/bodymedium.dart';
+import 'package:aden_envanterus/feature/checking/model/scanned_list.dart';
+import 'package:aden_envanterus/models/customer_model.dart';
+import 'package:aden_envanterus/models/items_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner_overlay_shape.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:kartal/kartal.dart';
-import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:photo_manager/photo_manager.dart';
-
-import '../../../core/util/extension.dart';
+import 'package:collection/collection.dart';
 import '../../../core/widgets/bodylarge.dart';
-import '../../../core/widgets/bodymedium.dart';
 import '../../../core/widgets/headline6.dart';
-import '../model/check_qr_model.dart';
 
 class ScanQrCodeView extends StatefulWidget {
-  final CheckQrModel qrModel;
-  const ScanQrCodeView({Key? key, required this.qrModel}) : super(key: key);
+  final List<ItemsModel>? items;
+  final double? quantity;
+  final ItemsModel? item;
+  final CustomerModel? customer;
+  const ScanQrCodeView({
+    Key? key,
+    this.items,
+    this.quantity,
+    this.customer,
+    this.item,
+  }) : super(key: key);
 
   @override
   State<ScanQrCodeView> createState() => _ScanQrCodeViewState();
@@ -29,16 +37,27 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
     with TickerProviderStateMixin {
   QrController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  late double count;
+  String name = '';
+  late double quantity;
+  double currentQuantity = 0;
+  bool isChanged = false;
   late AnimationController animationController;
 
   @override
   void initState() {
-    count = widget.qrModel.quantity;
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 3000));
     resumeC();
+    quantity = widget.quantity ?? 0;
     super.initState();
+  }
+
+  bool isList() {
+    if (widget.items == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   void resumeC() async {
@@ -48,7 +67,9 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
   @override
   void dispose() {
     controller?.dispose();
+
     animationController.dispose();
+
     super.dispose();
   }
 
@@ -76,70 +97,123 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
       this.controller = controller;
     });
 
-    controller.scannedDataStream.listen((scanData) async {
-      if (scanData.code == widget.qrModel.item.barkod ||
-          scanData.code == widget.qrModel.item.kod) {
-        late Timer timer;
-        await controller.pauseCamera();
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            timer = Timer(
-              const Duration(milliseconds: 3000),
-              () {
-                Navigator.pop(context);
-                animationController.reset();
-              },
-            );
-            return Dialog(
-              insetPadding: const EdgeInsets.all(32.0),
-              child: SizedBox(
-                height: context.dynamicHeight(.5),
-                child: Column(
-                  children: [
-                    const Spacer(),
-                    const Headline6(
-                      data: 'İşlem Başarılı',
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    const SizedBox(height: 20),
-                    Lottie.asset(
-                      context.getPath(
-                          folder: 'animations', file: 'success.json'),
-                      width: 100,
-                      height: 100,
-                      controller: animationController,
-                      repeat: false,
-                      reverse: false,
-                      onLoaded: (p0) {
-                        animationController.forward();
-                      },
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-              ),
-            );
-          },
-        ).then((value) {
-          if (timer.isActive) {
-            timer.cancel();
+    controller.scannedDataStream.listen((scanCode) async {
+      if (isList()) {
+        ItemsModel? item = widget.items!
+            .where((element) =>
+                element.QrKod == scanCode.code ||
+                element.barkod == scanCode.code)
+            .singleOrNull;
+        if (item == null) {
+          controller.pauseCamera();
+          MotionToast.error(
+              description: const Bodymedium(
+            data: 'Kod Bulunamadı',
+          )).show(context);
+          await Future.delayed(const Duration(milliseconds: 500), () {
+            controller.resumeCamera();
+          });
+        } else {
+          if (getIt.get<ScannedListMobx>().scannedList.isEmpty) {
+            controller.pauseCamera();
+            getIt.get<ScannedListMobx>().addDoneList(
+                name: item.adi!,
+                itemId: item.oid!,
+                customerId: widget.customer!.oid!,
+                unit: item.birim!,
+                item: item,
+                quantity: 1);
+            name = getIt.get<ScannedListMobx>().scannedList[0].name;
+            currentQuantity =
+                getIt.get<ScannedListMobx>().scannedList[0].quantity;
+            setState(() {
+              isChanged = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 500), () {
+              controller.resumeCamera();
+            });
+          } else if (getIt
+              .get<ScannedListMobx>()
+              .scannedList
+              .any((element) => element.name == item.adi)) {
+            controller.pauseCamera();
+            getIt
+                .get<ScannedListMobx>()
+                .scannedList
+                .where((element) => element.name == item.adi)
+                .first
+                .quantity = getIt
+                    .get<ScannedListMobx>()
+                    .scannedList
+                    .where((element) => element.name == item.adi)
+                    .first
+                    .quantity +
+                1;
+            name = getIt
+                .get<ScannedListMobx>()
+                .scannedList
+                .where((element) => element.name == item.adi)
+                .first
+                .name;
+            currentQuantity = getIt
+                .get<ScannedListMobx>()
+                .scannedList
+                .where((element) => element.name == item.adi)
+                .first
+                .quantity;
+            setState(() {
+              isChanged = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 500), () {
+              controller.resumeCamera();
+            });
+          } else {
+            controller.pauseCamera();
+            getIt.get<ScannedListMobx>().addDoneList(
+                name: item.adi!,
+                itemId: item.oid!,
+                customerId: widget.customer!.oid!,
+                unit: item.birim!,
+                item: item,
+                quantity: 1);
+            name = getIt
+                .get<ScannedListMobx>()
+                .scannedList
+                .where((element) => element.name == item.adi)
+                .first
+                .name;
+            currentQuantity = getIt
+                .get<ScannedListMobx>()
+                .scannedList
+                .where((element) => element.name == item.adi)
+                .first
+                .quantity;
+            setState(() {
+              isChanged = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 500), () {
+              controller.resumeCamera();
+            });
           }
-        });
-        setState(() {
-          count++;
-        });
-        controller.resumeCamera();
+        }
       } else {
-        await controller.pauseCamera();
-        // ignore: use_build_context_synchronously
-        MotionToast.error(
-            description: const Bodymedium(
-          data: 'Kod Bulunamadı',
-        )).show(context);
-        await controller.resumeCamera();
+        if (widget.item?.QrKod == scanCode.code ||
+            widget.item?.barkod == scanCode.code) {
+          quantity++;
+          setState(() {
+            isChanged = true;
+          });
+        } else {
+          controller.pauseCamera();
+          MotionToast.error(
+              description: const Bodymedium(
+            data: 'Kod Bulunamadı',
+            color: Colors.white,
+          )).show(context);
+          await Future.delayed(const Duration(milliseconds: 500), () {
+            controller.resumeCamera();
+          });
+        }
       }
     });
   }
@@ -161,7 +235,11 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
         title: const Headline6(data: 'Tarama Yap'),
         leading: IconButton(
           onPressed: () {
-            context.router.pop<double>(widget.qrModel.quantity);
+            if (widget.quantity == null) {
+              context.router.pop();
+            } else {
+              context.router.pop<double>(quantity);
+            }
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
@@ -171,7 +249,7 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
             child: Align(
               alignment: Alignment.center,
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 500),
                 transitionBuilder: (child, animation) {
                   return ScaleTransition(
                     scale: animation,
@@ -179,7 +257,11 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
                   );
                 },
                 child: Bodylarge(
-                  data: '+${count.toInt()}',
+                  data: isList()
+                      ? (isChanged
+                          ? '$name : ${currentQuantity.toInt().toString()}'
+                          : '')
+                      : '+ ${quantity.toInt()}',
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
@@ -191,23 +273,17 @@ class _ScanQrCodeViewState extends State<ScanQrCodeView>
       body: Column(
         children: [
           Expanded(child: _buildQrView(context)),
-          SizedBox(
-            height: 60,
-            child: GFButton(
-              onPressed: count == 0 || widget.qrModel.quantity == count
-                  ? null
-                  : () async {
-                      await context.router.pop<double>(count);
-                    },
-              fullWidthButton: true,
-              child: const Bodymedium(
-                data: 'Kaydet',
-                color: Colors.white,
-              ),
-            ),
-          )
         ],
       ),
     );
+  }
+}
+
+extension MyIterable<T> on Iterable<T> {
+  T? get firstOrNull => isEmpty ? null : first;
+
+  T? firstWhereOrNull(bool Function(T element) test) {
+    final list = where(test);
+    return list.isEmpty ? null : list.first;
   }
 }

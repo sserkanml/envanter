@@ -189,11 +189,11 @@ class SettingsView extends StatelessWidget {
                                   if (result ?? false) {
                                     getIt
                                         .get<Shared>()
-                                        .pref
+                                        .getPref
                                         .setBool('isLogin', false);
                                     getIt
                                         .get<Shared>()
-                                        .pref
+                                        .getPref
                                         .setString('sessionID', '');
                                     context.router.push(const OnBoardRoute());
                                   } else {

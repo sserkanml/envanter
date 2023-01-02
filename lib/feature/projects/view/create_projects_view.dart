@@ -170,6 +170,10 @@ class _CreateProjectsViewState extends State<CreateProjectsView> {
                   ),
                   Row(
                     children: [
+                      GFButton(
+                        onPressed: () {},
+                        child: const Bodymedium(data: 'Resim Ekle'),
+                      ),
                       const Spacer(),
                       GFButton(
                         onPressed: () async {

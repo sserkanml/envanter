@@ -24,12 +24,28 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ScanQrCodeRoute.name: (routeData) {
-      final args = routeData.argsAs<ScanQrCodeRouteArgs>();
-      return CustomPage<double>(
+      final args = routeData.argsAs<ScanQrCodeRouteArgs>(
+          orElse: () => const ScanQrCodeRouteArgs());
+      return CustomPage<double?>(
         routeData: routeData,
         child: ScanQrCodeView(
           key: args.key,
-          qrModel: args.qrModel,
+          items: args.items,
+          quantity: args.quantity,
+          customer: args.customer,
+          item: args.item,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    TakePictureForChecksRoute.name: (routeData) {
+      final args = routeData.argsAs<TakePictureForChecksRouteArgs>();
+      return CustomPage<bool>(
+        routeData: routeData,
+        child: TakePictureForChecksView(
+          key: args.key,
+          customer: args.customer,
         ),
         opaque: true,
         barrierDismissible: false,
@@ -228,14 +244,10 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
-    TakePictureForChecksRoute.name: (routeData) {
-      final args = routeData.argsAs<TakePictureForChecksRouteArgs>();
-      return CustomPage<dynamic>(
+    ShowCheckedImageRoute.name: (routeData) {
+      return CustomPage<bool>(
         routeData: routeData,
-        child: TakePictureForChecksView(
-          key: args.key,
-          takenPhoto: args.takenPhoto,
-        ),
+        child: const ShowCheckedImageView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -385,6 +397,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/scan-qr-code-view',
         ),
         RouteConfig(
+          TakePictureForChecksRoute.name,
+          path: '/take-picture-for-checks-view',
+        ),
+        RouteConfig(
           RootRoute.name,
           path: '/root',
           children: [
@@ -485,8 +501,8 @@ class _$AppRouter extends RootStackRouter {
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
-                  TakePictureForChecksRoute.name,
-                  path: 'take-picture',
+                  ShowCheckedImageRoute.name,
+                  path: 'show-checked-image',
                   parent: ChecksWrapperRoute.name,
                 ),
                 RouteConfig(
@@ -598,13 +614,19 @@ class OnBoardRoute extends PageRouteInfo<void> {
 class ScanQrCodeRoute extends PageRouteInfo<ScanQrCodeRouteArgs> {
   ScanQrCodeRoute({
     Key? key,
-    required CheckQrModel qrModel,
+    List<ItemsModel>? items,
+    double? quantity,
+    CustomerModel? customer,
+    ItemsModel? item,
   }) : super(
           ScanQrCodeRoute.name,
           path: '/scan-qr-code-view',
           args: ScanQrCodeRouteArgs(
             key: key,
-            qrModel: qrModel,
+            items: items,
+            quantity: quantity,
+            customer: customer,
+            item: item,
           ),
         );
 
@@ -614,16 +636,60 @@ class ScanQrCodeRoute extends PageRouteInfo<ScanQrCodeRouteArgs> {
 class ScanQrCodeRouteArgs {
   const ScanQrCodeRouteArgs({
     this.key,
-    required this.qrModel,
+    this.items,
+    this.quantity,
+    this.customer,
+    this.item,
   });
 
   final Key? key;
 
-  final CheckQrModel qrModel;
+  final List<ItemsModel>? items;
+
+  final double? quantity;
+
+  final CustomerModel? customer;
+
+  final ItemsModel? item;
 
   @override
   String toString() {
-    return 'ScanQrCodeRouteArgs{key: $key, qrModel: $qrModel}';
+    return 'ScanQrCodeRouteArgs{key: $key, items: $items, quantity: $quantity, customer: $customer, item: $item}';
+  }
+}
+
+/// generated route for
+/// [TakePictureForChecksView]
+class TakePictureForChecksRoute
+    extends PageRouteInfo<TakePictureForChecksRouteArgs> {
+  TakePictureForChecksRoute({
+    Key? key,
+    required CustomerModel customer,
+  }) : super(
+          TakePictureForChecksRoute.name,
+          path: '/take-picture-for-checks-view',
+          args: TakePictureForChecksRouteArgs(
+            key: key,
+            customer: customer,
+          ),
+        );
+
+  static const String name = 'TakePictureForChecksRoute';
+}
+
+class TakePictureForChecksRouteArgs {
+  const TakePictureForChecksRouteArgs({
+    this.key,
+    required this.customer,
+  });
+
+  final Key? key;
+
+  final CustomerModel customer;
+
+  @override
+  String toString() {
+    return 'TakePictureForChecksRouteArgs{key: $key, customer: $customer}';
   }
 }
 
@@ -947,38 +1013,15 @@ class SelectCustomerRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [TakePictureForChecksView]
-class TakePictureForChecksRoute
-    extends PageRouteInfo<TakePictureForChecksRouteArgs> {
-  TakePictureForChecksRoute({
-    Key? key,
-    required int takenPhoto,
-  }) : super(
-          TakePictureForChecksRoute.name,
-          path: 'take-picture',
-          args: TakePictureForChecksRouteArgs(
-            key: key,
-            takenPhoto: takenPhoto,
-          ),
+/// [ShowCheckedImageView]
+class ShowCheckedImageRoute extends PageRouteInfo<void> {
+  const ShowCheckedImageRoute()
+      : super(
+          ShowCheckedImageRoute.name,
+          path: 'show-checked-image',
         );
 
-  static const String name = 'TakePictureForChecksRoute';
-}
-
-class TakePictureForChecksRouteArgs {
-  const TakePictureForChecksRouteArgs({
-    this.key,
-    required this.takenPhoto,
-  });
-
-  final Key? key;
-
-  final int takenPhoto;
-
-  @override
-  String toString() {
-    return 'TakePictureForChecksRouteArgs{key: $key, takenPhoto: $takenPhoto}';
-  }
+  static const String name = 'ShowCheckedImageRoute';
 }
 
 /// generated route for

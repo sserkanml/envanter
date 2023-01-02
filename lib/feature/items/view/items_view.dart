@@ -49,24 +49,24 @@ class _ItemsViewState extends State<ItemsView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {},
-                  trailing: GFButton(
-                    onPressed: () {
-                      context.router.push(ItemsDetailRoute(
-                          customer: getIt
-                              .get<CustomerMobx>()
-                              .customers
-                              .where((element) =>
-                                  element.oid ==
-                                  getIt.get<ItemsMobx>().items[index].musteriID)
-                              .first,
-                          item: getIt.get<ItemsMobx>().items[index]));
-                    },
-                    color: GFColors.WARNING,
-                    child: const Bodylarge(
-                      data: 'Detay',
-                      color: Colors.white,
-                    ),
-                  ),
+                  // trailing: GFButton(
+                  //   onPressed: () {
+                  //     context.router.push(ItemsDetailRoute(
+                  //         customer: getIt
+                  //             .get<CustomerMobx>()
+                  //             .customers
+                  //             .where((element) =>
+                  //                 element.oid ==
+                  //                 getIt.get<ItemsMobx>().items[index].musteriID)
+                  //             .first,
+                  //         item: getIt.get<ItemsMobx>().items[index]));
+                  //   },
+                  //   color: GFColors.WARNING,
+                  //   child: const Bodylarge(
+                  //     data: 'Detay',
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                   title: Row(
                     children: [
                       Bodymedium(
@@ -75,7 +75,7 @@ class _ItemsViewState extends State<ItemsView> {
                                   30
                               ? '${getIt.get<CustomerMobx>().customers.firstWhereOrNull((element) => element.oid == getIt.get<ItemsMobx>().items[index].musteriID)?.musteriFirmaAdi}...'
                               : '${getIt.get<CustomerMobx>().customers.firstWhereOrNull((element) => element.oid == getIt.get<ItemsMobx>().items[index].musteriID)?.musteriFirmaAdi} -- '),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 2),
                       Bodymedium(
                           data: getIt
                                       .get<ItemsMobx>()

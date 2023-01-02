@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/feature/dashboard/model/get_assigned_project.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:kartal/kartal.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:tab_container/tab_container.dart';
 
+import '../../../core/widgets/bodymedium.dart';
+import '../../../core/widgets/bodysmall.dart';
 import '../../../core/widgets/headline6.dart';
 import '../../authentication/view_model/get_login.dart';
 import '../model/tab_model.dart';
@@ -115,23 +120,117 @@ class _DashboardViewState extends State<DashboardView> {
                 const SizedBox(
                   height: 40,
                 ),
-                // const Headline6(data: 'Son Eklenen Projeler'),
-                // SizedBox(
-                //     height: 240,
-                //     child: ListView.builder(
-                //       scrollDirection: Axis.horizontal,
-                //       itemBuilder: (context, index) {
-                //         return const SizedBox(
-                //           width: 200,
-                //           child: Card(
-                //             color: Colors.red,
-                //             margin:
-                //                 EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                //           ),
-                //         );
-                //       },
-                //       itemCount: 5,
-                //     ))
+                const Headline6(data: 'Bana Atanan Projeler'),
+                const SizedBox(height: 10),
+                SizedBox(
+                    height: 240,
+                    child: getIt.get<GetAssignedProjectMobx>().projects.isEmpty
+                        ? const Card(
+                            elevation: 1,
+                            child: Center(
+                              child:
+                                  Bodymedium(data: 'Atanan Proje Bulunamadı'),
+                            ),
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              var rawStart = getIt
+                                  .get<GetAssignedProjectMobx>()
+                                  .projects[index]
+                                  .kayitZamani;
+                              var numericStart =
+                                  rawStart?.split('(')[1].split(')')[0];
+                              var negativeStart = numericStart?.contains('-');
+                              var partsStart = numericStart
+                                  ?.split(negativeStart! ? '-' : '+');
+                              var millisStart = int.parse(partsStart![0]);
+                              var local = DateTime.fromMillisecondsSinceEpoch(
+                                  millisStart);
+
+                              String date =
+                                  '${local.day < 10 ? '0${local.day}' : local.day.toString()}/${local.month < 10 ? '0${local.month}' : local.month.toString()}/${local.year}';
+                              return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  child: ScaleAnimation(
+                                      child: FadeInAnimation(
+                                          child: SizedBox(
+                                    width: 175,
+                                    child: Card(
+                                      elevation: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Bodymedium(
+                                                data: getIt
+                                                        .get<
+                                                            GetAssignedProjectMobx>()
+                                                        .projects[index]
+                                                        .kaydeden ??
+                                                    ''),
+                                            const SizedBox(height: 5),
+                                            Bodysmall(
+                                              data: 'Atayan Kullanıcı',
+                                              color: context
+                                                  .colorScheme.onSurface
+                                                  .withOpacity(.3),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            getIt
+                                                    .get<
+                                                        GetAssignedProjectMobx>()
+                                                    .projects[index]
+                                                    .projeResim
+                                                    .isNullOrEmpty
+                                                ? Expanded(
+                                                    child: Container(
+                                                    color: context
+                                                        .colorScheme.onSurface
+                                                        .withOpacity(.07),
+                                                  ))
+                                                : Expanded(
+                                                    child: Image.network(
+                                                      'http://envanter.sgktesvikrehberi.com/Content/img/${getIt.get<GetAssignedProjectMobx>().projects[index].projeResim}',
+                                                      width: context
+                                                          .dynamicWidth(1),
+                                                      height: 100,
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Bodymedium(
+                                                data: getIt
+                                                        .get<
+                                                            GetAssignedProjectMobx>()
+                                                        .projects[index]
+                                                        .projeAdi ??
+                                                    ''),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Bodymedium(data: date),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ))));
+                            },
+                            itemCount: getIt
+                                    .get<GetAssignedProjectMobx>()
+                                    .projects
+                                    .isEmpty
+                                ? 1
+                                : getIt
+                                    .get<GetAssignedProjectMobx>()
+                                    .projects
+                                    .length,
+                          ))
               ],
             ),
           ),

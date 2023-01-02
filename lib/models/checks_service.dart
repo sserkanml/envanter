@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:aden_envanterus/models/check_detail_service.dart';
+
 import '../core/service/dependecy_service.dart';
 import 'checks_model.dart';
 import 'user_session.dart';
@@ -32,6 +34,7 @@ abstract class _CheckMobxBase with Store {
     if (response.statusCode <= 299 && response.statusCode >= 200) {
       infoMessage = response.body;
       await getAllChecks();
+      await getIt.get<CheckDetailMobx>().getAllChekcDetail();
     } else {
       print(response.body);
     }
@@ -47,7 +50,6 @@ abstract class _CheckMobxBase with Store {
       checks = result['jsonData_1'].map<CheckModel>((element) {
         return CheckModel.fromMap(element);
       }).toList();
-     
     } else {}
   }
 }

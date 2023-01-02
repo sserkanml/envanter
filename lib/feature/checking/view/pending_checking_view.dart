@@ -61,7 +61,7 @@ class _PendingCheckingViewState extends State<PendingCheckingView> {
             const SizedBox(
               height: 20,
             ),
-            ListView.separated(
+            ListView.builder(
                 shrinkWrap: true,
                 primary: false,
                 itemBuilder: (context, index) {
@@ -124,11 +124,6 @@ class _PendingCheckingViewState extends State<PendingCheckingView> {
                                 '(${getIt.get<ItemsMobx>().items.firstWhereOrNull((element) => element.oid == pendingCheckDetail[index].malzeme)?.adi})')
                       ],
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    color: context.colorScheme.onSurface,
                   );
                 },
                 itemCount: pendingCheckDetail.length)

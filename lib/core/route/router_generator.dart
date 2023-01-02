@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ import '../../feature/checking/view/create_checks_view.dart';
 import '../../feature/checking/view/pending_checking_view.dart';
 import '../../feature/checking/view/scan_qr_code_view.dart';
 import '../../feature/checking/view/select_customer_view.dart';
+import '../../feature/checking/view/show_checked_image.dart';
 import '../../feature/checking/view/take_picture_for_checks_view.dart';
 import '../../feature/customers/view/create_customers_view.dart';
 import '../../feature/customers/view/custom_select_location_view.dart';
@@ -55,7 +58,8 @@ part './router_generator.gr.dart';
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(page: OnBoardView, initial: true),
-    CustomRoute<double>(page: ScanQrCodeView),
+    CustomRoute<double?>(page: ScanQrCodeView),
+    CustomRoute<bool>(page: TakePictureForChecksView,),
     rootAutoRoute,
     AutoRoute(page: LoginView),
     AutoRoute(page: SignUpView),

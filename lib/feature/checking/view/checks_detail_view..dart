@@ -14,7 +14,6 @@ import '../../../models/checks_detail_model.dart';
 import '../../../models/checks_model.dart';
 import '../../../models/customer_model.dart';
 import '../../../models/items_model.dart';
-import '../model/check_qr_model.dart';
 
 class CheckDetailView extends StatefulWidget {
   final CustomerModel customer;
@@ -102,7 +101,6 @@ class _CheckDetailViewState extends State<CheckDetailView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 30),
             const Bodymedium(data: 'Miktar'),
             const SizedBox(
               height: 2,
@@ -161,13 +159,8 @@ class _CheckDetailViewState extends State<CheckDetailView> {
                 ),
                 IconButton(
                   onPressed: () async {
-                    final double? data = await context.router.push(
-                        ScanQrCodeRoute(
-                            qrModel: CheckQrModel(
-                                controller: checkCount,
-                                item: widget.item,
-                                name: widget.item.adi ?? ' ',
-                                quantity: widget.check.miktar ?? 0)));
+                    final double? data =
+                        await context.router.push<double?>(ScanQrCodeRoute(quantity: widget.check.miktar));
                     setState(() {
                       checkCount.text = (data?.toInt() ?? 0).toString();
                     });

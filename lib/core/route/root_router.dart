@@ -1,3 +1,4 @@
+import 'package:aden_envanterus/feature/checking/view/show_checked_image.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../feature/checking/view/canceled_check_view.dart';
@@ -95,7 +96,7 @@ const rootAutoRoute = CustomRoute(
         CustomRoute(page: ChecksView, path: ''),
         CustomRoute(page: ConfirmedView, path: 'confirmed'),
         CustomRoute(page: SelectCustomerView,path: 'select-customer'),
-        CustomRoute(page:TakePictureForChecksView,path:'take-picture'),
+        CustomRoute<bool>(page: ShowCheckedImageView,path: 'show-checked-image'),
         CustomRoute(page: CreateChecksView, path: 'create-checks'),
         CustomRoute(page: PendingCheckingView, path: 'pending'),
         CustomRoute(page:CanceledCheckView,path:'canceled'),

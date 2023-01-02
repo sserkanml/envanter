@@ -22,7 +22,7 @@ class Bodymedium extends StatelessWidget {
     return Text(
       data,
       maxLines: maxLines,
-      overflow: TextOverflow.ellipsis,
+    
       textAlign: textalign,
       style: context.textTheme.bodyMedium!.copyWith(
           color:

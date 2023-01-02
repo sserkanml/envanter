@@ -8,11 +8,11 @@ class LoginGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
  
-    if (getIt.get<Shared>().pref.getBool('isLogin') ?? false) {
+    if (getIt.get<Shared>().getPref.getBool('isLogin') ?? false) {
       // if user is authenticated we continue
       resolver.next(true);
     } else {
-      getIt.get<Shared>().pref.setBool('isLogin', false);
+      getIt.get<Shared>().getPref.setBool('isLogin', false);
     
       resolver.next(true);
     }

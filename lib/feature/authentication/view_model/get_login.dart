@@ -1,4 +1,5 @@
 import 'package:aden_envanterus/core/service/dependecy_service.dart';
+import 'package:aden_envanterus/feature/dashboard/model/get_assigned_project.dart';
 import 'package:aden_envanterus/models/user_session.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,5 +32,6 @@ class AuthenticateUser {
     await getIt.get<CheckDetailMobx>().getAllChekcDetail();
     await getIt.get<CheckMobx>().getAllChecks();
     await getIt.get<CustomerMobx>().getAllCustomers();
+    await getIt.get<GetAssignedProjectMobx>().getAllAssignedProjects();
   }
 }

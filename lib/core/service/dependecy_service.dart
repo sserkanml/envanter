@@ -1,6 +1,9 @@
+import 'package:aden_envanterus/feature/checking/model/scanned_list.dart';
+import 'package:aden_envanterus/feature/dashboard/model/get_assigned_project.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../feature/authentication/view_model/get_login.dart';
+import '../../feature/checking/model/take_picture_mobx.dart';
 import '../../models/check_detail_service.dart';
 import '../../models/checks_service.dart';
 import '../../models/customer_service.dart';
@@ -31,17 +34,15 @@ class DependecyService {
     getIt.registerSingleton<Shared>(Shared());
     getIt.registerSingleton<MemberMobx>(MemberMobx());
     getIt.registerSingleton<CustomerMobx>(CustomerMobx());
+    getIt.registerSingleton<TakePicture>(TakePicture());
+    getIt.registerSingleton<ScannedListMobx>(ScannedListMobx());
     getIt.registerSingleton<CheckMobx>(CheckMobx());
     getIt.registerSingleton<ProjectsMobx>(ProjectsMobx());
     getIt.registerSingleton<CheckDetailMobx>(CheckDetailMobx());
     getIt.registerSingleton<ItemsMobx>(ItemsMobx());
     getIt.registerSingleton<UserSession>(UserSession());
     getIt.registerSingleton<InfoDevices>(InfoDevices());
+    getIt.registerSingleton<GetAssignedProjectMobx>(GetAssignedProjectMobx());
     await getIt.get<Shared>().getRef();
-    if (getIt.get<Shared>().pref.containsKey('isFirstUsage')) {
-       getIt.get<Shared>().pref.setBool('isFirstUsage', false);
-    } else {
-      getIt.get<Shared>().pref.setBool('isFirstUsage', true);
-    }
   }
 }

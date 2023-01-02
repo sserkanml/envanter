@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:aden_envanterus/core/service/dependecy_service.dart';
 import 'package:aden_envanterus/models/items_model.dart';
@@ -27,8 +26,6 @@ abstract class _ItemsMobxBase with Store {
       items = result['jsonData_1'].map<ItemsModel>((element) {
         return ItemsModel.fromMap(element);
       }).toList();
-    } else {
-      print(response.body);
-    }
+    } else {}
   }
 }
